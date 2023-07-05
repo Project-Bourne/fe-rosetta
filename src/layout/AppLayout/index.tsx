@@ -4,11 +4,11 @@ import { Header, NavBar } from '@/components/layouts';
 function AppLayout({children}) {
 
     return (
-        <div className='bg-white w-[100vw] h-[100vh] flex flex-row justify-between'>
+        <div className='bg-white h-[100vh] w-[100vw] flex flex-row'>
             {/* Nav Bar Component */}
             <NavBar/>
 
-            <div className='bg-white w-[80vw] ml-[60vw] h-full'>
+            <div className='bg-white h-full w-[80vw]'>
                 {/* Layout header */}
                 <Header/>
 
