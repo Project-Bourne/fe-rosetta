@@ -1,6 +1,18 @@
+import React from 'react'
+import { AppLayout } from '@/layout/index';
 import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function App({Component, pageProps, ...appProps}) {
+
+    const isLayoutNeeded = appProps.router.pathname.includes("/auth");
+
+    const LayoutWrapper = !isLayoutNeeded ? AppLayout : React.Fragment;
+
+  return (
+    <LayoutWrapper>
+        <Component {...pageProps} />
+    </LayoutWrapper>
+  )
 }
+
+export default App
