@@ -56,6 +56,80 @@ export const SettingsData = [
     },
 ]
 
+export const HomeData = [
+    {
+        name: "Detect Language",
+        nameType: "text",
+        id: 1,
+       isActive: false,
+    },
+    {
+        name: "Chinese",
+        nameType: "text",
+        id: 2,
+        isActive: false,
+    },
+    {
+        name: "French",
+        nameType: "text",
+        id: 3,
+        isActive: false,
+    },
+    {
+        name: "",
+        nameType: "dropdown",
+        id: 4,
+        isActive: false,
+    },
+    {
+        name: "",
+        nameType: "arrows",
+        id: 5,
+        isActive: false,
+    },
+    {
+        name: "French",
+        nameType: "text",
+        id: 6,
+        isActive: false,
+    },
+    {
+        name: "Spanish",
+        nameType: "text",
+        id: 7,
+        isActive: false,
+    },
+    {
+        name: "Arabic",
+        nameType: "text",
+        id: 8,
+        isActive: false,
+    },
+    {
+        name: "",
+        nameType: "dropdown",
+        id: 9,
+        isActive: false,
+    },
+]
+
+export const HomeSubData = [
+    {
+        name: "History",
+        icon: "history.svg",
+        selectedIcon: "on.history.svg",
+        id: 1,
+        isActive: false,
+    },
+    {
+        name: "Saved",
+        icon: "star.svg",
+        selectedIcon: "on.star.svg",
+        id: 2,
+        isActive: false,
+    },
+]
+
 
 
 export const UserRoles = [
