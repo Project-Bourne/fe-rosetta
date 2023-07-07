@@ -1,11 +1,12 @@
 import { CustomSwitch } from '@/components/ui';
+import { SettingsData } from '@/utils/constants';
 import SettingsLayout from '@/layout/SettingsLayout'
 import { EmailNotificationData, PushNotificationData } from '@/utils/constants';
 import React from 'react'
 
 const NotificationSettings = () => {
   return (
-    <SettingsLayout>
+    <SettingsLayout data={SettingsData}>
 
       {/* Email Notification */}
       <div className='border-b w-full'>

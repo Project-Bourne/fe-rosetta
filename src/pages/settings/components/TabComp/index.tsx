@@ -6,9 +6,9 @@ import Link from 'next/link'
 type TabCompType = {
     item: {
         name: string,
-        icon: string,
+        icon?: string,
         id: number,
-        route: string,
+        route?: string,
         selectedIcon: string
     },
     index: number,

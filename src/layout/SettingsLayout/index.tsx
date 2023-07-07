@@ -1,5 +1,4 @@
 import { TabComp } from '@/pages/settings/components';
-import { SettingsData } from '@/utils/constants';
 import React, { ReactNode } from 'react'
 import { useRouter } from 'next/router';
 
@@ -8,34 +7,31 @@ type LayoutType = {
     children: ReactNode,
 }
 
-const SettingsLayout = ({children}: LayoutType) => {
-    
+const SettingsLayout = ({ children, showTitle, data }: any) => {
+console.log(data)
     const route = useRouter().pathname;
+    return (
+        <div className='w-full h-full'>
 
-    // console.log({route})
+            {/* Header */}
+            {showTitle === false ? ""
+                : <div className='flex flex-row w-full py-7 px-7 items-center justify-between'>
+                    <h1 className='text-[18px] font-semibold'>Profile Settings</h1>
+                </div>
+                }
 
-  return (
-    <div className='w-full h-full'>
-        
-        {/* Header */}
-        <div className='flex flex-row w-full py-7 px-7 items-center justify-between'>
-            <h1 className='text-[18px] font-semibold'>Profile Settings</h1>
-        </div>
 
-        {/* Settings tabs */}
-        <div className='w-[100%] flex flex-row items-center border-b overscroll-y-auto-'>
-            {
-                SettingsData.map((item, index) => (
-                    <TabComp item={item} index={index} key={index} route={route} />
-                ))
-            }
-        </div>
-
-        {/* <div className='w-full h-full overscroll-auto flex'>
-        </div> */}
+            {/* Settings tabs */}
+            <div className='w-[100%] flex flex-row items-center border-b overscroll-y-auto-'>
+                {
+                    data?.map((item, index) => (
+                        <TabComp item={item} index={index} key={index} route={route} />
+                    ))
+                }
+            </div>
             {children}
-    </div>
-  )
+        </div>
+    )
 }
 
 export default SettingsLayout;
