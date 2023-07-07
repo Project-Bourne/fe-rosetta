@@ -156,3 +156,79 @@ export const LogData = [
     },
     
 ]
+
+
+export const TrainingData = [
+    {
+        name: "All",
+        icon: "all.svg",
+        selectedIcon: "on.all.svg",
+        id: 1,
+        route: "/training/all"
+    },
+    {
+        name: "IRP",
+        icon: "irp.svg",
+        selectedIcon: "on.irp.svg",
+        id: 2,
+        route: "/training/irp"
+    },
+    {
+        name: "Fact Checker",
+        icon: "checker.svg",
+        selectedIcon: "on.checker.svg",
+        id: 3,
+        route: "/training/checker"
+    },
+    {
+        name: "Analyzer",
+        icon: "analyzer.svg",
+        selectedIcon: "on.analyzer.svg",
+        id: 4,
+        route: "/training/analyzer"
+    },
+    {
+        name: "Summarizer",
+        icon: "summarizer.svg",
+        selectedIcon: "on.summarizer.svg",
+        id: 5,
+        route: "/training/summarizer"
+    },
+    {
+        name: "Collab Workspace",
+        icon: "collab.svg",
+        selectedIcon: "on.collab.svg",
+        id: 6,
+        route: "/training/workspace"
+    },
+    {
+        name: "Translator",
+        icon: "translator.svg",
+        selectedIcon: "on.translator.svg",
+        id: 7,
+        route: "/training/translator"
+    },
+    {
+        name: "Interrogator",
+        icon: "interrogator.svg",
+        selectedIcon: "on.interrogator.svg",
+        id: 8,
+        route: "/training/interrogator"
+    },
+]
+
+export const QuickSearch = [
+    "What is crawler",
+    "How to use fact checker",
+    "What is fact checker",
+    "How does fact checker work",
+    "Permission for fact checker",
+];
+
+
+export const FAQS = [
+    "What is crawler",
+    "How to use Fact checker",
+    "How does fact checker work",
+    "Exporting from fact checker"
+]
