@@ -61,55 +61,55 @@ export const HomeData = [
         name: "Detect Language",
         nameType: "text",
         id: 1,
-        route: "/home"
+       isActive: false,
     },
     {
         name: "Chinese",
         nameType: "text",
         id: 2,
-        route: ""
+        isActive: false,
     },
     {
         name: "French",
         nameType: "text",
         id: 3,
-        route: ""
+        isActive: false,
     },
     {
         name: "",
         nameType: "dropdown",
         id: 4,
-        route: ""
+        isActive: false,
     },
     {
         name: "",
         nameType: "arrows",
         id: 5,
-        route: ""
+        isActive: false,
     },
     {
         name: "French",
         nameType: "text",
         id: 6,
-        route: ""
+        isActive: false,
     },
     {
         name: "Spanish",
         nameType: "text",
         id: 7,
-        route: ""
+        isActive: false,
     },
     {
         name: "Arabic",
         nameType: "text",
         id: 8,
-        route: ""
+        isActive: false,
     },
     {
         name: "",
         nameType: "dropdown",
         id: 9,
-        route: ""
+        isActive: false,
     },
 ]
 
@@ -119,14 +119,14 @@ export const HomeSubData = [
         icon: "history.svg",
         selectedIcon: "on.history.svg",
         id: 1,
-        // route: "/home?tab=history"
+        isActive: false,
     },
     {
         name: "Saved",
         icon: "star.svg",
         selectedIcon: "on.star.svg",
         id: 2,
-        // route: "/home?tab=saved"
+        isActive: false,
     },
 ]
 

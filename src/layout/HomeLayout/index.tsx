@@ -1,7 +1,5 @@
-import { TabComp } from '@/pages/settings/components';
 import { HomeData } from '@/utils/constants';
 import React, { ReactNode, useState } from 'react'
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 
 type ItemCompType = {
@@ -9,7 +7,6 @@ type ItemCompType = {
     nameType: string,
     id: number,
     route?: string,
-
 }
 
 type LayoutType = {
@@ -17,23 +14,25 @@ type LayoutType = {
 }
 
 const HomeLayout = ({ children }: LayoutType) => {
-    const [path, setPath] = useState("");
+    const [activeTabs, setActiveTabs] = useState<number[]>([]); // Array to store active tab indexes
 
-    const router = useRouter();
-    const { pathname } = router;
+    const updatePath = (index: number) => {
+        const isActive = activeTabs.includes(index);
+        let newActiveTabs: number[];
 
-    const updatePath = (item: ItemCompType) => {
-        setPath(item.route);
-        router.push(
-            {
-                pathname: item.route
-            },
-            undefined,
-            {
-                shallow: true
+        if (isActive) {
+            // Remove the index from activeTabs if it's already active
+            newActiveTabs = activeTabs.filter((tabIndex) => tabIndex !== index);
+        } else {
+            // Add the index to activeTabs if it's not active
+            if (activeTabs.length < 2) {
+                newActiveTabs = [...activeTabs, index];
+            } else {
+                newActiveTabs = [...activeTabs.slice(1), index];
             }
-        )
+        }
 
+        setActiveTabs(newActiveTabs);
     }
 
     return (
@@ -48,15 +47,16 @@ const HomeLayout = ({ children }: LayoutType) => {
                         <div
                             key={index}
                             className={
-                                item.route == pathname ? 'px-8 pt-3 flex flex-row flex-wrap items-center border-b-2 border-sirp-primary pb-3 mr-10 mb-[-2px] cursor-pointer'
-                                    : 'px-8 pt-3 flex flex-row items-center pb-3 mr-15 flex-wrap mb-[-2px] cursor-pointer text-sirp-grey'
+                                activeTabs.includes(index)
+                                    ? 'px-8 pt-3 flex cursor-pointer flex-row flex-wrap items-center border-b-2 border-sirp-primary pb-3 mr-10 mb-[-2px] cursor-pointer'
+                                    : 'px-8 pt-3 cursor-pointer flex flex-row items-center pb-3 mr-15 flex-wrap mb-[-2px] cursor-pointer text-sirp-grey'
                             }
-                            onClick={() => updatePath(item)}
+                            onClick={() => updatePath(index)}
                         >
                             {item.nameType === "text" && (
                                 <h2
                                     className={
-                                        pathname === item.route
+                                        activeTabs.includes(index)
                                             ? 'text-[12px] font-semibold text-sirp-primary'
                                             : 'text-[12px] font-semibold'
                                     }
@@ -68,7 +68,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                                 <>
                                     <Image
                                         className={
-                                            pathname === item.route
+                                            activeTabs.includes(index)
                                                 ? 'text-[12px] font-semibold text-sirp-primary'
                                                 : 'text-[12px] font-semibold'
                                         }
@@ -84,7 +84,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                                 <>
                                     <Image
                                         className={
-                                            pathname === item.route
+                                            activeTabs.includes(index)
                                                 ? 'text-[12px] font-semibold text-sirp-primary'
                                                 : 'text-[12px] font-semibold'
                                         }
@@ -94,7 +94,6 @@ const HomeLayout = ({ children }: LayoutType) => {
                                         height={18}
                                         priority
                                     />
-
                                 </>
                             )}
                         </div>
