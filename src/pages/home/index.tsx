@@ -14,7 +14,7 @@ function Home() {
   console.log(router, 'i am router')
   return (
     // eslint-disable-next-line react/jsx-filename-extension
-    <div className='m-10 py-5 rounded-lg bg-[#F9F9F9]'>
+    <div className='m-10 py-5 rounded-[1rem] bg-[#F9F9F9]'>
       <HomeLayout>
         <FileUpload />
       </HomeLayout>

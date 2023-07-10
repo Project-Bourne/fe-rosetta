@@ -5,7 +5,7 @@ import { NavBarContents } from '@/utils/constants';
 
 function NavBar() {
   return (
-    <div className='w-[20vw] h-[100vh] border-3 border-r bg-white p-10'>
+    <div className='w-[20vw] h-[100vh] border-3 border-r bg-white p-10 z-[100] fixed left-0 bottom-0 top-0'>
         <div className='flex flex-row items-center cursor-pointer mb-20'>
             <Image
                 src={require("../../../assets/svg/logo.svg")}
@@ -15,7 +15,7 @@ function NavBar() {
                 style={{marginRight: 20}}
                 priority
             />
-            <h1 className='text-sirp-primary font-semibold text-[30px]'>Translator</h1>
+            <h1 className='text-sirp-primary font-semibold text-[30px] sm:hidden'>Translator</h1>
         </div>
 
         <div 
