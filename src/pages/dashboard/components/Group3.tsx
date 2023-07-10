@@ -24,7 +24,7 @@ function Group3() {
           </div>
         </div>
         <div className="ml-6 pt-8 ">
-          <button className=" border border-sirp-dashbordb w-[20rem] pb-2 pt-2 rounded-[1rem] hover:bg-sirp-dashbordb hover:text-white text-sirp-dashbordb font-bold">
+          <button className="border border-sirp-primary w-[20rem] pb-2 pt-2 rounded-[1rem] hover:bg-sirp-primaryLess1 hover:text-white text-sirp-primary  font-bold">
             Open SIRP
           </button>
         </div>
@@ -72,7 +72,7 @@ function Group3() {
           </div>
         </div>
         <div className="ml-6 pt-8 ">
-          <button className=" border border-sirp-dashbordb w-[20rem] pb-2 pt-2 rounded-[1rem] hover:bg-sirp-dashbordb hover:text-white text-sirp-dashbordb font-bold">
+          <button className="border border-sirp-primary w-[20rem] pb-2 pt-2 rounded-[1rem] hover:bg-sirp-primaryLess1 hover:text-white text-sirp-primary  font-bold">
             Open collab workspace
           </button>
         </div>

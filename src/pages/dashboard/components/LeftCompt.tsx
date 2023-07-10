@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function LeftCompt() {
   return (
-    <div className="ml-10 bg-sirp-secondary1 drop-shadow-md  h-28 flex items-center rounded-[1.5rem] basis-1/2 gap-[1.5rem]">
+    <div className="ml-10 bg-sirp-primary1 drop-shadow-md  h-28 flex items-center rounded-[1.5rem] basis-1/2 gap-[1.5rem]">
       <div>
         <div className="flex flex-row items-center gap-2">
           <div>

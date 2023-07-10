@@ -28,6 +28,7 @@ module.exports = {
           dashbordb3: '#D17D86',
           dashbordb3a: '#B22735',
           dashbordb1: '#E8EAEC',
+          primary1: '#4AC7ED'
         },
       },
       screens: {
