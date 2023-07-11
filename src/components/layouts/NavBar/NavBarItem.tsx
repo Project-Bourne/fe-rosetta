@@ -24,8 +24,8 @@ function NavBarItem({item, index}: NavBarItemType) {
         <div
             className={
                 !isSelected ? 
-                    'flex flex-row my-5 w-[100%] items-center justify-start self-center rounded-md cursor-pointer hover:bg-sirp-primaryLess2 py-4 px-5 ml-[-20px]' 
-                    : 'flex flex-row my-5 w-[100%] items-center justify-start self-center rounded-md cursor-pointer bg-sirp-primaryLess2 py-4 px-5 border-l-4 border-sirp-primary ml-[-20px]'
+                    'flex flex-row my-5 w-[100%] items-center justify-start self-center rounded-md cursor-pointer hover:bg-sirp-primaryLess2 py-4 px-5 md:ml-[-20px]' 
+                    : 'flex flex-row my-5 w-[100%] items-center justify-start self-center rounded-md cursor-pointer bg-sirp-primaryLess2 py-4 px-5 border-l-4 border-sirp-primary md:ml-[-20px]'
             }
             key={index}
         >
@@ -39,7 +39,7 @@ function NavBarItem({item, index}: NavBarItemType) {
                 priority
             />
 
-            <h2 className={isSelected ? 'text-[13px] text-sirp-primary font-semibold' : 'text-[13px] text-sirp-grey font-semibold'}>{item.name}</h2>
+            <h2 className={isSelected ? 'text-[13px] text-sirp-primary font-semibold hidden md:block md:pr-5' : 'text-[13px] text-sirp-grey font-semibold hidden md:block md:pr-5'}>{item.name}</h2>
         </div>
     </Link>
   )

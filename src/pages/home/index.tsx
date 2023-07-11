@@ -3,7 +3,7 @@ import { useState } from 'react';
 import HomeLayout from '@/layout/HomeLayout'
 import { HomeSubData } from '@/utils/constants';
 import HomeHistory from './components/history'
-import SettingsLayout from '@/layout/SettingsLayout'
+import TabLayout from '@/layout/TabLayout'
 import { useRouter } from 'next/router';
 import FileUpload from './components/FileUpload';
 
@@ -19,9 +19,9 @@ function Home() {
         <FileUpload />
       </HomeLayout>
 
-      <SettingsLayout showTitle={showTitle} data={HomeSubData}>
+      <TabLayout showTitle={showTitle} data={HomeSubData}>
         <HomeHistory />
-      </SettingsLayout>
+      </TabLayout>
     </div>
 
   )

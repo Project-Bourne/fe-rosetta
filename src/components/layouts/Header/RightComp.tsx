@@ -5,7 +5,7 @@ function RightComp() {
   return (
     <div className='flex flex-row items-center self-start'>
         
-        <div className={`${styles.view1} bg-white`}>
+        <div className={`${styles.view1}  bg-white`}>
             <Image
                 src={require("../../../assets/icons/notification.svg")}
                 alt="Filter"
@@ -63,7 +63,7 @@ function RightComp() {
 }
 
 const styles = {
-    view1: "bg-sirp-lightGrey cursor-pointer flex py-2 px-2 rounded-[15px] w-[45px] h-[45px] items-center justify-center content-center mr-4"
+    view1: "bg-sirp-lightGrey cursor-pointer flex py-2 px-2 rounded-[15px] w-[45px] h-[45px] items-center justify-center content-center mr-4 hidden"
 }
 
 export default RightComp;

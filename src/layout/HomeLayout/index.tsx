@@ -29,7 +29,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                 <div className="flex flex-row w-full py-7 px-7 items-center justify-between">
                     <h1 className="text-[18px] font-semibold">Add Content</h1>
                 </div>
-                <div className="w-[100%] flex-wrap flex flex-row items-center border-b justify-between overscroll-y-auto-">
+                <div className="w-[100%] flex-wrap flex flex-row items-center border-b justify-between overscroll-y-auto">
                     <div className="left w-[49%] flex items-center justify-between">
                         {/* {selectedLanguage.length > 1 && <span className='px-8 pt-3 flex cursor-pointer flex-row flex-wrap items-center w-[100%] border-b-2 border-sirp-primary pb-3 mr-10 mb-[-2px] cursor-pointer'>{selectedLanguage}</span>} */}
                         <LanguagesDropdown

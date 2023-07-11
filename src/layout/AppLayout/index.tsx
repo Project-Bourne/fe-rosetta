@@ -4,19 +4,17 @@ import { Header, NavBar } from '@/components/layouts';
 function AppLayout({ children }) {
 
     return (
-        <div className='bg-white h-[100vh] w-[100vw] flex flex-row'>
+        <div className='bg-white h-full w-full flex flex-row overflow-x-hidden'>
             {/* Nav Bar Component */}
             <NavBar />
 
-            <div className='bg-white w-full h-full bg-red-700' >
+            <div className='w-full h-full' >
                 {/* Layout header */}
                 <Header />
 
                 {/* wrapper childen */}
-                <div className='ml-[20vw]'>
-                    <div className='mt-[20vh]'>
-                        {children}
-                    </div>
+                <div className='ml-[20vw] mt-[23vh]'>
+                    {children}
                 </div>
             </div>
         </div>
