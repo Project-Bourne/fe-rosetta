@@ -1,4 +1,3 @@
-import { HomeData } from '@/utils/constants';
 import React, { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import { LanguagesDropdown } from '../../components/ui/Input'

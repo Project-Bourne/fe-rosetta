@@ -104,7 +104,7 @@ const FileUpload = () => {
                         {showActions && !isLoading && <div className=" px-3 flex w-[100%] align-middle justify-between">
                             <span onClick={showNewReader} className='w-[50px] cursor-pointer h-[50px] flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC]'>
                                 <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../../../assets/icons/file.svg`)}
+                                    src={require(`../../../../assets/icons/eye.svg`)}
                                     alt="upload image"
                                     width={20}
                                     height={20}
@@ -113,7 +113,7 @@ const FileUpload = () => {
                             </span>
                             <span className='w-[50px] h-[50px] flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC]'>
                                 <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../../../assets/icons/file.svg`)}
+                                    src={require(`../../../../assets/icons/box-arrow.svg`)}
                                     alt="upload image"
                                     width={20}
                                     height={20}
@@ -122,7 +122,7 @@ const FileUpload = () => {
                             </span>
                             <span className='w-[50px] h-[50px] flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC]'>
                                 <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../../../assets/icons/file.svg`)}
+                                    src={require(`../../../../assets/icons/binbin.svg`)}
                                     alt="upload image"
                                     width={20}
                                     height={20}
@@ -131,7 +131,7 @@ const FileUpload = () => {
                             </span>
                             <span className='w-[50px] h-[50px] flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC]'>
                                 <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../../../assets/icons/file.svg`)}
+                                    src={require(`../../../../assets/icons/searcharrow.svg`)}
                                     alt="upload image"
                                     width={20}
                                     height={20}
@@ -140,7 +140,7 @@ const FileUpload = () => {
                             </span>
                             <span className='w-[50px] h-[50px] flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC]'>
                                 <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../../../assets/icons/file.svg`)}
+                                    src={require(`../../../../assets/icons/searchbox.svg`)}
                                     alt="upload image"
                                     width={20}
                                     height={20}
