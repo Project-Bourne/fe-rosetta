@@ -24,8 +24,8 @@ function NavBarItem({item, index}: NavBarItemType) {
         <div
             className={
                 !isSelected ? 
-                    'flex flex-row my-5 w-[100%] items-center justify-start self-center rounded-md cursor-pointer hover:bg-sirp-primaryLess2 py-4 px-5 ml-[-20px]' 
-                    : 'flex flex-row my-5 w-[100%] items-center justify-start self-center rounded-md cursor-pointer bg-sirp-primaryLess2 py-4 px-5 border-l-4 border-sirp-primary ml-[-20px]'
+                    'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer hover:bg-sirp-primaryLess2 md:py-4 p-3 md:px-5 md:ml-[-20px]' 
+                    : 'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer bg-sirp-primaryLess2 md:py-4 p-3 md:px-5 border-l-4 border-sirp-primary md:ml-[-20px]'
             }
             key={index}
         >
@@ -34,12 +34,11 @@ function NavBarItem({item, index}: NavBarItemType) {
                 alt="Dashboard icon"
                 width={22}
                 height={22}
-                style={{marginRight: 20}}
-                className='fill-sirp-primary'
+                className='fill-sirp-primary md:mr-[20px]'
                 priority
             />
 
-            <h2 className={isSelected ? 'text-[13px] text-sirp-primary font-semibold' : 'text-[13px] text-sirp-grey font-semibold'}>{item.name}</h2>
+            <h2 className={isSelected ? 'text-[13px] text-sirp-primary font-semibold hidden md:block' : 'text-[13px] text-sirp-grey font-semibold hidden md:block'}>{item.name}</h2>
         </div>
     </Link>
   )

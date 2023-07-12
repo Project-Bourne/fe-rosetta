@@ -2,8 +2,6 @@ import React from "react";
 import Left from "./components/LeftCompt";
 import Right from "./components/RightCompt";
 import Group1 from "./components/Group1";
-import Group2 from "./components/Group2";
-import Group3 from "./components/Group3";
 
 const index = () => {
   return (
@@ -13,15 +11,12 @@ const index = () => {
       </h1>
 
       {/* the yellow navigation at the top of the dashboard page */}
-      <div className="flex items-center justify-between w-full gap-[20px] mt-5">
+      <div className="grid grid-cols-1 px-[5px] md:px-0 md:grid-cols-2 md:items-center w-full md:gap-x-[20px] gap-y-[20px] mt-5">
         <Left />
         <Right />
       </div>
-      {/* this three components are all the sirp dashboard model */}
-      <div className="mt-5">
+      <div className="my-5 flex items-center justify-center">
         <Group1 />
-        <Group2 />
-        <Group3 />
       </div>
     </div>
   );

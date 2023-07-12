@@ -22,7 +22,7 @@ console.log(data)
 
 
             {/* Settings tabs */}
-            <div className='w-[100%] flex flex-row items-center border-b overscroll-y-auto-'>
+            <div className='w-[100%] flex flex-row flex-wrap items-center border-b overscroll-y-auto-'>
                 {
                     data?.map((item, index) => (
                         <TabComp item={item} index={index} key={index} route={route} />
@@ -33,5 +33,6 @@ console.log(data)
         </div>
     )
 }
+
 
 export default SettingsLayout;
