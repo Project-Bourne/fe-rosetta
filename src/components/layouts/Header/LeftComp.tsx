@@ -3,7 +3,7 @@ import React from 'react'
 
 export const LeftComp = (props) => {
   return (
-    <div className='flex flex-row items-center w-[30%] self-start'>
+    <div className='flex relative flex-row items-center w-full self-start'>
         <div className='bg-sirp-lightGrey flex flex-row w-full mr-2 py-3 px-5 h-[45px] rounded-[12px]'>
             <Image
                 src={require("../../../assets/icons/search.svg")}
@@ -14,7 +14,7 @@ export const LeftComp = (props) => {
             />
 
             <div className='ml-3 bg-sirp-lightGrey w-full self-center'>
-                <input placeholder='Search SIRP' className='w-full bg-sirp-lightGrey border-none outline-none text-[13px]'/>
+                <input type='search' placeholder='Search SIRP' className='w-full bg-sirp-lightGrey border-none outline-none text-[13px]'/>
             </div>
         </div>
         

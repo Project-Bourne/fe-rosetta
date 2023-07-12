@@ -15,7 +15,7 @@ const index = () => {
         <Left />
         <Right />
       </div>
-      <div className="mt-5 mb-5">
+      <div className="my-5 flex items-center justify-center">
         <Group1 />
       </div>
     </div>

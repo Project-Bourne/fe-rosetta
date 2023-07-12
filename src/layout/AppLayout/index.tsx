@@ -8,12 +8,12 @@ function AppLayout({ children }) {
             {/* Nav Bar Component */}
             <NavBar />
 
-            <div className='w-full h-full' >
+            <div className='h-full bg-white w-full md:w-[80vw] ml-[15vw] md:ml-[20vw]' >
                 {/* Layout header */}
                 <Header />
 
                 {/* wrapper childen */}
-                <div className='ml-[20vw] mt-[23vh]'>
+                <div className='mt-[120px]'>
                     {children}
                 </div>
             </div>

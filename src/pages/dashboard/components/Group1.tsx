@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function Group1() {
   return (
-    <div className="flex justify-start md:justify-evenly flex-row flex-wrap gap-x-5 md:gap-x-0">
+    <div className="flex justify-center md:justify-evenly flex-row flex-wrap gap-x-5 md:gap-x-0">
       <div className="border border-sirp-dashbordb1 rounded-[1.5rem] bg-sirp-secondary2  h-[12rem] mt-5  p-3">
         <div>
           <div className="flex flex-row items-center gap-3 pt-5">
