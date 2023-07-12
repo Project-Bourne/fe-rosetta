@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import Image from 'next/image';
 
 type LayoutType = {
@@ -6,9 +6,10 @@ type LayoutType = {
 };
 
 const TabLayout = ({ children, showTitle, data }: any) => {
-  const handleClick = (item, i) => {
-    item.isClicked = !item.isClicked;
-    console.log(item.isClicked);
+  const [selectedTab, setSelectedTab] = useState(data[0].id); // Initially select the first tab
+
+  const handleClick = (id) => {
+    setSelectedTab(id);
   };
 
   return (
@@ -25,17 +26,15 @@ const TabLayout = ({ children, showTitle, data }: any) => {
         {data?.map((item, index) => (
           <div
             className={`${
-              item.isClicked
+              selectedTab === item.id
                 ? 'px-8 pt-3 flex flex-row items-center border-b-2 border-sirp-primary pb-3 mr-10 mb-[-2px] cursor-pointer'
                 : 'px-8 pt-3 flex flex-row items-center border-b pb-3 mr-15 mb-[-2px] cursor-pointer text-sirp-grey'
             }`}
-            onClick={() => handleClick(item, index)}
+            onClick={() => handleClick(item.id)}
             key={index}
           >
             <Image
-              src={
-                require(`../../assets/icons/${item.icon}`)
-              }
+              src={require(`../../assets/icons/${item.icon}`)}
               alt="settings tab"
               width={18}
               height={18}
@@ -43,7 +42,7 @@ const TabLayout = ({ children, showTitle, data }: any) => {
               priority
             />
 
-            <h2 className={item.isClicked ? 'text-[12px] font-semibold text-sirp-primary' : 'text-[12px] font-semibold'}>
+            <h2 className={selectedTab === item.id ? 'text-[12px] font-semibold text-sirp-primary' : 'text-[12px] font-semibold'}>
               {item.name}
             </h2>
           </div>

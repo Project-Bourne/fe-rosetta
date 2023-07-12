@@ -201,7 +201,7 @@ function LanguagesDropdown(props: DropdownModel) {
     return (
         <div className={`relative flex cursor-pointer flex-row flex-wrap items-center border-b-2 border-sirp-primary mb-[-2px] cursor-pointer ${style}`}>
             <div
-                className={`flex justify-between items-center my-2 w-[150px] px-1 rounded-md border-gray-100 hover:cursor-pointer`}
+                className={`flex justify-between items-center my-2 w-[150px] px-1 rounded-md hover:cursor-pointer`}
                 onClick={handleDropdown}>
                 <div className="flex gap-2 items-center">
                     <div className="text-[15px] font-normal text-gray-700">{country.name}</div>
