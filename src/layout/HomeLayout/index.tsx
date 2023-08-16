@@ -1,16 +1,21 @@
 import React, { ReactNode, useState } from 'react';
 import Image from 'next/image';
-import { LanguagesDropdown } from '../../components/ui/Input'
+import MultipleSelect from '../../components/ui/select'
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { useTruncate } from "@/components/custom-hooks";
+
 
 type LayoutType = {
     children: ReactNode;
 };
 
 const HomeLayout = ({ children }: LayoutType) => {
+    const router = useRouter()
     const [selectedLanguage, setSelectedLanguage] = useState('')
     const [translatedLang, setTranslatedLang] = useState('')
     const [languages, setLanguages] = useState([])
-
+    const { translatedData } = useSelector((state: any) => state?.translate)
     const handleChange = (e) => {
         e.preventDefault();
         setSelectedLanguage(e.target.value)
@@ -25,36 +30,94 @@ const HomeLayout = ({ children }: LayoutType) => {
         <div className="w-full h-full">
             <div className="w-full h-full border-b">
                 {/* Header */}
-                <div className="flex flex-row w-full py-7 px-7 items-center justify-between">
-                    <h1 className="text-[18px] font-semibold">Add Content</h1>
+                <div className="flex flex-row w-full py-7 border-b px-7 items-center justify-between">
+                    <div>
+                        <Image
+                            src={require('../../assets/icons/arrow-narrow-left_1.svg')}
+                            alt="documents"
+                            className="cursor-pointer pb-5"
+                            width={20}
+                            onClick={() => router.back()}
+                        />
+                        <span className='font-bold'>{useTruncate(translatedData?.title, 70) }</span>
+                    </div>
+
+                    <div className=" px-3 flex w-[40%] align-middle justify-between">
+                        <span className='w-[50px] cursor-pointer  shadow-xl h-[50px] flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
+                            <span className='flex align-middle justify-center'>   <Image
+                                src={require(`../../assets/icons/eye.svg`)}
+                                alt="upload image"
+                                width={20}
+                                height={20}
+                                priority
+                            /></span>
+                        </span>
+                        <span className='w-[50px] h-[50px] shadow-xl cursor-pointer flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
+                            <span className='flex align-middle justify-center'>   <Image
+                                src={require(`../../assets/icons/box-arrow.svg`)}
+                                alt="upload image"
+                                width={20}
+                                height={20}
+                                priority
+                            /></span>
+                        </span>
+                        <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
+                            <span className='flex align-middle justify-center'>   <Image
+                                src={require(`../../assets/icons/binbin.svg`)}
+                                alt="upload image"
+                                width={20}
+                                height={20}
+                                priority
+                            /></span>
+                        </span>
+                        <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
+                            <span className='flex align-middle justify-center'>   <Image
+                                src={require(`../../assets/icons/searcharrow.svg`)}
+                                alt="upload image"
+                                width={20}
+                                height={20}
+                                priority
+                            /></span>
+                        </span>
+                        <span className='w-[50px] h-[50px] cursor-pointer flex shadow-xl align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
+                            <span className='flex align-middle justify-center'>   <Image
+                                src={require(`../../assets/icons/searchbox.svg`)}
+                                alt="upload image"
+                                width={20}
+                                height={20}
+                                priority
+                            /></span>
+                        </span>
+                        <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
+                            <span className='flex align-middle justify-center'>   <Image
+                                src={require(`../../assets/icons/file-arrow.svg`)}
+                                alt="upload image"
+                                width={20}
+                                height={20}
+                                priority
+                            /></span>
+                        </span>
+                    </div>
                 </div>
-                <div className="w-[100%] flex-wrap flex flex-row items-center border-b justify-start overscroll-y-auto">
-    <div className="left w-[49%] flex items-center">
-        {/* {selectedLanguage.length > 1 && <span className='px-8 pt-3 flex cursor-pointer flex-row flex-wrap items-center w-[100%] border-b-2 border-sirp-primary pb-3 mr-10 mb-[-2px] cursor-pointer'>{selectedLanguage}</span>} */}
-        <LanguagesDropdown
-            data={languages}
-            selectItem={setSelectedLanguage}
-            className='text-[12px] text-black border-[1.5px] rounded-md py-2 px-7  w-[38%]'
-            style={" mx-4"} />
-    </div>
-    <span className='arrow w-[20px]'>
-        <Image
-            src={require(`../../assets/icons/arrows.svg`)}
-            alt="dropdown"
-            width={18}
-            height={18}
-            priority
-        />
-    </span>
-    <div className="right w-[49%] flex items-center justify-end">
-        {/* {translatedLang.length > 1 && <span className='px-8 pt-3 flex cursor-pointer flex-row flex-wrap items-center border-b-2 border-sirp-primary pb-3 mr-10 mb-[-2px] cursor-pointer'>{translatedLang}</span>} */}
-        <LanguagesDropdown
-            data={languages}
-            selectItem={setTranslatedLang}
-            className='text-[12px] text-black border-[1.5px] rounded-md py-2 px-7  w-[38%]'
-            style={"mx-4 align-left"}/>
-    </div>
-</div>
+                <div className="w-[100%] flex-wrap flex flex-row items-center border-b p-5 justify-start overscroll-y-auto">
+                    <div className="left w-[49%] flex items-center">
+                        <MultipleSelect
+                        />
+                    </div>
+                    <span className='arrow w-[20px]'>
+                        <Image
+                            src={require(`../../assets/icons/arrows.svg`)}
+                            alt="dropdown"
+                            width={18}
+                            height={18}
+                            priority
+                        />
+                    </span>
+                    <div className="right w-[49%] flex items-center justify-end">
+                        <MultipleSelect
+                        />
+                    </div>
+                </div>
 
             </div>
             {children}

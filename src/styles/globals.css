@@ -15,6 +15,17 @@
   animation: rotate 2s linear infinite;
 }
 
+.MuiFormControl-root{
+  border: 0;
+}
+.MuiInputBase-root{
+  border: 0;
+}
+
+.MuiSelect-select{
+  border: 0;
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
