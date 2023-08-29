@@ -9,7 +9,7 @@ export const requestHeader = {
   Accept: "application/json",
   "Cache-Control": "no-cache",
   "Content-Type": "application/json",
-  "x-token": "",
+  "deep-token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdkNjA0OTUzLTk0YzAtNGYzOC05N2I3LWFlYWEyYWI5YjRjMCIsInJvbGUiOiIxIiwiaWF0IjoxNjkzMjE2MTM1LCJleHAiOjE2OTMzMDI1MzV9.nqb9ArDYCXRfpF1IHGGvf0DEGieTYT__FwuJK_1FwRY',
 };
 
 /**
@@ -23,10 +23,7 @@ export const requestHeader = {
  * @returns Response Data;
  */
 
-//deepsoul = "http://192.168.0.142:4040/"
-//deepsoul2 = "http://192.168.88.99:4000/"
-//micheals Iphone = "http://172.20.10.9:4000/api/v1/"
-let API_USER_URL = "http://localhost:3060/";
+let API_USER_URL = "http://192.81.213.226:83/";
 
 export async function request(url, method, payload, token, text, form) {
   requestHeader["Content-Type"] =
@@ -69,7 +66,7 @@ export async function request(url, method, payload, token, text, form) {
         }
       })
       .catch((err) => {
-        console.error(`Request Error ${url}: `, err);
+        return err
         // throw new Error(err);
       });
   }

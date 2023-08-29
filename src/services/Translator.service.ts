@@ -23,48 +23,94 @@ class TranslatorService {
     }
   }
 
-  // /**
-  //  * Delete a workspace by its ID.
-  //  * @param {string} workspaceId - The ID of the workspace to delete.
-  //  * @returns {Promise<void>} - Resolves when the workspace is deleted successfully.
-  //  */
 
-  // async deleteWorkspace(workspaceId) {
-  //   try {
-  //     await request(
-  //       `/workspaces/${workspaceId}`,
-  //       "DELETE",
-  //       {},
-  //       true,
-  //       false,
-  //       false,
-  //     );
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
 
-  // /**
-  //  * Update a workspace by its ID.
-  //  * @param {string} workspaceId - The ID of the workspace to update.
-  //  * @param {Object} updatedData - The updated data of the workspace.
-  //  * @returns {Promise<Object>} - The response data from the server.
-  //  */
-  // async updateWorkspace(workspaceId, updatedData) {
-  //   try {
-  //     const response = await request(
-  //       `/space/${workspaceId}`,
-  //       "PATCH",
-  //       updatedData,
-  //       true,
-  //       false,
-  //       false,
-  //     );
-  //     return response;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
+    /**
+   * Create a new Analysis.
+   * @param {Object} data - The data of the new workspace.
+   * @returns {Promise<Object>} - The response data from the server.
+   */
+
+    static async translateFile(data) {
+      try {
+        const response = await request(
+          `translate/file`,
+          "POST",
+          data,
+          true,
+          false,
+          false,
+        );
+        return response;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+  /**
+   * Delete a translation by its ID.
+   * @param {string} id - The ID of the translation to delete.
+   * @returns {Promise<void>} - Resolves when the workspace is deleted successfully.
+   */
+
+  static async deleteTranslation(id) {
+    try {
+      await request(
+        `delete/translation/history/${id}`,
+        "PUT",
+        {},
+        true,
+        false,
+        false,
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+   /**
+   * Delete a translation by its ID.
+   * @param {string} id - The ID of the translation to delete.
+   * @returns {Promise<void>} - Resolves when the workspace is deleted successfully.
+   */
+
+   static async bookMarkTranslation(id) {
+    try {
+      await request(
+        `bookmark/translation/${id}`,
+        "PUT",
+        {},
+        true,
+        false,
+        false,
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  /**
+   * Update a workspace by its ID.
+   * @param {string} workspaceId - The ID of the workspace to update.
+   * @param {Object} data - The updated data of the workspace.
+   * @returns {Promise<Object>} - The response data from the server.
+   */
+  static async translate(data) {
+    try {
+      const response = await request(
+        `translate/`,
+        "POST",
+        data,
+        true,
+        false,
+        false,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 
   /**
@@ -74,10 +120,10 @@ class TranslatorService {
    */
 
 
-  async getTranslationsById(Id) {
+  static async getTranslationsById(Id) {
     try {
       const response = await request(
-        `collab/${Id}/collabs`,
+        `translation/${Id}`,
         "GET",
         true,
         false,
@@ -88,23 +134,25 @@ class TranslatorService {
       throw error;
     }
   }
+
+
   /**
    * Get a workspace by its ID.
    * @param {string} - The ID of the workspace to get.
    * @returns {Promise<Object>} - The response data from the server.
    */
 
-  async getTranslations() {
+  static async getTranslationsHistory() {
     try {
       const response = await request(
-        `translations`,
+        `translation/user`,
         "GET",
         {},
         true,
         false,
         false,
       );
-      return response.data;
+      return response;
     } catch (error) {
       throw error;
     }

@@ -21,28 +21,16 @@ const MenuProps = {
 };
 
 
-function getStyles(name: string, personName: string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+// function getStyles(name: string, personName: string[], theme: Theme) {
+//   return {
+//     fontWeight:
+//       personName.indexOf(name) === -1
+//         ? theme.typography.fontWeightRegular
+//         : theme.typography.fontWeightMedium,
+//   };
+// }
 
-export default function MultipleSelect() {
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string[]>([]);
-
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+export default function MultipleSelect({ selectedLanguage, handleChange }) {
 
   return (
     <div>
@@ -51,7 +39,7 @@ export default function MultipleSelect() {
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
-          value={personName}
+          value={selectedLanguage}
           onChange={handleChange}
           input={<OutlinedInput label="Language" />}
           MenuProps={MenuProps}
@@ -60,7 +48,6 @@ export default function MultipleSelect() {
             <MenuItem
               key={name.name}
               value={name.key}
-              style={getStyles(name.name, personName, theme)}
             >
               {name.name}
             </MenuItem>

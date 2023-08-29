@@ -1,5 +1,5 @@
 [
-    {"name": "Automatic", "key": "auto"},
+    {"name": "Detect Language", "key": "auto"},
     {"name": "Afrikaans", "key": "af"},
     {"name": "Albanian", "key": "sq"},
     {"name": "Amharic", "key": "am"},

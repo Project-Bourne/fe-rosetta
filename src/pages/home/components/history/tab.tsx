@@ -6,6 +6,9 @@ import Box from '@mui/material/Box';
 import HistoryIcon from '@mui/icons-material/History';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import Histroy from './History';
+import Bookmark from '../bookmark/Bookmark';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveTab } from '@/redux/reducer/tabSlice';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -22,7 +25,7 @@ function CustomTabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      style={{ padding: "0px !important", margin: "0px"  }}
+      style={{ padding: "0px !important", margin: "0px" }}
       {...other}
     >
       {value === index && (
@@ -42,10 +45,12 @@ function a11yProps(index: number) {
 }
 
 export default function BasicTabs() {
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
+  const value = useSelector((state:any) => state.tab)
+  const dispatch = useDispatch();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  const handleChange = (_, newValue: number) => {
+    dispatch(setActiveTab(newValue));
   };
 
   return (
@@ -60,7 +65,7 @@ export default function BasicTabs() {
             label={
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <HistoryIcon style={{ marginRight: '8px' }} />
-                Item One
+                History
               </div>
             }
             {...a11yProps(0)}
@@ -69,21 +74,19 @@ export default function BasicTabs() {
             label={
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <BookmarkBorderIcon style={{ marginRight: '8px' }} />
-                Item Two
+                Bookmark
               </div>
             }
             {...a11yProps(1)}
           />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <div className='flex w-full' >
-          <Histroy />
-        </div>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        save
-      </CustomTabPanel>
+      <div role="tabpanel" hidden={value !== 0} className="py-2">
+        <Histroy />
+      </div>
+      <div role="tabpanel" hidden={value !== 1} className="py-2">
+        <Bookmark />
+      </div>
     </Box>
   );
 }
