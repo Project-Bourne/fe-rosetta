@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import React, { useState } from 'react'
 import Reader from '../../reader'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TranslatorService from "@/services/Translator.service"
-import { seTranslatedData } from '@/redux/reducer/translateSlice';
+import { seTranslatedData, setOriginal, setTranslated, toggleTextSwap } from '@/redux/reducer/translateSlice';
 import LoadingModal from './loadingModal';
 import { useRouter } from 'next/router';
+import NotificationService from '@/services/notification.service';
 
 const FileUpload = () => {
     const router = useRouter()
@@ -17,16 +18,19 @@ const FileUpload = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [showActions, setShowActions] = useState(false)
     const [showLoader, setShowLoader] = useState(false)
+    const { isSwapped, translatedData, setTranslatedLoading } = useSelector((state: any) => state?.translate)
 
 
     const handleChange = (e) => {
         e.preventDefault();
         setFormData(e.target.value)
-        console.log(formData)
     };
 
     const handleKeyDown = async (e) => {
         if (e.key === 'Enter') {
+            if (isSwapped) {
+                dispatch(toggleTextSwap())
+            }
             e.preventDefault();
             console.log('Enter key pressed:', formData);
             let data = {
@@ -37,64 +41,128 @@ const FileUpload = () => {
                 setShowLoader(true);
                 const request = await translatorService.createTranslations(data);
                 console.log(request)
-                if(request.status) {
+                if (request.status) {
                     dispatch(seTranslatedData(request.data))
+                    dispatch(setTranslated({
+                        text: request.data.textTranslation,
+                        lang: 'en',
+                    }))
+                    dispatch(setOriginal({
+                        text: request.data.text,
+                        lang: 'auto',
+                    }))
+                    // setTimeout(() => {
+                    setShowLoader(false);
+                    router.push('/home/reader');
+                    // }, 2000);
                 } else {
                     setShowLoader(false);
                     router.push('/home');
-
+                    NotificationService.error({
+                        message: "Error!",
+                        addedText: <p>{request.message}. please try again</p>,
+                    });
                 }
-              
             } catch (error) {
                 setShowLoader(false);
                 console.log(error);
             }
-            setTimeout(() => {
-                setShowLoader(false);
-                router.push('/home/reader');
-            }, 2000);
         }
 
     };
 
 
-    const handleFileUpload = (e) => {
-        e.preventDefault();
-        const selectedFile = e.target.files[0];
-        setFile(selectedFile);
+    const handleFileUpload = async (event) => {
+        event.preventDefault();
+
+        const selectedFile = event.target.files[0];
         if (selectedFile) {
-            setIsFileUploaded(true);
-            console.log(selectedFile, 'selectedFile');
+            setIsFileUploaded(true)
+            const formData = new FormData();
+            formData.append('files', selectedFile);
+            setIsLoading(true);
+            try {
+                const res = await fetch('http://192.81.213.226:89/api/v1/uploads', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const response = await res.json();
+                if (response) {
+                    let newObj = {
+                        text: response.data[0].text,
+                        uri: response.data[0].uri,
+                    }
+                    let newResponse = await TranslatorService.translateFile(newObj)
+                    if (newResponse.status) {
+                        dispatch(setTranslated({
+                            text: newResponse.data.textTranslation,
+                            lang: 'en',
+                        }))
+                        dispatch(setOriginal({
+                            text: newResponse.data.text,
+                            lang: 'auto',
+                        }))
+                        setIsLoading(false);
+                        router.push('/home/reader');
+                    } else {
+                        setIsLoading(false);
+                        router.push('/home');
+                        NotificationService.error({
+                            message: "Error!",
+                            addedText: <p>{newResponse.message}. please try again</p>,
+                        });
+                    }
+                } else {
+                    setIsLoading(false);
+                    NotificationService.error({
+                        message: "Error!",
+                        addedText: <p>Something went wrong. please try again</p>,
+                    });
+                    console.error('File upload failed.');
+                }
+            } catch (error) {
+                console.error(error);
+                NotificationService.error({
+                    message: "Error!",
+                    addedText: <p>Something went wrong. please try again</p>,
+                });
+            }
         }
-    };
+    }
 
     const handleDragOver = (event) => {
         event.preventDefault();
     };
 
-    const handleDrop = (event) => {
+    const handleDrop = async (event) => {
         event.preventDefault();
         const droppedFile = event.dataTransfer.files[0];
+        console.log(droppedFile, 'dropped')
         setFile(droppedFile);
         if (droppedFile) {
-            setIsFileUploaded(true);
+            const formData = new FormData();
+            formData.append('files', droppedFile);
+
+            try {
+                const response: any = await fetch('http://192.81.213.226:89/api/v1/uploads', {
+                    method: 'POST',
+                    body: formData,
+                });
+                console.log(response);
+                if (response.status) {
+                } else {
+                    console.error('File upload failed.');
+                }
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 
     const handleClear = () => {
         setFormData("")
     }
-
-    const translate = () => {
-        setIsLoading(true); // Set loading state to true
-        setTimeout(() => {
-            console.log(file, file?.name); // Upload the file to the server
-            setIsLoading(false); // 
-            router.push('/home/reader')
-        }, 10000); // Simulating a 10-second delay
-    }
-
-
 
     const closeModal = () => {
         setShowLoader(false)
@@ -141,8 +209,8 @@ const FileUpload = () => {
                             </span>
                         </div>
                         <div className="flex w-[50%] align-middle justify-end  mt-4">
-                            {!isLoading && !showActions && <div className="p-5 cursor-pointer flex w-[30%] align-middle justify-center bg-[#4582C4]  border-2 text-white rounded-[15px] font-extrabold">
-                                <span className='ml-3' onClick={translate}>Translate</span>
+                            {!isLoading && <div className="p-5 cursor-pointer flex w-[30%] align-middle justify-center bg-[#4582C4]  border-2 text-white rounded-[15px] font-extrabold">
+                                <span className='ml-3'>Translate</span>
                             </div>}
                             {isLoading && !showActions && <div className="p-5 flex w-[35%] align-middle justify-center bg-[#4582C4]  border-2 text-white rounded-[15px] font-extrabold">
                                 <span> <Image
@@ -160,7 +228,7 @@ const FileUpload = () => {
                     </div>
                 ) :
                 (<>
-                    <div className='flex align-middle w-full border-2 rounded-full border-[#E5E7EB]-500  border-dotted'>
+                    <div className='flex align-middle w-full border-2 rounded-full border-[#E5E7EB]-500  border-dotted bg-[]'>
                         <span className='flex align-middle justify-center mx-3'>
                             <Image
                                 src={require(`../../../../assets/icons/link.svg`)}
@@ -171,15 +239,15 @@ const FileUpload = () => {
                             />
                             {/* <span className='ml-3 font-light text-[#A1ADB5]'>Copy and paste link here</span> */}
                         </span>
-                        <input placeholder='Copy and paste content text here' className='py-5 w-[95%] bg-white outline-none focus:ring-0' value={formData} onChange={handleChange} onKeyDown={handleKeyDown} />
+                        <input placeholder='Copy and paste content text here' className='py-5 w-[95%]  outline-none' value={formData} onChange={handleChange} onKeyDown={handleKeyDown} />
                         <span className='flex align-middle justify-center mx-3' onClick={handleClear}>
                             <Image
-                                className='flex align-middle justify-center font-light text-[#A1ADB5]'
+                                className='flex align-middle justify-center font-light text-black'
                                 src={require(`../../../../assets/icons/x.svg`)}
                                 alt="upload image"
                                 width={20}
                                 height={20}
-                                 />
+                            />
                         </span>
                     </div>
 
@@ -203,9 +271,9 @@ const FileUpload = () => {
                                     className="hidden"
                                     onChange={handleFileUpload}
                                 />
-                                <label className='text-blue-400 cursor-pointer' htmlFor="file-upload">Upload a file
+                                <label className='text-blue-400 cursor-pointer mr-5' htmlFor="file-upload">Upload a file
                                 </label>
-                                or drag and drop</span>
+                                  or drag and drop</span>
                             <span className='font-light  text-[#383E42]'>TXT, RFT, DOC, PDF upto 5MB</span>
                         </div>
                     </div>

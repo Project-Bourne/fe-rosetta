@@ -2,8 +2,9 @@ import React from 'react';
 interface ListItemModels {
   uuid?: string | number;
   isArchived? : any;
+  translateid?:any;
   title?: string;
-  summary?: any[];
+  translation?: any;
   numberOfSummary?: string | number;
   time?: string;
   actionButtons?: React.ReactNode;

@@ -1,10 +1,12 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import Image from 'next/image';
 import MultipleSelect from '../../components/ui/select'
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTruncate } from "@/components/custom-hooks";
-
+import { seTranslatedData, setOriginalLang, setTranslatedLang, setOriginalLoading, setOriginalText, setTranslatedText, swapContents, setTranslatedLoading } from '@/redux/reducer/translateSlice';
+import TranslatorService from '@/services/Translator.service';
+import NotificationService from '@/services/notification.service';
 
 type LayoutType = {
     children: ReactNode;
@@ -12,25 +14,75 @@ type LayoutType = {
 
 const HomeLayout = ({ children }: LayoutType) => {
     const router = useRouter()
-    const [selectedLanguage, setSelectedLanguage] = useState('')
-    const [translatedLang, setTranslatedLang] = useState('')
-    const [languages, setLanguages] = useState([])
-    const { translatedData } = useSelector((state: any) => state?.translate)
-    const handleChange = (e) => {
-        e.preventDefault();
-        setSelectedLanguage(e.target.value)
-    }
+    const dispatch = useDispatch()
+    const { translatedData, original, translated } = useSelector((state: any) => state?.translate)
 
-    const handleTranslation = (e) => {
+
+    const handleOriginalSelectChange = async (e) => {
         e.preventDefault();
-        setTranslatedLang(e.target.value)
-    }
+        dispatch(setOriginalLang(e.target.value))
+        dispatch(setOriginalLoading(true))
+        try {
+            const data = {
+                text: original.text,
+                sourceLang: original.lang,
+                targetLang: e.target.value,
+            }
+            const response = await TranslatorService.translate(data)
+            if (response.status) {
+                dispatch(setOriginalText(response.data.textTranslation))
+                console.log('Making API call:', response);
+            } else {
+                NotificationService.error({
+                    message: "Error!",
+                    addedText: <p>{response.message}. please try again</p>,
+                });
+            }
+            dispatch(setOriginalLoading(false))
+        } catch (error) {
+            console.log(error)
+            dispatch(setOriginalLoading(false))
+        }
+    };
+
+    const handleTranslatedSelectChange = async (e) => {
+        e.preventDefault();
+        dispatch(setTranslatedLoading(true))
+        dispatch(setTranslatedLang(e.target.value))
+        try {
+            const data = {
+                text: original.text,
+                sourceLang: translated.lang,
+                targetLang: e.target.value,
+            }
+            const response = await TranslatorService.translate(data)
+            if (response.status) {
+                dispatch(setTranslatedText(response.data.textTranslation))
+                console.log('Making API call:', response);
+            } else {
+
+                NotificationService.error({
+                    message: "Error!",
+                    addedText: <p>{response.message}. please try again</p>,
+                });
+            }
+            dispatch(setTranslatedLoading(false))
+        } catch (error) {
+            console.log(error)
+            dispatch(setTranslatedLoading(false))
+        }
+    };
+
+    const handleSwapClick = async () => {
+        dispatch(swapContents());
+
+    };
 
     return (
         <div className="w-full h-full">
-            <div className="w-full h-full border-b">
+            <div className="w-full h-full  text-gray-500">
                 {/* Header */}
-                <div className="flex flex-row w-full py-7 border-b px-7 items-center justify-between">
+                <div className="flex flex-row w-full pb-10 px-7 items-center justify-between">
                     <div>
                         <Image
                             src={require('../../assets/icons/arrow-narrow-left_1.svg')}
@@ -39,7 +91,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                             width={20}
                             onClick={() => router.back()}
                         />
-                        <span className='font-bold'>{useTruncate(translatedData?.title, 70) }</span>
+                        <span className='font-bold'>{useTruncate(translatedData?.title, 70)}</span>
                     </div>
 
                     <div className=" px-3 flex w-[40%] align-middle justify-between">
@@ -99,12 +151,14 @@ const HomeLayout = ({ children }: LayoutType) => {
                         </span>
                     </div>
                 </div>
-                <div className="w-[100%] flex-wrap flex flex-row items-center border-b p-5 justify-start overscroll-y-auto">
-                    <div className="left w-[49%] flex items-center">
+                <div className="w-[100%] flex flex-wrap  items-center border-b px-10 md:justify-start overscroll-y-auto">
+                    <div className="left md:w-[49%] w-full flex items-center">
                         <MultipleSelect
+                            selectedLanguage={original?.lang}
+                            handleChange={handleOriginalSelectChange}
                         />
                     </div>
-                    <span className='arrow w-[20px]'>
+                    <span className='arrow md:w-[20px] w-full cursor-pointer' onClick={handleSwapClick}>
                         <Image
                             src={require(`../../assets/icons/arrows.svg`)}
                             alt="dropdown"
@@ -113,8 +167,10 @@ const HomeLayout = ({ children }: LayoutType) => {
                             priority
                         />
                     </span>
-                    <div className="right w-[49%] flex items-center justify-end">
+                    <div className="right md:w-[49%] w-full flex items-center md:justify-end justify-start">
                         <MultipleSelect
+                            selectedLanguage={translated?.lang}
+                            handleChange={handleTranslatedSelectChange}
                         />
                     </div>
                 </div>
