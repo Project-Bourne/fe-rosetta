@@ -106,6 +106,7 @@ const FileUpload = () => {
                         setIsLoading(false);
                         router.push('/home/reader');
                     } else {
+                        setIsFileUploaded(false)
                         setIsLoading(false);
                         router.push('/home');
                         NotificationService.error({
@@ -114,6 +115,7 @@ const FileUpload = () => {
                         });
                     }
                 } else {
+                    setIsFileUploaded(false)
                     setIsLoading(false);
                     NotificationService.error({
                         message: "Error!",
@@ -123,6 +125,8 @@ const FileUpload = () => {
                 }
             } catch (error) {
                 console.error(error);
+                setIsLoading(false);
+                setIsFileUploaded(false)
                 NotificationService.error({
                     message: "Error!",
                     addedText: <p>Something went wrong. please try again</p>,

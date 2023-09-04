@@ -152,7 +152,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                     </div>
                 </div>
                 <div className="w-[100%] flex flex-wrap  items-center border-b px-10 md:justify-start overscroll-y-auto">
-                    <div className="left md:w-[49%] w-full flex items-center">
+                    <div className="left md:w-[47%] w-full flex items-center">
                         <MultipleSelect
                             selectedLanguage={original?.lang}
                             handleChange={handleOriginalSelectChange}
@@ -167,7 +167,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                             priority
                         />
                     </span>
-                    <div className="right md:w-[49%] w-full flex items-center md:justify-end justify-start">
+                    <div className="right md:w-[47%] w-full flex items-center md:justify-end justify-start">
                         <MultipleSelect
                             selectedLanguage={translated?.lang}
                             handleChange={handleTranslatedSelectChange}
