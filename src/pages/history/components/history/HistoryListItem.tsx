@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTruncate } from '@/components/custom-hooks';
 import Image from 'next/image';
-import ListItemModels from '../../../../utils/model/home.models';
 import { DateTime } from 'luxon';
-import { setBookmark } from '@/redux/reducer/translateSlice';
 import { useDispatch } from 'react-redux';
 import { fetchData } from '@/hooks/FetchHistory'
 import TranslatorService from '@/services/Translator.service';
+import NotificationService from '@/services/notification.service';
 
-function BookmarkListItem({
+function ListItem({
     uuid,
     title,
     translation,
@@ -17,7 +16,7 @@ function BookmarkListItem({
     time,
     actionButtons,
     isArchived
-}: ListItemModels) {
+}) {
     const [showaction, setShowAction] = useState(0);
     const dispatch = useDispatch();
     const router = useRouter();
@@ -31,16 +30,16 @@ function BookmarkListItem({
     };
 
     const handleItemClick = () => {
-        router.push(`/home/${uuid}`);
+        router.push(`/history/${uuid}`);
     };
 
-    const handleArchive = (e, uuid) => {
+    const handleArchive = async (e, uuid) => {
         e.stopPropagation();
         try {
-             TranslatorService.bookMarkTranslation(uuid);
+            await TranslatorService.bookMarkTranslation(uuid)
             fetchData(dispatch)
-            // dispatch(setBookmark());
-        } catch (error) {
+        }
+        catch (error) {
             console.log(error)
         }
     };
@@ -48,12 +47,18 @@ function BookmarkListItem({
     const handleDelete = async (e, uuid) => {
         e.stopPropagation();
         try {
-            await TranslatorService.deleteTranslation(uuid);
-            dispatch(setBookmark());
+            await TranslatorService.deleteTranslation(uuid)
+            await TranslatorService.getTranslationsHistory()
             fetchData(dispatch)
+            NotificationService.success({
+                message: "History Deleted!",
+                position: "bottom-right"
+
+            });
         } catch (error) {
             console.log(error)
         }
+      
     };
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Get user's time zone
@@ -84,14 +89,12 @@ function BookmarkListItem({
                     onClick={(e) => handleArchive(e, translateid)}
                 />
                 {/* name */}
-                <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-400">
+                <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-500">
                     {useTruncate(title, 20)}
                 </p>
             </div>
-
-            {/* message */}
             {showaction === 0 ? (
-                <div className="md:w-[33rem] hidden md:block">
+                <div className="md:w-[23rem] hidden md:block">
                     <p className="text-gray-400 border-l-2 pl-2 ">{useTruncate(translation, 20)}</p>
                 </div>
 
@@ -110,4 +113,4 @@ function BookmarkListItem({
     );
 }
 
-export default BookmarkListItem;
+export default ListItem;

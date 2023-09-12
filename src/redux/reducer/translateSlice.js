@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const TranslateSlice = createSlice({
   name: 'Translator',
   initialState: {
-    translatedData: {},
     history: [],
     bookmark: [],
     singleHistory: {},
@@ -21,12 +20,6 @@ const TranslateSlice = createSlice({
   },
 
   reducers: {
-    seTranslatedData: (state, action) => {
-      state.translatedData = action.payload;
-    },
-    setTranslatedDataText: (state, action) => {
-      state.translatedData.text = action.payload;
-    },
     swapContents: (state) => {
       const temp = { ...state.original };
       state.original.text = state.translated.text;

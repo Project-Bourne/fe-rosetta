@@ -4,8 +4,11 @@ import MultipleSelect from '../../components/ui/select'
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTruncate } from "@/components/custom-hooks";
-import { seTranslatedData, setOriginalLang, setTranslatedLang, setOriginalLoading, setOriginalText, setTranslatedText, swapContents, setTranslatedLoading } from '@/redux/reducer/translateSlice';
+import {  setOriginalLang, setTranslatedLang, setOriginalLoading, setOriginalText, setTranslatedText, swapContents, setTranslatedLoading, setTranslated, setOriginal } from '@/redux/reducer/translateSlice';
 import TranslatorService from '@/services/Translator.service';
+import Button from '@mui/material/Button';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import { grey } from '@mui/material/colors';
 import NotificationService from '@/services/notification.service';
 
 type LayoutType = {
@@ -15,8 +18,10 @@ type LayoutType = {
 const HomeLayout = ({ children }: LayoutType) => {
     const router = useRouter()
     const dispatch = useDispatch()
-    const { translatedData, original, translated } = useSelector((state: any) => state?.translate)
-
+    const [fileName, setFileName] = useState('')
+    const { original, translated } = useSelector((state: any) => state?.translate)
+    const [isFileUploded, setIsFileUploaded] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleOriginalSelectChange = async (e) => {
         e.preventDefault();
@@ -25,12 +30,12 @@ const HomeLayout = ({ children }: LayoutType) => {
         try {
             const data = {
                 text: original.text,
-                sourceLang: original.lang,
+                sourceLang: translated.lang,
                 targetLang: e.target.value,
             }
             const response = await TranslatorService.translate(data)
             if (response.status) {
-                dispatch(setOriginalText(response.data.textTranslation))
+                // dispatch(setOriginalText(response.data.textTranslation))
                 console.log('Making API call:', response);
             } else {
                 NotificationService.error({
@@ -78,21 +83,93 @@ const HomeLayout = ({ children }: LayoutType) => {
 
     };
 
+
+    const handleFileUpload = async (event) => {
+        event.preventDefault();
+
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            setFileName(selectedFile.name)
+            setIsFileUploaded(true)
+            const formData = new FormData();
+            formData.append('files', selectedFile);
+            setIsLoading(true);
+            try {
+                const res = await fetch('http://192.81.213.226:89/api/v1/uploads', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const response = await res.json();
+                if (response) {
+                    let newObj = {
+                        text: response.data[0].text,
+                        uri: response.data[0].uri,
+                    }
+                    let newResponse = await TranslatorService.translateFile(newObj)
+                    if (newResponse.status) {
+                        dispatch(setTranslated({
+                            text: newResponse.data.textTranslation,
+                            lang: 'en',
+                        }))
+                        dispatch(setOriginal({
+                            text: newResponse.data.text,
+                            lang: 'auto',
+                        }))
+                        setIsLoading(false);
+                        // router.push('/home/reader');
+                    } else {
+                        setIsFileUploaded(false)
+                        setIsLoading(false);
+                        router.push('/home');
+                        NotificationService.error({
+                            message: "Error!",
+                            addedText: <p>{newResponse.message}. please try again</p>,
+                        });
+                    }
+                } else {
+                    setIsFileUploaded(false)
+                    setIsLoading(false);
+                    NotificationService.error({
+                        message: "Error!",
+                        addedText: <p>Something went wrong. please try again</p>,
+                    });
+                    console.error('File upload failed.');
+                }
+            } catch (error) {
+                console.error(error);
+                setIsLoading(false);
+                setIsFileUploaded(false)
+                NotificationService.error({
+                    message: "Error!",
+                    addedText: <p>Something went wrong. please try again</p>,
+                });
+            }
+        }
+    }
+
     return (
         <div className="w-full h-full">
             <div className="w-full h-full  text-gray-500">
                 {/* Header */}
                 <div className="flex flex-row w-full pb-10 px-7 items-center justify-between">
-                    <div>
-                        <Image
-                            src={require('../../assets/icons/arrow-narrow-left_1.svg')}
-                            alt="documents"
-                            className="cursor-pointer pb-5"
-                            width={20}
-                            onClick={() => router.back()}
-                        />
-                        <span className='font-bold'>{useTruncate(translatedData?.title, 70)}</span>
-                    </div>
+                    {/* {original.text.length === 0 ? ( */}
+                        <div className='bg-sp pr-10'>
+                            <div className='flex items-center'>
+                                <label htmlFor="file-input" className='px-4 py-1 rounded-lg' style={{ cursor: 'pointer', color: '#4582C4', backgroundColor: "white", border: '1px solid #4582C4' }}>
+                                    <DriveFolderUploadIcon style={{ color: '#4582C4', cursor: 'pointer' }} /> Upload File
+                                </label>
+                                <span className='text-grey-400 ml-2 text-sm text-sirp-primary'>{fileName}</span>
+                                <input
+                                    type="file"
+                                    id="file-input"
+                                    style={{ display: 'none' }}
+                                    accept=".pdf,.doc,.docx,.txt"
+                                    onChange={handleFileUpload}
+                                />
+                            </div>
+                        </div>
+                    {/* // ) : null} */}
 
                     <div className=" px-3 flex w-[40%] align-middle justify-between">
                         <span className='w-[50px] cursor-pointer  shadow-xl h-[50px] flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
@@ -182,3 +259,7 @@ const HomeLayout = ({ children }: LayoutType) => {
 };
 
 export default HomeLayout;
+function setIsFileUploaded(arg0: boolean) {
+    throw new Error('Function not implemented.');
+}
+

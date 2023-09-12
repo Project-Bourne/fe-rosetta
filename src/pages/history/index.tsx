@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import HistoryIcon from '@mui/icons-material/History';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import Histroy from './History';
-import Bookmark from '../bookmark/Bookmark';
+import Histroy from './components/history/History';
+import Bookmark from './components/bookmark/Bookmark';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveTab } from '@/redux/reducer/tabSlice';
 

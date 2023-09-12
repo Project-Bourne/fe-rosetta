@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTruncate } from '@/components/custom-hooks';
 import Image from 'next/image';
 import ListItemModels from '../../../../utils/model/home.models';
 import { DateTime } from 'luxon';
+import { setBookmark } from '@/redux/reducer/translateSlice';
 import { useDispatch } from 'react-redux';
 import { fetchData } from '@/hooks/FetchHistory'
 import TranslatorService from '@/services/Translator.service';
+import NotificationService from '@/services/notification.service';
 
-function ListItem({
+function BookmarkListItem({
     uuid,
     title,
     translation,
@@ -33,13 +35,13 @@ function ListItem({
         router.push(`/home/${uuid}`);
     };
 
-    const handleArchive = async (e, uuid) => {
+    const handleArchive = (e, uuid) => {
         e.stopPropagation();
         try {
-            await TranslatorService.bookMarkTranslation(uuid)
+             TranslatorService.bookMarkTranslation(uuid);
             fetchData(dispatch)
-        }
-        catch (error) {
+            // dispatch(setBookmark());
+        } catch (error) {
             console.log(error)
         }
     };
@@ -47,13 +49,17 @@ function ListItem({
     const handleDelete = async (e, uuid) => {
         e.stopPropagation();
         try {
-            await TranslatorService.deleteTranslation(uuid)
-            await TranslatorService.getTranslationsHistory()
+            await TranslatorService.deleteTranslation(uuid);
+            dispatch(setBookmark());
             fetchData(dispatch)
+            NotificationService.success({
+                message: "History Deleted!",
+                position: "bottom-right"
+
+            });
         } catch (error) {
             console.log(error)
         }
-      
     };
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Get user's time zone
@@ -84,12 +90,14 @@ function ListItem({
                     onClick={(e) => handleArchive(e, translateid)}
                 />
                 {/* name */}
-                <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-500">
+                <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-400">
                     {useTruncate(title, 20)}
                 </p>
             </div>
+
+            {/* message */}
             {showaction === 0 ? (
-                <div className="md:w-[23rem] hidden md:block">
+                <div className="md:w-[33rem] hidden md:block">
                     <p className="text-gray-400 border-l-2 pl-2 ">{useTruncate(translation, 20)}</p>
                 </div>
 
@@ -108,4 +116,4 @@ function ListItem({
     );
 }
 
-export default ListItem;
+export default BookmarkListItem;
