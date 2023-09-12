@@ -1,7 +1,8 @@
 import TrainingLayout from '@/layout/TrainingLayout';
 import { FAQS, LogData, QuickSearch } from '@/utils/constants';
 import React from 'react'
-import {SearchComp, FAQComp} from '../components';
+import SearchComp from '../components/SearchComp';
+import FAQComp from '../components/FAQ'
 import Image from 'next/image';
 
 const AllTraining = () => {

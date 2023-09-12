@@ -20,8 +20,7 @@ function HistoryContent() {
                                     title={item.translate.title} // Pass the title
                                     translation={item.translate.textTranslation} // Pass the summary
                                     time={item.createdAt}
-                                    isArchived={item.bookmark} // Pass the isArchived value
-                                    buttonType="action"
+                                    isArchived={item.bookmark}
                                     actionButtons={<DeleteIcon doc={item.title} />}
                                 />
                             </div>

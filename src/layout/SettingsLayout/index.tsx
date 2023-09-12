@@ -1,4 +1,4 @@
-import { TabComp } from '@/pages/settings/components';
+import  TabComp  from '@/pages/settings/components/TabComp/';
 import React, { ReactNode } from 'react'
 import { useRouter } from 'next/router';
 

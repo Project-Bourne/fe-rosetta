@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import React, { useState } from 'react'
-import Reader from '../../reader'
 import { useDispatch, useSelector } from 'react-redux';
 import TranslatorService from "@/services/Translator.service"
 import { seTranslatedData, setOriginal, setTranslated, toggleTextSwap } from '@/redux/reducer/translateSlice';
