@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-// import Link from 'next/link'
+import Link from 'next/link'
 
 type TabCompType = {
     item: {
@@ -16,9 +16,9 @@ type TabCompType = {
 }
 
 const TabComp = ({item, index, route}: TabCompType) => {
-
+  
   const router = useRouter();
-
+  
   // States
   const [path, setPath] = useState("");
 
@@ -33,15 +33,15 @@ const TabComp = ({item, index, route}: TabCompType) => {
       },
       undefined,
       {
-        shallow: true
+        shallow: true 
       }
     )
 
   }
 
 
-  return (
-    <div
+  return (    
+    <div 
       className={
         item.route == router.pathname ? 'flex flex-row items-center h-10 flex-wrap gap-2 mr-10 border-b-2 border-sirp-primary cursor-pointer'
         : 'flex flex-row items-center gap-2 cursor-pointer mr-10  flex-wrap text-sirp-grey'
@@ -49,8 +49,8 @@ const TabComp = ({item, index, route}: TabCompType) => {
       onClick={updatePath}
     >
       <Image
-        src={router.pathname == item.route ? require(`../../../../../public/icons/${item.selectedIcon}`) : require(`../../../../../public/icons/${item.icon}`)}
-        // item.route.includes(route) ? require(`../../../../assets/icons/on.${item.icon}`) :
+        src={router.pathname == item.route ? require(`../../../../assets/icons/${item.selectedIcon}`) : require(`../../../../assets/icons/${item.icon}`)}
+        // item.route.includes(route) ? require(`../../../../assets/icons/on.${item.icon}`) : 
         alt="settings tab"
         width={18}
         height={18}

@@ -1,3 +1,40 @@
+<<<<<<< HEAD
+# DEEP SOUL - roselta
+
+
+
+## Getting started
+
+To make it easy for you to get started with GitHub, here's a list of recommended next steps.
+
+## How to render on DEV MODE
+
+- npm run dev.
+
+## Build Project for PRODUCTION 
+
+- npm run build.
+
+
+## Authors and acknowledgment
+Show your appreciation to those who have contributed to the project.
+
+-legacy.rexio@gmail.com
+https://github.com/legacy-rex0
+
+-https://github.com/okafohenry
+
+-https://github.com/Cabraham1
+
+-https://github.com/code-sensei
+
+
+## License
+For open source projects, say how it is licensed.
+
+## Project status
+---------
+=======
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -36,3 +73,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+>>>>>>> 11093bf6fca61fe00a6e16223bcc736e0adbd118

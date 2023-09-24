@@ -1,7 +1,7 @@
+import  TabComp  from '@/pages/settings/components/TabComp/';
 import { TrainingData } from '@/utils/constants';
 import React, { ReactNode } from 'react'
 import { useRouter } from 'next/router';
-import TabComp from "@/pages/settings/components/TabComp";
 
 
 type LayoutType = {
@@ -9,14 +9,14 @@ type LayoutType = {
 }
 
 const TrainingLayout = ({children}: LayoutType) => {
-
+    
     const route = useRouter().pathname;
 
     // console.log({route})
 
   return (
     <div className='w-full h-[100vw] bg-white'>
-
+        
         {/* Header */}
         <div className='flex flex-row w-full py-7 px-7 items-center justify-between'>
             <h1 className='text-[18px] font-semibold'>Training</h1>

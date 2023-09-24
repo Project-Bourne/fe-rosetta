@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from "next/image";
 
-export interface ToastModel {
+export interface ToastModel { 
     message: any;
     addedText?: any | null;
     position?: 'bottom-left' | 'bottom-right' | 'bottom-center' | 'top-right' | 'top-left' | 'top-center'  ;
@@ -13,16 +13,16 @@ function CustomToast({ message, addedText, position, type }: ToastModel) {
     const [isVisible, setIsVisible] = useState(true);
 
 
-    //   return and icon path based on the notification type
+    //   return and icon path based on the notification type 
       const _toast_type = () => {
-        if(type === 'success') return require('../../../public/icons/toast.success.svg')
-        if(type === 'error') return require('../../../public/icons/toast.error.svg')
+        if(type === 'success') return require('../../assets/icons/toast.success.svg')
+        if(type === 'error') return require('../../assets/icons/toast.error.svg')
         // if(type === 'info') return '../../../'
-        if(type === 'warn') return require('../../../public/icons/toast.warn.svg')
+        if(type === 'warn') return require('../../assets/icons/toast.warn.svg')
       }
 
-    //   return a position style based on position entered
-      const _toast_position = () => {
+    //   return a position style based on position entered 
+      const _toast_position = () => {  
         if(position === 'bottom-right') return  'bottom-7 right-7';
         if(position === 'bottom-left') return  'bottom-7 left-7';
         if(position === 'bottom-center') return  'bottom-[6rem] left-[30%] right-[30%]';
@@ -34,7 +34,7 @@ function CustomToast({ message, addedText, position, type }: ToastModel) {
 
     return(
         <>
-        { isVisible &&
+        { isVisible && 
             <div className={`
                 ${ type === 'success' ? 'bg-[#F0FDF4] border-[#22C55E]' :
                     type === 'error' ? 'bg-[#FAEAEC] border-[#B22735]' : 
@@ -46,7 +46,7 @@ function CustomToast({ message, addedText, position, type }: ToastModel) {
                     <Image
                         src={_toast_type()}
                         alt="toast icon"
-                        width={25}
+                        width={25} 
                         height={25}
                     />
                 </p>
@@ -55,7 +55,7 @@ function CustomToast({ message, addedText, position, type }: ToastModel) {
         }
         </>
     )
-
+    
 }
 
 export default CustomToast;

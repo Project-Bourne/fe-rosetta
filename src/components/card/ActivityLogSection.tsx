@@ -11,7 +11,7 @@ export  default function ActivityLogSection() {
                     <h2 className='font-semibold text-[14px] '>Activity Log</h2>
                     <div className='bg-sirp-lightGrey cursor-pointer flex p-2 rounded-lg items-center justify-center content-center'>
                         <Image
-                            src={require("../../../public/icons/filter.svg")}
+                            src={require("../../assets/icons/filter.svg")}
                             alt="Filter"
                             width={18}
                             height={18}
@@ -26,7 +26,7 @@ export  default function ActivityLogSection() {
                 </div>
             </div>
             <div>
-                <ActivityCard
+                <ActivityCard 
                     time={'9:00PM'}
                     actionText={'Uploaded documents to SIRP'}
                     activityText={'Redesigned Naira: CBN launches Cash Swap Programme for rural '}

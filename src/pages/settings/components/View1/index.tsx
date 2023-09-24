@@ -16,7 +16,7 @@ const View1 = () => {
           <h2 className='font-semibold text-[13px]'>Personal Information</h2>
           <div className='flex flex-row items-center border border-sirp-primary rounded-md px-4 py-3 cursor-pointer'>
             <Image
-              src={require(`../../../../../public/icons/edit.svg`)}
+              src={require(`../../../../assets/icons/edit.svg`)}
               alt="Edit btn"
               width={18}
               height={18}
@@ -30,17 +30,17 @@ const View1 = () => {
         {/* Names */}
         <div className='flex flex-row items-center my-[20px] w-full'>
           <label htmlFor='name' className='text-[12px] text-sirp-grey'>Name: </label>
-
+          
           <div className='ml-[3vh] w-full'>
-            <input
+            <input 
               name='name'
-              type='text'
+              type='text' 
               placeholder='First name'
               onChange={(e: any) => setFirstname(e)}
               className='text-[12px] text-black border-[1.5px] rounded-md py-2 px-4 mx-4 w-[18%]'
             />
-            <input
-              type='text'
+            <input 
+              type='text' 
               placeholder='Last name'
               onChange={(e: any) => setLastname(e)}
               className='text-[12px] text-black border-[1.5px] rounded-md py-2 px-4 mx-4 w-[18%]'
@@ -51,24 +51,24 @@ const View1 = () => {
         {/* Email */}
         <div className='flex flex-row items-center my-[20px] w-full'>
           <label htmlFor='email' className='text-[12px] text-sirp-grey'>Email: </label>
-
+          
           <div className='ml-[3vh] w-full items-center flex flex-row relative'>
             <Image
-              src={require(`../../../../../public/icons/mail.svg`)}
+              src={require(`../../../../assets/icons/mail.svg`)}
               alt="mail"
               width={16}
               height={16}
               className='absolute self-center item-center left-[2.3vh]'
             />
 
-            <input
-              type='email'
+            <input 
+              type='email' 
               name='email'
               placeholder='Email Address'
               onChange={(e: any) => setEmail(e)}
               className='text-[12px] text-black border-[1.5px] rounded-md py-2 px-7 mx-4 w-[38%]'
             />
-
+            
           </div>
         </div>
 

@@ -6,5 +6,5 @@ const rootReducer = combineReducers({
     translate: TranslateSlice,
     tab: TabSlice
 });
-
+                            
 export default rootReducer;

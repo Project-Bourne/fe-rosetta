@@ -6,7 +6,7 @@ type SearchType = {
     list: any[]
 }
 
-function SearchComp({item, index, list}: SearchType){
+const SearchComp = ({item, index, list}: SearchType) => {
   return (
     <div className='item-center flex flex-row my-2'>
         <div className='p-2 px-5 rounded-[200px] border-x-sirp-dashbordb1 border-2 items-center justify-center mx-2 cursor-pointer' >

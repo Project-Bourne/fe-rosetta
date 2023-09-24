@@ -23,14 +23,14 @@ function NavBarItem({item, index}: NavBarItemType) {
     <Link href={item.route}>
         <div
             className={
-                !isSelected ?
-                    'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer hover:bg-sirp-primaryLess2 md:py-4 p-3 md:px-5 md:ml-[-20px]'
+                !isSelected ? 
+                    'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer hover:bg-sirp-primaryLess2 md:py-4 p-3 md:px-5 md:ml-[-20px]' 
                     : 'flex flex-row my-5 w-[100%] items-center md:justify-start justify-center rounded-md cursor-pointer bg-sirp-primaryLess2 md:py-4 p-3 md:px-5 border-l-4 border-sirp-primary md:ml-[-20px]'
             }
             key={index}
         >
             <Image
-                src={isSelected ? require(`../../../../public/icons/on.${item.icon}`) : require(`../../../../public/icons/${item.icon}`)}
+                src={isSelected ? require(`../../../assets/icons/on.${item.icon}`) : require(`../../../assets/icons/${item.icon}`)}
                 alt="Dashboard icon"
                 width={22}
                 height={22}

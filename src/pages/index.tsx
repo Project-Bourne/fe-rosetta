@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     router.push(
       {
-        pathname: `/home`,
+        pathname: `/dashboard`,
       },
       undefined,
       { shallow: true }

@@ -1,4 +1,4 @@
-
+import  TabComp  from '@/pages/settings/components/TabComp/';
 import React, { ReactNode } from 'react'
 import { useRouter } from 'next/router';
 
@@ -22,13 +22,13 @@ console.log(data)
 
 
             {/* Settings tabs */}
-            {/*<div className='w-[100%] flex flex-row flex-wrap items-center border-b overscroll-y-auto-'>*/}
-            {/*    {*/}
-            {/*        data?.map((item, index) => (*/}
-            {/*            <TabComp item={item} index={index} key={index} route={route} />*/}
-            {/*        ))*/}
-            {/*    }*/}
-            {/*</div>*/}
+            <div className='w-[100%] flex flex-row flex-wrap items-center border-b overscroll-y-auto-'>
+                {
+                    data?.map((item, index) => (
+                        <TabComp item={item} index={index} key={index} route={route} />
+                    ))
+                }
+            </div>
             {children}
         </div>
     )

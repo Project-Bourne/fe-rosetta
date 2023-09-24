@@ -34,7 +34,7 @@ const TabLayout = ({ children, showTitle, data }: any) => {
             key={index}
           >
             <Image
-              src={require(`../../../public/icons/${item.icon}`)}
+              src={require(`../../assets/icons/${item.icon}`)}
               alt="settings tab"
               width={18}
               height={18}

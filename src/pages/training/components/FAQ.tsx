@@ -7,11 +7,11 @@ type FAQtype = {
     index: number
 }
 
-function FAQComp({text, index}: FAQtype){
+const FAQComp = ({text, index}: FAQtype) => {
   return (
     <div className='items-center flex flex-row my-2 cursor-pointer'>
         <Image
-            src={require("../../../../public/icons/report-search.svg")}
+            src={require("../../../assets/icons/report-search.svg")}
             alt="search"
             width={13}
             height={13}
