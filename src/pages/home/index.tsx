@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import HomeLayout from '@/layout/HomeLayout';
+import Tooltip from '@mui/material/Tooltip';
 import { useSelector, useDispatch } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Image from 'next/image'
 import { useTruncate } from "@/components/custom-hooks";
 import { setOriginalText, seTranslatedData, setOriginal, setTranslated } from '@/redux/reducer/translateSlice';
 import _debounce from 'lodash/debounce';
@@ -12,6 +14,7 @@ import { errorMonitor } from 'events';
 
 export default function Reader() {
   const { original, translated, isSwapped } = useSelector((state: any) => state?.translate);
+  const [showContext, setShowContext] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const focusedTextarea = useRef(null);
@@ -33,13 +36,14 @@ export default function Reader() {
     try {
       const data = {
         text: original.text,
-        sourceLang: original.lang,
+        sourceLang: original.lang == 'auto' ? '' : original.lang,
         targetLang: translated.lang,
       }
       const response = await TranslatorService.translate(data)
       if (response.status) {
         dispatch(setTranslated({
           text: response.data.textTranslation,
+          context: response.data.textTranslationContext,
           lang: 'en',
         }))
         dispatch(setOriginal({
@@ -66,8 +70,8 @@ export default function Reader() {
   };
 
   const handleKeyDown = async (e) => {
-    setLoading(true)
     if (e.key === 'Enter') {
+      setLoading(true)
       await debouncedHandleChange();
       setEditMode(false);
       setLoading(false)
@@ -101,8 +105,7 @@ export default function Reader() {
               </Box> : <textarea
                 ref={focusedTextarea}
                 className='text-[#383E42] h-full text-sm pt-3 bg-transparent border-0 outline-none w-full resize-none'
-                defaultValue={original.text}
-                // value={isSwapped ? translatedData?.textTranslation : translatedData?.text}
+                value={original.text}
                 onClick={handleTextareaClick}
                 onBlur={handleTextareaBlur}
                 onChange={handlechange}
@@ -116,11 +119,36 @@ export default function Reader() {
                 }}
               />}
             </div>
-            <div className={`row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] border-2 max-h-[60vh] overflow-y-scroll border-[#E5E7EB] ${isSwapped ? 'order-2' : 'order-1'}`}>
+            <div className={`row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] border-2 max-h-[60vh] relative overflow-y-scroll border-[#E5E7EB] ${isSwapped ? 'order-2' : 'order-1'}`}>
               <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
-              {translated.isLoading || loading ? <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                <CircularProgress />
-              </Box> : <p className='text-[#383E42] text-sm pt-3'>{translated.text}</p>}
+              {showContext ? <Tooltip title="Get normal traslation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
+                  <Image
+                    src={require(`../../assets/icons/on.eye.svg`)}
+                    alt="upload image"
+                    width={20}
+                    height={20}
+                    priority
+                  />
+                </div>
+              </Tooltip> : <Tooltip title="Get a contextual traslation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
+                  <Image
+                    src={require(`../../assets/icons/eye.svg`)}
+                    alt="upload image"
+                    width={20}
+                    height={20}
+                    priority
+                  />
+                </div>
+              </Tooltip>}
+              {translated.isLoading || loading ? (
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <p className='text-[#383E42] text-sm pt-3'>{!showContext ? translated.text : translated.context}</p>
+              )}
             </div>
           </div>
         </div>

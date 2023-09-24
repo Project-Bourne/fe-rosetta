@@ -1,10 +1,10 @@
 export const NavBarContents = [
-  {
-    name: 'Dashboard',
-    icon: 'dashboard.svg',
-    id: 1,
-    route: '/dashboard'
-  },
+  // {
+  //   name: 'Dashboard',
+  //   icon: 'dashboard.svg',
+  //   id: 1,
+  //   route: '/dashboard'
+  // },
   {
     name: 'Home',
     icon: 'home.svg',

@@ -9,25 +9,47 @@ const TranslateSlice = createSlice({
     isArchived: false,
     original: {
       text: '',
-      lang: 'auto',
+      lang: '',
       isLoading: false
     },
     translated: {
       text: '',
+      context:'',
       lang: 'en',
       isLoading: false
     },
   },
 
   reducers: {
+    // swapContents: (state) => {
+    //   const temp = { ...state.original };
+    //   state.original.text = state.translated.text;
+    //   state.original.lang = state.translated.lang;
+    //   state.original.isLoading = state.translated.isLoading;
+    //   state.translated.text = temp.text;
+    //   state.translated.lang = temp.lang;
+    //   state.translated.isLoading = temp.isLoading;
+    // },
     swapContents: (state) => {
-      const temp = { ...state.original };
-      state.original.text = state.translated.text;
-      state.original.lang = state.translated.lang;
-      state.original.isLoading = state.translated.isLoading;
-      state.translated.text = temp.text;
-      state.translated.lang = temp.lang;
-      state.translated.isLoading = temp.isLoading;
+      const { original, translated } = state;
+    
+      // Create a new state object with swapped contents
+      const newState = {
+        ...state,
+        original: {
+          text: translated.text,
+          lang: translated.lang,
+          isLoading: translated.isLoading,
+        },
+        translated: {
+          text: original.text,
+          lang: original.lang,
+          // context: translated.context,
+          isLoading: original.isLoading,
+        },
+      };
+    
+      return newState;
     },
     setOriginal: (state, action) => {
       state.original = action.payload;
@@ -37,6 +59,9 @@ const TranslateSlice = createSlice({
     },
     setTranslatedLoading: (state, action) => {
       state.translated.isLoading = action.payload;
+    },
+    setTranslateContext: (state, action) => {
+      state.translated.context = action.payload;
     },
     setOriginalLoading: (state, action) => {
       state.original.isLoading = action.payload;
@@ -87,7 +112,8 @@ export const {
   setOriginalLang,
   swapContents,
   setTranslatedText,
-  setTranslatedLang
+  setTranslatedLang,
+  setTranslateContext
 } = TranslateSlice.actions;
 
 export default TranslateSlice.reducer;
