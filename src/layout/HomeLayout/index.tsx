@@ -87,9 +87,8 @@ const HomeLayout = ({ children }: LayoutType) => {
     };
 
     const handleSwapClick = async () => {
-        dispatch(swapContents());
-
-    };
+        dispatch(swapContents({}));
+      };
 
 
     const handleFileUpload = async (event) => {

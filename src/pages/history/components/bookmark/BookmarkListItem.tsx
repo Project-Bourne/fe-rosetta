@@ -32,7 +32,7 @@ function BookmarkListItem({
     };
 
     const handleItemClick = () => {
-        router.push(`/home/${uuid}`);
+        router.push(`/history/${uuid}`);
     };
 
     const handleArchive = (e, uuid) => {
@@ -50,7 +50,7 @@ function BookmarkListItem({
         e.stopPropagation();
         try {
             await TranslatorService.deleteTranslation(uuid);
-            dispatch(setBookmark());
+            dispatch(setBookmark({}));
             fetchData(dispatch)
             NotificationService.success({
                 message: "History Deleted!",
