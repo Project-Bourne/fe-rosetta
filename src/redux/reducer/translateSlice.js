@@ -10,6 +10,7 @@ const TranslateSlice = createSlice({
     original: {
       text: '',
       lang: '',
+      context:'',
       isLoading: false
     },
     translated: {
@@ -39,12 +40,13 @@ const TranslateSlice = createSlice({
         original: {
           text: translated.text,
           lang: translated.lang,
+          context: translated.context,
           isLoading: translated.isLoading,
         },
         translated: {
           text: original.text,
           lang: original.lang,
-          // context: translated.context,
+          context: original.context,
           isLoading: original.isLoading,
         },
       };
