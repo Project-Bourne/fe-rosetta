@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { fetchData } from '@/hooks/FetchHistory'
 import TranslatorService from '@/services/Translator.service';
 import NotificationService from '@/services/notification.service';
+import { Tooltip } from '@mui/material';
 
 function BookmarkListItem({
     uuid,
@@ -38,7 +39,7 @@ function BookmarkListItem({
     const handleArchive = (e, uuid) => {
         e.stopPropagation();
         try {
-             TranslatorService.bookMarkTranslation(uuid);
+            TranslatorService.bookMarkTranslation(uuid);
             fetchData(dispatch)
             // dispatch(setBookmark());
         } catch (error) {
@@ -77,18 +78,21 @@ function BookmarkListItem({
         >
             <div className="flex gap-3 items-center  hover:text-gray-400">
                 {/* Save icon */}
-                <Image
-                    src={
-                        isArchived
-                            ? require(`../../../../assets/icons/on.saved.svg`)
-                            : require(`../../../../assets/icons/saved.svg`)
-                    }
-                    alt="documents"
-                    className="cursor-pointer w-4 h-4"
-                    width={10}
-                    height={10}
-                    onClick={(e) => handleArchive(e, translateid)}
-                />
+                <Tooltip title={isArchived ? "Remove from bookmark" : "Save to bookmark"}>
+                    <Image
+                        src={
+                            isArchived
+                                ? require(`../../../../assets/icons/on.saved.svg`)
+                                : require(`../../../../assets/icons/saved.svg`)
+                        }
+                        alt="documents"
+                        className="cursor-pointer w-4 h-4"
+                        width={10}
+                        height={10}
+                        onClick={(e) => handleArchive(e, translateid)}
+                    />
+                </Tooltip>
+
                 {/* name */}
                 <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-400">
                     {useTruncate(title, 20)}
