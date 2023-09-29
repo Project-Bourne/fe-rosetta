@@ -11,6 +11,8 @@ import _debounce from 'lodash/debounce';
 import TranslatorService from '@/services/Translator.service';
 import NotificationService from '@/services/notification.service';
 import { errorMonitor } from 'events';
+import AuthService from '@/services/auth.service';
+import { setUserInfo } from '@/redux/reducer/authReducer';
 
 export default function Reader() {
   const { original, translated, isSwapped } = useSelector((state: any) => state?.translate);
@@ -31,7 +33,29 @@ export default function Reader() {
     }))
   }, [])
 
-
+  useEffect(() => {
+    setLoading(true);
+    try {
+      AuthService
+        .getUserViaAccessToken()
+        .then((response) => {
+          setLoading(false);
+          if (response?.status) {
+            dispatch(setUserInfo(response?.data));
+          }
+        })
+        .catch((err) => {
+          NotificationService.error({
+            message: "Error",
+            addedText: "Could not fetch user data",
+            position: "top-center",
+          });
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+  
   const debouncedHandleChange = async () => {
     try {
       const data = {

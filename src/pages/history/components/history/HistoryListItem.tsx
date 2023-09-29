@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { fetchData } from '@/hooks/FetchHistory'
 import TranslatorService from '@/services/Translator.service';
 import NotificationService from '@/services/notification.service';
+import { Tooltip } from '@mui/material';
 
 function ListItem({
     uuid,
@@ -76,6 +77,7 @@ function ListItem({
         >
             <div className="flex gap-3 items-center  hover:text-gray-400">
                 {/* Save icon */}
+                <Tooltip title={isArchived ? "Remove from bookmark" : "Save to bookmark"}>
                 <Image
                     src={
                         isArchived
@@ -88,6 +90,7 @@ function ListItem({
                     height={10}
                     onClick={(e) => handleArchive(e, translateid)}
                 />
+                </Tooltip>
                 {/* name */}
                 <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-500">
                     {useTruncate(title, 20)}
