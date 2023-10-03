@@ -51,7 +51,7 @@ function BookmarkListItem({
         e.stopPropagation();
         try {
             await TranslatorService.deleteTranslation(uuid);
-            dispatch(setBookmark({}));
+            dispatch(setBookmark());
             fetchData(dispatch)
             NotificationService.success({
                 message: "History Deleted!",
