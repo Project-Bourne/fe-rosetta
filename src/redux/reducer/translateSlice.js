@@ -7,6 +7,7 @@ const TranslateSlice = createSlice({
     bookmark: [],
     singleHistory: {},
     isArchived: false,
+    translatedUuid: '',
     original: {
       text: '',
       lang: '',
@@ -52,6 +53,9 @@ const TranslateSlice = createSlice({
       };
     
       return newState;
+    },
+    setTranslatedUuid: (state, action) => {
+      state.translatedUuid = action.payload;
     },
     setOriginal: (state, action) => {
       state.original = action.payload;
@@ -115,7 +119,8 @@ export const {
   swapContents,
   setTranslatedText,
   setTranslatedLang,
-  setTranslateContext
+  setTranslateContext,
+  setTranslatedUuid
 } = TranslateSlice.actions;
 
 export default TranslateSlice.reducer;

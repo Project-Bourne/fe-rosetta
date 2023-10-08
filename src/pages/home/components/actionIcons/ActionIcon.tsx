@@ -1,63 +1,115 @@
 import React, { useState } from "react";
 import Image from "next/image";
-const ActionIcons = () => {
+import { Tooltip } from "@mui/material";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+
+const ActionIcons = ({ docId }) => {
+  const router = useRouter();
+  const { userInfo } = useSelector((state: any) => state?.auth);
+
+  const permissions = userInfo?.role?.permissions;
+
+  const handleExport = (id: string, to: string) => {
+    if (to === "collab") {
+      router.push(`http://192.81.213.226:36/documents/${id}&translator`);
+    }
+    if (to === "analyzer") {
+      router.push(`http://192.81.213.226:31/home/${id}&translator`);
+    }
+    if (to === "factcheck") {
+      router.push(`http://192.81.213.226:34/home/${id}&translator`);
+    }
+    if (to === "deepchat") {
+      router.push(`http://192.81.213.226:35/home/${id}&translator`);
+    }
+    if (to === "interrogator") {
+      router.push(`http://192.81.213.226:37/home/${id}&translator`);
+    }
+    if (to === "summarizer") {
+      router.push(`http://192.81.213.226:32/home/${id}&translator`);
+    }
+  };
+
   return (
     <>
-      <div className=" px-3 flex w-[40%] align-middle justify-between">
-        <span className='w-[50px] cursor-pointer  shadow-xl h-[50px] flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-          <span className='flex align-middle justify-center'>   <Image
-            src={require(`../../../../assets/icons/eye.svg`)}
-            alt="upload image"
-            width={20}
-            height={20}
-            priority
-          /></span>
-        </span>
-        <span className='w-[50px] h-[50px] shadow-xl cursor-pointer flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-          <span className='flex align-middle justify-center'>   <Image
-            src={require(`../../../../assets/icons/box-arrow.svg`)}
-            alt="upload image"
-            width={20}
-            height={20}
-            priority
-          /></span>
-        </span>
-        <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-          <span className='flex align-middle justify-center'>   <Image
-            src={require(`../../../../assets/icons/binbin.svg`)}
-            alt="upload image"
-            width={20}
-            height={20}
-            priority
-          /></span>
-        </span>
-        <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-          <span className='flex align-middle justify-center'>   <Image
-            src={require(`../../../../assets/icons/searcharrow.svg`)}
-            alt="upload image"
-            width={20}
-            height={20}
-            priority
-          /></span>
-        </span>
-        <span className='w-[50px] h-[50px] cursor-pointer flex shadow-xl align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-          <span className='flex align-middle justify-center'>   <Image
-            src={require(`../../../../assets/icons/searchbox.svg`)}
-            alt="upload image"
-            width={20}
-            height={20}
-            priority
-          /></span>
-        </span>
-        <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-          <span className='flex align-middle justify-center'>   <Image
-            src={require(`../../../../assets/icons/file-arrow.svg`)}
-            alt="upload image"
-            width={20}
-            height={20}
-            priority
-          /></span>
-        </span>
+      <div className="flex flex-row justify-end gap-[0.5rem] mr-5">
+        {/* collab */}
+        {permissions.includes("collab") && (
+          <Tooltip title="Export to Collab">
+            <Image
+              src={require("../../../../../public/icons/action_collab.svg")}
+              alt="documents"
+              className=" cursor-pointer"
+              width={60}
+              onClick={() => handleExport(docId, "collab")}
+            />
+          </Tooltip>
+        )}
+        {/* factcheck */}
+        {permissions.includes("fact checker") && (
+          <Tooltip title="Export to Factchecker">
+            <Image
+              src={require("../../../../../public/icons/action_factchecker.svg")}
+              alt="documents"
+              className="cursor-pointer"
+              onClick={() => handleExport(docId, "factcheck")}
+              width={60}
+            />
+          </Tooltip>
+        )}
+
+        {/* analyzer */}
+        {permissions.includes("analyser") && (
+          <Tooltip title="Export to Analyzer">
+            <Image
+              src={require("../../../../../public/icons/action_analyzer.svg")}
+              alt="documents"
+              className=" cursor-pointer"
+              onClick={() => handleExport(docId, "analyzer")}
+              width={60}
+            />
+          </Tooltip>
+        )}
+
+        {/* translator */}
+        {permissions.includes("summarizer") && (
+          <Tooltip title="Export to Summarizer">
+            <Image
+              src={require("../../../../../public/icons/action_summarizer.svg")}
+              alt="documents"
+              className="cursor-pointer"
+              onClick={() => handleExport(docId, "summarizer")}
+              width={60}
+            />
+          </Tooltip>
+        )}
+
+        {/* deepchat */}
+        {permissions.includes("deep chat") && (
+          <Tooltip title="Export to Deep chat">
+            <Image
+              src={require("../../../../../public/icons/action_deepchat.svg")}
+              alt="documents"
+              className="cursor-pointer"
+              onClick={() => handleExport(docId, "deepchat")}
+              width={60}
+            />
+          </Tooltip>
+        )}
+
+        {/* interrogator */}
+        {permissions.includes("interrogator") && (
+          <Tooltip title="Export to Interrogator">
+            <Image
+              src={require("../../../../../public/icons/action_interrogator.svg")}
+              alt="documents"
+              className="cursor-pointer"
+              onClick={() => handleExport(docId, "interrogator")}
+              width={60}
+            />
+          </Tooltip>
+        )}
       </div>
     </>
   );
