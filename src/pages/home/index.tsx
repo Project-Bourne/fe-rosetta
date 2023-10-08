@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Image from 'next/image'
 import { useTruncate } from "@/components/custom-hooks";
-import { setOriginalText, seTranslatedData, setOriginal, setTranslated } from '@/redux/reducer/translateSlice';
+import { setOriginalText, seTranslatedData, setOriginal, setTranslated, setTranslatedUuid } from '@/redux/reducer/translateSlice';
 import _debounce from 'lodash/debounce';
 import TranslatorService from '@/services/Translator.service';
 import NotificationService from '@/services/notification.service';
@@ -74,8 +74,8 @@ export default function Reader() {
           text: response.data.text,
           lang: 'auto',
         }))
+        dispatch(setTranslatedUuid(response.data.uuid))
         setLoading(false);
-        console.log('Making API call:', response);
       } else {
         NotificationService.error({
           message: "Error!",

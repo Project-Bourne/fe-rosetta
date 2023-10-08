@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { grey } from '@mui/material/colors';
 import NotificationService from '@/services/notification.service';
+import ActionIcons from '@/pages/home/components/actionIcons/ActionIcon';
 
 
 type LayoutType = {
@@ -21,7 +22,7 @@ const HomeLayout = ({ children }: LayoutType) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const [fileName, setFileName] = useState('')
-    const { original, translated } = useSelector((state: any) => state?.translate)
+    const { original, translated, translatedUuid } = useSelector((state: any) => state?.translate)
     const [isContainerVisible, setIsContainerVisible] = useState(false);
 
 
@@ -155,7 +156,6 @@ const HomeLayout = ({ children }: LayoutType) => {
             }
         }
     }
-
     return (
         <div className="w-full h-full">
             <div className="w-full h-full  text-gray-500">
@@ -180,51 +180,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                     {/* // ) : null} */}
                     <div className='flex w-full items-center justify-end'>
                         <div className={`px-3 flex w-[40%] align-middle justify-between ${isContainerVisible ? '' : 'hidden'}`}>
-                            <span className='w-[50px] h-[50px] shadow-xl cursor-pointer flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-                                <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../assets/icons/box-arrow.svg`)}
-                                    alt="upload image"
-                                    width={20}
-                                    height={20}
-                                    priority
-                                /></span>
-                            </span>
-                            <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-                                <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../assets/icons/binbin.svg`)}
-                                    alt="upload image"
-                                    width={20}
-                                    height={20}
-                                    priority
-                                /></span>
-                            </span>
-                            <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-                                <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../assets/icons/searcharrow.svg`)}
-                                    alt="upload image"
-                                    width={20}
-                                    height={20}
-                                    priority
-                                /></span>
-                            </span>
-                            <span className='w-[50px] h-[50px] cursor-pointer flex shadow-xl align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-                                <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../assets/icons/searchbox.svg`)}
-                                    alt="upload image"
-                                    width={20}
-                                    height={20}
-                                    priority
-                                /></span>
-                            </span>
-                            <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex align-middle rounded-[10px] justify-center border-2 border-[#E8EAEC] bg-[#fff]'>
-                                <span className='flex align-middle justify-center'>   <Image
-                                    src={require(`../../assets/icons/file-arrow.svg`)}
-                                    alt="upload image"
-                                    width={20}
-                                    height={20}
-                                    priority
-                                /></span>
-                            </span>
+                            <ActionIcons docId={translatedUuid} />
                         </div>
 
                         <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex items-center rounded-[10px] justify-center' onClick={toggleContainerVisibility}>
