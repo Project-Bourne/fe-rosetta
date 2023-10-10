@@ -35,7 +35,7 @@ const ActionIcons = ({ docId }) => {
     <>
       <div className="flex flex-row justify-end gap-[0.5rem] mr-5">
         {/* collab */}
-        {permissions.includes("collab") && (
+        {permissions?.includes("collab") && (
           <Tooltip title="Export to Collab">
             <Image
               src={require("../../../../../public/icons/action_collab.svg")}
@@ -47,7 +47,7 @@ const ActionIcons = ({ docId }) => {
           </Tooltip>
         )}
         {/* factcheck */}
-        {permissions.includes("fact checker") && (
+        {permissions?.includes("fact checker") && (
           <Tooltip title="Export to Factchecker">
             <Image
               src={require("../../../../../public/icons/action_factchecker.svg")}
@@ -60,7 +60,7 @@ const ActionIcons = ({ docId }) => {
         )}
 
         {/* analyzer */}
-        {permissions.includes("analyser") && (
+        {permissions?.includes("analyser") && (
           <Tooltip title="Export to Analyzer">
             <Image
               src={require("../../../../../public/icons/action_analyzer.svg")}
@@ -73,7 +73,7 @@ const ActionIcons = ({ docId }) => {
         )}
 
         {/* translator */}
-        {permissions.includes("summarizer") && (
+        {permissions?.includes("summarizer") && (
           <Tooltip title="Export to Summarizer">
             <Image
               src={require("../../../../../public/icons/action_summarizer.svg")}
@@ -86,7 +86,7 @@ const ActionIcons = ({ docId }) => {
         )}
 
         {/* deepchat */}
-        {permissions.includes("deep chat") && (
+        {permissions?.includes("deep chat") && (
           <Tooltip title="Export to Deep chat">
             <Image
               src={require("../../../../../public/icons/action_deepchat.svg")}
@@ -99,7 +99,7 @@ const ActionIcons = ({ docId }) => {
         )}
 
         {/* interrogator */}
-        {permissions.includes("interrogator") && (
+        {permissions?.includes("interrogator") && (
           <Tooltip title="Export to Interrogator">
             <Image
               src={require("../../../../../public/icons/action_interrogator.svg")}
