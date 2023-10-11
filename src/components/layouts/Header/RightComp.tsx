@@ -1,4 +1,4 @@
-import { useTruncate } from "../../../components/custom-hooks";
+import useTruncate from "../../custom-hooks/getTruncatedText";
 import { logout } from "../../../redux/reducer/authReducer";
 import AuthService from "../../../services/auth.service";
 import NotificationService from "../../../services/notification.service";
@@ -6,19 +6,19 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import notification from "../../../../public/icons/notification.svg";
-// import dashboard from "../../../../public/icons/dashboard.svg";
-// import down from "../../../../public/icons/down.svg";
-import { Cookies, useCookies } from 'react-cookie';
+import { Cookies, useCookies } from "react-cookie";
+import DashboardDropdown from "./DropdownItems";
+import { Tooltip } from "@mui/material";
 
 function RightComp() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [toggleDashboard, setToggleDashboard] = useState(false);
   const authService = new AuthService();
+  const [cookies, setCookie, removeCookie] = useCookies(["deep-access"]);
   const { userInfo, userAccessToken, refreshToken } = useSelector(
-    (state: any) => state?.auth,
+    (state: any) => state?.auth
   );
-  const [cookies, setCookie, removeCookie] = useCookies(['deep-access']);
   const [dropdown, setDropdown] = useState(false);
 
   const handleLogout = async (event: any) => {
@@ -27,8 +27,8 @@ function RightComp() {
     localStorage.clear();
 
     removeCookie("deep-access", { path: "/" });
-    router.push("/http://192.81.213.226/30/auth/login");
-    
+    router.push("http://192.81.213.226:80/auth/login");
+
     NotificationService.success({
       message: "Logout operation successful!",
     });
@@ -36,7 +36,10 @@ function RightComp() {
   };
 
   const userName = () => userInfo?.firstName + " " + userInfo?.lastName;
-  const userInitials = () => userInfo?.firstName[0] + userInfo?.lastName[0];
+  const userInitials = () => {
+    if (userInfo?.firstName && userInfo?.lastName[0])
+      return userInfo?.firstName[0] + userInfo?.lastName[0];
+  };
 
   return (
     <div className="flex flex-row items-center self-start">
@@ -51,17 +54,21 @@ function RightComp() {
           priority
         />
       </div>
-      {/* <div className={`${styles.view1} hidden md:flex`}>
-        <Image
-          src={dashboard}
-          alt="dashbaord"
-          width={20}
-          height={20}
-          className="self-center"
-          style={{ alignSelf: "center" }}
-          priority
-        />
-      </div> */}
+      <div className={`${styles.view1} hidden md:flex relative`}>
+        <Tooltip title={toggleDashboard ? "Close modules" : "Open all modules"}>
+          <Image
+            src={require("../../../../public/icons/dashboard.svg")}
+            alt="dashboard"
+            width={20}
+            height={20}
+            className="self-center"
+            onClick={() => setToggleDashboard((prevState) => !prevState)}
+            style={{ alignSelf: "center" }}
+            priority
+          />
+        </Tooltip>
+        {toggleDashboard && <DashboardDropdown />}
+      </div>
 
       <div className="relative bg-sirp-lightGrey flex flex-row mr-2 py-2 px-2 md:px-5 h-[45px] rounded-[12px] items-center justify-center cursor-pointer">
         <div className="flex flex-row items-center justify-center">
@@ -106,7 +113,7 @@ function RightComp() {
 
         {dropdown && (
           <div
-            className="absolute bg-sirp-lightGrey text-[13px] py-2 px-2 w-[90px] text-center top-[3rem] md:mr-[7.5rem] rounded-lg items-center justify-center"
+            className="absolute bg-sirp-lightGrey text-black text-[13px] py-2 px-2 w-[90px] text-center top-[3rem] md:mr-[7.5rem] rounded-lg items-center justify-center"
             onClick={handleLogout}
           >
             <p>Log Out</p>
