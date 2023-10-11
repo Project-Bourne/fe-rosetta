@@ -59,6 +59,9 @@ export default function Reader() {
             case 'factcheck':
               url = `http://192.81.213.226:81/84/fact/${routeId}`;
               break;
+            case 'irp':
+              url = `http://192.81.213.226:81/84/fact/${routeId}`;
+              break;
             case 'deepchat':
               url = `http://192.81.213.226:81/85/deepchat/${routeId}`;
               break;
@@ -89,6 +92,9 @@ export default function Reader() {
               setFormData(data?.data?.textTranslation);
               break;
             case 'factcheck':
+              setFormData(data?.data?.confidence?.content);
+              break;
+            case 'irp':
               setFormData(data?.data?.confidence?.content);
               break;
             case 'summarizer':
