@@ -25,7 +25,7 @@ export default function Reader() {
   useEffect(() => {
     dispatch(setTranslated({
       text: '',
-      lang: 'en',
+      lang: '',
     }))
     dispatch(setOriginal({
       text: '',
@@ -55,14 +55,22 @@ export default function Reader() {
       console.log(err);
     }
   }, []);
-  
+
   const debouncedHandleChange = async () => {
+    setLoading(true)
     try {
       const data = {
         text: original.text,
         sourceLang: original.lang == 'auto' ? '' : original.lang,
         targetLang: translated.lang,
       }
+      if (!data.text || !data.targetLang) {
+        NotificationService.error({
+          message: "Error!",
+          addedText: <p>Text cannot be empty. Select A Language for your text to be translated to.</p>,
+        });
+      }
+
       const response = await TranslatorService.translate(data)
       if (response.status) {
         dispatch(setTranslated({
@@ -82,10 +90,12 @@ export default function Reader() {
           addedText: <p>{response.message}. please try again</p>,
 
         });
+        setLoading(false)
       }
 
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   };
 
@@ -95,10 +105,10 @@ export default function Reader() {
 
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
-      setLoading(true)
+    
       await debouncedHandleChange();
       setEditMode(false);
-      setLoading(false)
+
     }
   };
 
@@ -145,27 +155,35 @@ export default function Reader() {
             </div>
             <div className={`row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] border-2 max-h-[60vh] relative overflow-y-scroll border-[#E5E7EB] ${isSwapped ? 'order-2' : 'order-1'}`}>
               <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
-              {showContext ? <Tooltip title="Get normal traslation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
-                <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
-                  <Image
-                    src={require(`../../assets/icons/on.eye.svg`)}
-                    alt="upload image"
-                    width={20}
-                    height={20}
-                    priority
-                  />
-                </div>
-              </Tooltip> : <Tooltip title="Get a contextual traslation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
-                <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
-                  <Image
-                    src={require(`../../assets/icons/eye.svg`)}
-                    alt="upload image"
-                    width={20}
-                    height={20}
-                    priority
-                  />
-                </div>
-              </Tooltip>}
+              {translated?.context?.length > 0 &&
+                <> 
+                {showContext ?
+                  <Tooltip title="Show Translation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                    <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
+                      <Image
+                        src={require(`../../assets/icons/on.eye.svg`)}
+                        alt="upload image"
+                        width={20}
+                        height={20}
+                        priority
+                      />
+                    </div>
+                  </Tooltip> :
+                  <Tooltip title="Show Translation with Context" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                    <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
+                      <Image
+                        src={require(`../../assets/icons/eye.svg`)}
+                        alt="upload image"
+                        width={20}
+                        height={20}
+                        priority
+                      />
+                    </div>
+                  </Tooltip>
+                }
+                </>
+              }
+
               {translated.isLoading || loading ? (
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                   <CircularProgress />
@@ -176,6 +194,7 @@ export default function Reader() {
             </div>
           </div>
         </div>
+        <div className='w-full flex items-center justify-center' onClick={debouncedHandleChange}> <div className='bg-sirp-primary cursor-pointer text-white font-bold rounded-lg py-2 px-4 w-[20%] flex items-center justify-center'>Run Translator</div></div>
       </HomeLayout>
     </div>
   );
