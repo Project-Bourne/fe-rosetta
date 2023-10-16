@@ -35,13 +35,13 @@ export default function MultipleSelect({ selectedLanguage, handleChange }) {
   return (
     <div>
       <FormControl sx={{borderBottom:"2px solid #4582C4", width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">Language</InputLabel>
+        <InputLabel id="demo-multiple-name-label">Select Language</InputLabel>
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
           value={selectedLanguage}
           onChange={handleChange}
-          input={<OutlinedInput label="Language" />}
+          input={<OutlinedInput label="Select Language" />}
           MenuProps={MenuProps}
         >
           {names.map((name) => (

@@ -34,6 +34,7 @@ const HomeLayout = ({ children }: LayoutType) => {
     const handleOriginalSelectChange = async (e) => {
         e.preventDefault();
         dispatch(setOriginalLang(e.target.value))
+        if(!original.text) return
         dispatch(setOriginalLoading(true))
         try {
             const data = {
@@ -60,8 +61,10 @@ const HomeLayout = ({ children }: LayoutType) => {
 
     const handleTranslatedSelectChange = async (e) => {
         e.preventDefault();
-        dispatch(setTranslatedLoading(true))
         dispatch(setTranslatedLang(e.target.value))
+        if (!translated.text) return
+        dispatch(setTranslatedLoading(true))
+
         try {
             const data = {
                 text: translated.text,
@@ -89,7 +92,7 @@ const HomeLayout = ({ children }: LayoutType) => {
 
     const handleSwapClick = async () => {
         dispatch(swapContents());
-      };
+    };
 
 
     const handleFileUpload = async (event) => {

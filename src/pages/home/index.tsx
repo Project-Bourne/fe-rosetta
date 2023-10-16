@@ -57,6 +57,7 @@ export default function Reader() {
   }, []);
 
   const debouncedHandleChange = async () => {
+    setLoading(true)
     try {
       const data = {
         text: original.text,
@@ -89,10 +90,12 @@ export default function Reader() {
           addedText: <p>{response.message}. please try again</p>,
 
         });
+        setLoading(false)
       }
 
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   };
 
@@ -102,10 +105,10 @@ export default function Reader() {
 
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
-      setLoading(true)
+    
       await debouncedHandleChange();
       setEditMode(false);
-      setLoading(false)
+
     }
   };
 
@@ -155,7 +158,7 @@ export default function Reader() {
               {translated?.context?.length > 0 &&
                 <> 
                 {showContext ?
-                  <Tooltip title="Get normal traslation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                  <Tooltip title="Show Translation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
                     <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
                       <Image
                         src={require(`../../assets/icons/on.eye.svg`)}
@@ -166,7 +169,7 @@ export default function Reader() {
                       />
                     </div>
                   </Tooltip> :
-                  <Tooltip title="Get a contextual traslation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                  <Tooltip title="Show Translation with Context" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
                     <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
                       <Image
                         src={require(`../../assets/icons/eye.svg`)}
