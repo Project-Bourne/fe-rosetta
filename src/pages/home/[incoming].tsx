@@ -71,7 +71,7 @@ export default function Reader() {
               url = `http://192.81.213.226:81/837/interrogator/${routeId}`;
               break;
             case 'collab':
-              url = `http://192.81.213.226:81/86/api/v1/${routeId}`;
+              url = `http://192.81.213.226:81/86/api/v1/doc/${routeId}`;
               break;
             default:
               throw new Error('Invalid routeName');
@@ -95,13 +95,13 @@ export default function Reader() {
               break;
             case 'factcheck':
               dispatch(setOriginal({
-                text: data?.data?.confidence?.content,
+                text: data?.data?.confidence?.content5wh,
                 lang: 'auto',
               }))
               break;
             case 'irp':
               dispatch(setOriginal({
-                text: data?.data?.confidence?.content,
+                text: data?.data?.confidence?.content5wh,
                 lang: 'auto',
               }))
               break;
@@ -112,12 +112,20 @@ export default function Reader() {
               }))
               break;
             case 'analyser':
-              dispatch(setOriginalText(data?.data?.text))
-              console.log(data?.data?.text, 'data?.data?.textmmmm')
+              if(data.data.text){
+                dispatch(setOriginal({
+                  text: data?.data?.text,
+                  lang: 'auto',
+                }))
+              }
+              console.log(data?.data?.text, 'data?.data?.textmmmm', data)
             case 'interrogator':
             case 'collab':
+              const collabData: string[] = data?.data?.data?.ops.map((el) => {
+                return el.insert;
+              });
               dispatch(setOriginal({
-                text: data?.data?.confidence?.content,
+                text: collabData.join(' '),
                 lang: 'auto',
               }))
             case 'deepchat':
