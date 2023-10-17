@@ -19,8 +19,6 @@ import AuthService from '@/services/auth.service';
 import { setUserInfo } from '@/redux/reducer/authReducer';
 import { useRouter } from 'next/router';
 import { Cookies } from 'react-cookie';
-import CustomModal from '@/components/ui/CustomModal';
-import Loader from '@/components/ui/Loader';
 
 export default function Reader() {
   const { original, translated, isSwapped } = useSelector(
@@ -29,9 +27,10 @@ export default function Reader() {
   const [showContext, setShowContext] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState('');
+  // const [formData, setFormData] = useState('');
   const focusedTextarea = useRef(null);
   const dispatch = useDispatch();
+  // const [importText,setImportText] = useState('')
   const router = useRouter();
   const { incoming } = router.query;
   const cookies = new Cookies();
@@ -65,7 +64,7 @@ export default function Reader() {
             case 'deepchat':
               url = `http://192.81.213.226:81/85/deepchat/${routeId}`;
               break;
-            case 'analyzer':
+            case 'analyser':
               url = `http://192.81.213.226:81/81/analysis/${routeId}`;
               break;
             case 'interrogator':
@@ -89,21 +88,38 @@ export default function Reader() {
           const data = await response.json();
           switch (routeName) {
             case 'translator':
-              setFormData(data?.data?.textTranslation);
+              dispatch(setOriginal({
+                text: data?.data?.textTranslationt,
+                lang: 'auto',
+              }))
               break;
             case 'factcheck':
-              setFormData(data?.data?.confidence?.content);
+              dispatch(setOriginal({
+                text: data?.data?.confidence?.content,
+                lang: 'auto',
+              }))
               break;
             case 'irp':
-              setFormData(data?.data?.confidence?.content);
+              dispatch(setOriginal({
+                text: data?.data?.confidence?.content,
+                lang: 'auto',
+              }))
               break;
             case 'summarizer':
-              setFormData(data?.data?.summaryArray[0].summary);
+              dispatch(setOriginal({
+                text: data?.data?.summaryArray[0].summary,
+                lang: 'auto',
+              }))
               break;
-            case 'analyzer':
-              setFormData(data?.data?.text);
+            case 'analyser':
+              dispatch(setOriginalText(data?.data?.text))
+              console.log(data?.data?.text, 'data?.data?.textmmmm')
             case 'interrogator':
             case 'collab':
+              dispatch(setOriginal({
+                text: data?.data?.confidence?.content,
+                lang: 'auto',
+              }))
             case 'deepchat':
               break;
             default:
@@ -126,22 +142,21 @@ export default function Reader() {
     fetchData();
   }, [incoming]);
 
-  console.log(formData);
 
-  useEffect(() => {
-    dispatch(
-      setTranslated({
-        text: '',
-        lang: 'en'
-      })
-    );
-    dispatch(
-      setOriginal({
-        text: '',
-        lang: 'auto'
-      })
-    );
-  }, []);
+  // useEffect(() => {
+  //   dispatch(
+  //     setTranslated({
+  //       text: '',
+  //       lang: 'en'
+  //     })
+  //   );
+  //   dispatch(
+  //     setOriginal({
+  //       text: '',
+  //       lang: 'auto'
+  //     })
+  //   );
+  // }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -166,37 +181,45 @@ export default function Reader() {
   }, []);
 
   const debouncedHandleChange = async () => {
+    setLoading(true)
     try {
       const data = {
         text: original.text,
         sourceLang: original.lang == 'auto' ? '' : original.lang,
-        targetLang: translated.lang
-      };
-      const response = await TranslatorService.translate(data);
+        targetLang: translated.lang,
+      }
+      if (!data.text || !data.targetLang) {
+        NotificationService.error({
+          message: "Error!",
+          addedText: <p>Text cannot be empty. Select A Language for your text to be translated to.</p>,
+        });
+      }
+
+      const response = await TranslatorService.translate(data)
       if (response.status) {
-        dispatch(
-          setTranslated({
-            text: response.data.textTranslation,
-            context: response.data.textTranslationContext,
-            lang: 'en'
-          })
-        );
-        dispatch(
-          setOriginal({
-            text: response.data.text,
-            lang: 'auto'
-          })
-        );
-        dispatch(setTranslatedUuid(response.data.uuid));
+        dispatch(setTranslated({
+          text: response.data.textTranslation,
+          context: response.data.textTranslationContext,
+          lang: 'en',
+        }))
+        dispatch(setOriginal({
+          text: response.data.text,
+          lang: 'auto',
+        }))
+        dispatch(setTranslatedUuid(response.data.uuid))
         setLoading(false);
       } else {
         NotificationService.error({
-          message: 'Error!',
-          addedText: <p>{response.message}. please try again</p>
+          message: "Error!",
+          addedText: <p>{response.message}. please try again</p>,
+
         });
+        setLoading(false)
       }
+
     } catch (error) {
-      console.log(error);
+      console.log(error)
+      setLoading(false)
     }
   };
 
@@ -219,7 +242,8 @@ export default function Reader() {
 
   const handlechange = async e => {
     e.preventDefault();
-    dispatch(setOriginalText(formData));
+    // dispatch(setOriginalText(formData));
+    dispatch(setOriginalText(e.target.value))
   };
   useEffect(() => {
     if (focusedTextarea.current && focusedTextarea.current.value) {
@@ -228,120 +252,73 @@ export default function Reader() {
   }, [original]);
 
   return (
-    <div className="m-10 py-5 rounded-[1rem] bg-[#F9F9F9]">
-
-{loading && (
-        <CustomModal
-          style="md:w-[30%] w-[90%] relative top-[20%] rounded-xl mx-auto pt-3 px-3 pb-5"
-          closeModal={() => setLoading(false)}
-        >
-          <div className="flex justify-center items-center mt-[10rem]">
-            <Loader />
-          </div>
-        </CustomModal>
-      )}
+    <div className='m-10 py-5 rounded-[1rem] bg-[#F9F9F9]'>
       <HomeLayout>
-        <div className="p-5">
-          <div className="m-5 grid grid-cols-2 gap-4">
-            <div
-              className={`row-span-2 p-5 rounded-[20px] bg-[#f4f5f6] max-h-[60vh] overflow-y-scroll border-2 border-[#E5E7EB]`}
-            >
-              <span className="text-[#383E42] text-xl font-bold">
-                Original Text
-              </span>
-              {original.isLoading ? (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '100%'
-                  }}
-                >
-                  <CircularProgress />
-                </Box>
-              ) : (
-                <textarea
-                  ref={focusedTextarea}
-                  className="text-[#383E42] h-full text-sm pt-3 bg-transparent border-0 outline-none w-full resize-none"
-                  value={formData}
-                  onClick={handleTextareaClick}
-                  onBlur={handleTextareaBlur}
-                  onChange={handlechange}
-                  onFocus={() => {
-                    focusedTextarea.current = 'original';
-                  }}
-                  onKeyDown={handleKeyDown}
-                  rows={20} // Set an initial value for rows
-                  style={{
-                    height:
-                      editMode && focusedTextarea.current === 'original'
-                        ? 'auto'
-                        : 'auto' // Set initial height
-                  }}
-                />
-              )}
+        <div className='p-5'>
+          <div className='m-5 grid grid-cols-2 gap-4'>
+            <div className={`row-span-2 p-5 rounded-[20px] bg-[#f4f5f6] max-h-[60vh] overflow-y-scroll border-2 border-[#E5E7EB]`}>
+              <span className='text-[#383E42] text-xl font-bold'>Original Text</span>
+              {original.isLoading ? <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                <CircularProgress />
+              </Box> : <textarea
+                ref={focusedTextarea}
+                className='text-[#383E42] h-full text-sm pt-3 bg-transparent border-0 outline-none w-full resize-none'
+                value={original.text}
+                onClick={handleTextareaClick}
+                onBlur={handleTextareaBlur}
+                onChange={handlechange}
+                onFocus={() => {
+                  focusedTextarea.current = 'original';
+                }}
+                onKeyDown={handleKeyDown}
+                rows={20} // Set an initial value for rows
+                style={{
+                  height: editMode && focusedTextarea.current === 'original' ? 'auto' : 'auto', // Set initial height
+                }}
+              />}
             </div>
-            <div
-              className={`row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] border-2 max-h-[60vh] relative overflow-y-scroll border-[#E5E7EB] ${
-                isSwapped ? 'order-2' : 'order-1'
-              }`}
-            >
-              <span className="text-[#383E42] text-xl font-bold">
-                Translated Text
-              </span>
-              {showContext ? (
-                <Tooltip
-                  title="Get normal traslation"
-                  className="badge-icon absolute top-2 right-2 cursor-pointer"
-                  onClick={() => setShowContext(!showContext)}
-                >
-                  <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
-                    <Image
-                      src={require(`../../assets/icons/on.eye.svg`)}
-                      alt="upload image"
-                      width={20}
-                      height={20}
-                      priority
-                    />
-                  </div>
-                </Tooltip>
-              ) : (
-                <Tooltip
-                  title="Get a contextual traslation"
-                  className="badge-icon absolute top-2 right-2 cursor-pointer"
-                  onClick={() => setShowContext(!showContext)}
-                >
-                  <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
-                    <Image
-                      src={require(`../../assets/icons/eye.svg`)}
-                      alt="upload image"
-                      width={20}
-                      height={20}
-                      priority
-                    />
-                  </div>
-                </Tooltip>
-              )}
+            <div className={`row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] border-2 max-h-[60vh] relative overflow-y-scroll border-[#E5E7EB] ${isSwapped ? 'order-2' : 'order-1'}`}>
+              <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
+              {translated?.context?.length > 0 &&
+                <>
+                  {showContext ?
+                    <Tooltip title="Show Translation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                      <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
+                        <Image
+                          src={require(`../../assets/icons/on.eye.svg`)}
+                          alt="upload image"
+                          width={20}
+                          height={20}
+                          priority
+                        />
+                      </div>
+                    </Tooltip> :
+                    <Tooltip title="Show Translation with Context" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                      <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
+                        <Image
+                          src={require(`../../assets/icons/eye.svg`)}
+                          alt="upload image"
+                          width={20}
+                          height={20}
+                          priority
+                        />
+                      </div>
+                    </Tooltip>
+                  }
+                </>
+              }
+
               {translated.isLoading || loading ? (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '100%'
-                  }}
-                >
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                   <CircularProgress />
                 </Box>
               ) : (
-                <p className="text-[#383E42] text-sm pt-3">
-                  {!showContext ? translated.text : translated.context}
-                </p>
+                <p className='text-[#383E42] text-sm pt-3'>{!showContext ? translated.text : translated.context}</p>
               )}
             </div>
           </div>
         </div>
+        <div className='w-full flex items-center justify-center' onClick={debouncedHandleChange}> <div className='bg-sirp-primary cursor-pointer text-white font-bold rounded-lg py-2 px-4 w-[20%] flex items-center justify-center'>Run Translator</div></div>
       </HomeLayout>
     </div>
   );
