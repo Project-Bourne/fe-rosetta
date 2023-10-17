@@ -8,7 +8,7 @@ import TranslatorService from '../../services/Translator.service';
 import {
     setSingleHistory,
 } from '@/redux/reducer/translateSlice';
-import { setOriginalText, seTranslatedData, setOriginal, setTranslated } from '@/redux/reducer/translateSlice';
+import { setOriginalText, seTranslatedData, setOriginal, setTranslated, setTranslatedUuid } from '@/redux/reducer/translateSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import BasicTabs from '.';
 import NotificationService from '@/services/notification.service';
@@ -56,47 +56,47 @@ function HomeContent() {
     }, [homecontent]);
     
     const debouncedHandleChange = async () => {
-        setLoading(true)
-        try {
-          const data = {
-            text: original.text,
-            sourceLang: original.lang == 'auto' ? '' : original.lang,
-            targetLang: translated.lang,
-          }
-          if (!data.text || !data.targetLang) {
-            NotificationService.error({
-              message: "Error!",
-              addedText: <p>Text cannot be empty. Select A Language for your text to be translated to.</p>,
-            });
-          }
-    
-          const response = await TranslatorService.translate(data)
-          if (response.status) {
-            dispatch(setTranslated({
-              text: response.data.textTranslation,
-              context: response.data.textTranslationContext,
-              lang: 'en',
-            }))
-            dispatch(setOriginal({
-              text: response.data.text,
-              lang: 'auto',
-            }))
-            dispatch(setTranslatedUuid(response.data.uuid))
-            setLoading(false);
-          } else {
-            NotificationService.error({
-              message: "Error!",
-              addedText: <p>{response.message}. please try again</p>,
-    
-            });
-            setLoading(false)
-          }
-    
-        } catch (error) {
-          console.log(error)
+      setLoading(true)
+      try {
+        const data = {
+          text: original.text,
+          sourceLang: original.lang == 'auto' ? '' : original.lang,
+          targetLang: translated.lang,
+        }
+        if (!data.text || !data.targetLang) {
+          NotificationService.error({
+            message: "Error!",
+            addedText: <p>Text cannot be empty. Select A Language for your text to be translated to.</p>,
+          });
+        }
+  
+        const response = await TranslatorService.translate(data)
+        if (response.status) {
+          dispatch(setTranslated({
+            text: response.data.textTranslation,
+            context: response.data.textTranslationContext,
+            lang: 'en',
+          }))
+          dispatch(setOriginal({
+            text: response.data.text,
+            lang: 'auto',
+          }))
+          dispatch(setTranslatedUuid(response.data.uuid))
+          setLoading(false);
+        } else {
+          NotificationService.error({
+            message: "Error!",
+            addedText: <p>{response.message}. please try again</p>,
+  
+          });
           setLoading(false)
         }
-      };
+  
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
+      }
+    };
     
 
     const handleTextareaClick = () => {
