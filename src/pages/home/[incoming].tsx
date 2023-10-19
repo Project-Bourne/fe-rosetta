@@ -68,7 +68,7 @@ export default function Reader() {
               url = `http://192.81.213.226:81/81/analysis/${routeId}`;
               break;
             case 'interrogator':
-              url = `http://192.81.213.226:81/837/interrogator/${routeId}`;
+              url = `http://192.81.213.226:81/87/interrogation/${routeId}`;
               break;
             case 'collab':
               url = `http://192.81.213.226:81/86/api/v1/doc/${routeId}`;
@@ -86,6 +86,7 @@ export default function Reader() {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data = await response.json();
+          console.log(data, "data-router")
           switch (routeName) {
             case 'translator':
               dispatch(setOriginal({

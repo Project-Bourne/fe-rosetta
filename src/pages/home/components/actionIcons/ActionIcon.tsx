@@ -14,7 +14,7 @@ const ActionIcons = ({ docId }) => {
     if (to === "collab") {
       router.push(`http://192.81.213.226:36/document/${id}&translator`);
     }
-    if (to === "analyzer") {
+    if (to === "analyser") {
       router.push(`http://192.81.213.226:31/home/${id}&translator`);
     }
     if (to === "factcheck") {

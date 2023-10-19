@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { useEffect } from 'react'
@@ -17,7 +18,7 @@ export default function Home() {
       undefined,
       { shallow: true }
     )
-  }, []);
+  }, );
 
   return (
     <>
