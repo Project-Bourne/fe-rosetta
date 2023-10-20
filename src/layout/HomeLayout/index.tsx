@@ -12,6 +12,7 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { grey } from '@mui/material/colors';
 import NotificationService from '@/services/notification.service';
 import ActionIcons from '@/pages/home/components/actionIcons/ActionIcon';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 
 type LayoutType = {
@@ -24,7 +25,7 @@ const HomeLayout = ({ children }: LayoutType) => {
     const [fileName, setFileName] = useState('')
     const { original, translated, translatedUuid } = useSelector((state: any) => state?.translate)
     const [isContainerVisible, setIsContainerVisible] = useState(false);
-
+    const { userInfo } = useSelector((state: any) => state?.auth);
 
     const toggleContainerVisibility = () => {
         setIsContainerVisible(!isContainerVisible);
@@ -98,15 +99,19 @@ const HomeLayout = ({ children }: LayoutType) => {
     const handleFileUpload = async (event) => {
         event.preventDefault();
         const selectedFile = event.target.files[0];
+        const fullName = `${userInfo.firstName} ${userInfo.lastName}`;
+        const userId = userInfo.uuid
+        if(!fullName || !userId || !selectedFile) return
         if (selectedFile) {
             setFileName(selectedFile.name)
-
             const formData = new FormData();
             formData.append('files', selectedFile);
+            formData.append("userId", userId);
+            formData.append("userName", fullName);
             dispatch(setOriginalLoading(true));
             dispatch(setOriginalLoading(true))
             try {
-                const res = await fetch('http://192.81.213.226:89/api/v1/uploads', {
+                const res = await fetch('http://192.81.213.226:81/89/api/v1/uploads', {
                     method: 'POST',
                     body: formData,
                 });
@@ -167,10 +172,11 @@ const HomeLayout = ({ children }: LayoutType) => {
                     {/* {original.text.length === 0 ? ( */}
                     <div className='bg-sp pr-10 ml-2 w-[50%]'>
                         <div className='flex items-center'>
-                            <label htmlFor="file-input" className='px-4 py-2 rounded-lg shadow' style={{ cursor: 'pointer', color: '#4582C4', backgroundColor: "white" }}>
+                            <label htmlFor="file-input" className='px-4 py-2 rounded-lg shadow w-[50%]' style={{ cursor: 'pointer', color: '#4582C4', backgroundColor: "white" }}>
                                 <DriveFolderUploadIcon style={{ color: '#4582C4', cursor: 'pointer' }} /> Upload File
                             </label>
-                            <span className='text-grey-400 ml-2 text-sm text-sirp-primary'>{fileName}</span>
+                            <span className='text-grey-400 ml-2 text-sm text-sirp-primary w-[38%]'>{useTruncate(fileName, 18)}</span>
+                            {fileName &&<span className='text-grey-400 text-sm text-sirp-primary ' onClick={() => setFileName('')}><RemoveCircleIcon style={{ color: '#4582C4', cursor: 'pointer' }} /></span>}
                             <input
                                 type="file"
                                 id="file-input"
