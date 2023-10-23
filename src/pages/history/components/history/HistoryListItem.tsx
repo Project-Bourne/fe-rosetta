@@ -59,7 +59,7 @@ function ListItem({
         } catch (error) {
             console.log(error)
         }
-      
+
     };
 
     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Get user's time zone
@@ -78,18 +78,18 @@ function ListItem({
             <div className="flex gap-3 items-center  hover:text-gray-400">
                 {/* Save icon */}
                 <Tooltip title={isArchived ? "Remove from bookmark" : "Save to bookmark"}>
-                <Image
-                    src={
-                        isArchived
-                            ? require(`../../../../assets/icons/on.saved.svg`)
-                            : require(`../../../../assets/icons/saved.svg`)
-                    }
-                    alt="documents"
-                    className="cursor-pointer w-4 h-4"
-                    width={10}
-                    height={10}
-                    onClick={(e) => handleArchive(e, translateid)}
-                />
+                    <Image
+                        src={
+                            isArchived
+                                ? require(`../../../../assets/icons/on.saved.svg`)
+                                : require(`../../../../assets/icons/saved.svg`)
+                        }
+                        alt="documents"
+                        className="cursor-pointer w-4 h-4"
+                        width={10}
+                        height={10}
+                        onClick={(e) => handleArchive(e, translateid)}
+                    />
                 </Tooltip>
                 {/* name */}
                 <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-500">

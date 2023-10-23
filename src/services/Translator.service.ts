@@ -142,10 +142,10 @@ class TranslatorService {
    * @returns {Promise<Object>} - The response data from the server.
    */
 
-  static async getTranslationsHistory() {
+  static async getTranslationsHistory(page=1) {
     try {
       const response = await request(
-        `translation/user`,
+        `translation/user?page=${page}`,
         "GET",
         {},
         true,

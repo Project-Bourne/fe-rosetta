@@ -3,7 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const TranslateSlice = createSlice({
   name: 'Translator',
   initialState: {
-    history: [],
+    history: {
+      translate: [], // Your translation history data
+      itemsPerPage: 10,
+      currentPage: 1, // You can set your default page here
+      totalItems: 0, // Total number of items in history
+    },
     bookmark: [],
     singleHistory: {},
     isArchived: false,
@@ -54,6 +59,13 @@ const TranslateSlice = createSlice({
     
       return newState;
     },
+// Reducer to update pagination-related properties
+updatePagination: (state, action) => {
+  state.history = {
+    ...state.history,
+    ...action.payload,
+  };
+},
     setTranslatedUuid: (state, action) => {
       state.translatedUuid = action.payload;
     },
@@ -88,7 +100,7 @@ const TranslateSlice = createSlice({
       state.history = action.payload;
     },
     setBookmark: state => {
-      state.bookmark = state.history.filter(el => el.bookmark);
+      state.bookmark = state?.history?.translate.filter(el => el.bookmark);
     },
     setSingleHistory: (state, action) => {
       state.singleHistory = action.payload;
@@ -120,7 +132,8 @@ export const {
   setTranslatedText,
   setTranslatedLang,
   setTranslateContext,
-  setTranslatedUuid
+  setTranslatedUuid,
+  updatePagination
 } = TranslateSlice.actions;
 
 export default TranslateSlice.reducer;

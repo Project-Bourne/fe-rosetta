@@ -117,6 +117,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                 });
 
                 const response = await res.json();
+                
                 if (response) {
                     let newObj = {
                         text: response.data[0].text,
