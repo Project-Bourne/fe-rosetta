@@ -10,9 +10,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 function HistoryContent() {
     const { history } = useSelector((state: any) => state.translate);
-    const itemsPerPage = history.itemsPerPage || 10;
+    const itemsPerPage = history?.itemsPerPage || 10;
     const [loading, setLoading] = useState(false)
-    const [currentPage, setCurrentPage] = useState(history.currentPage || 1);
+    const [currentPage, setCurrentPage] = useState(history?.currentPage || 1);
     const dispatch = useDispatch()
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -37,9 +37,9 @@ function HistoryContent() {
             <div className='fixed top-0 bottom-0 right-0 left-0  z-[1000000] flex items-center justify-center backdrop-blur-sm  bg-[#747474]/[0.1] backdrop-brightness-50'> 
                 <CircularProgress/>
             </div>}
-            {history.translate?.length > 0 ? (
+            {history?.translate?.length > 0 ? (
                 <>
-                    {history.translate.map((item) => {
+                    {history?.translate.map((item) => {
                         return (
                             <div
                                 key={item.translationUuid}
