@@ -39,7 +39,7 @@ const dropdownItems = [
   },
   {
     name: 'Analyzer',
-    to: `${BASE_URL}/31/home`,
+    to: `${BASE_URL}31/home`,
     key: 'analyser',
     icon: analyzer
   },
