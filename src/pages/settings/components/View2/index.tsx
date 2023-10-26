@@ -2,14 +2,14 @@ import { Dropdown, DropdownWithFlag } from '@/components/ui';
 import Image from 'next/image';
 import React, { useState } from 'react'
 import { UserRoles } from '@/utils/constants';
-import { useCountries } from 'use-react-countries';
+// import { useCountries } from 'use-react-countries';
 import { useRouter } from 'next/router';
 
 const View2 = () => {
 
 
     const router = useRouter();
-    const { countries } = useCountries()
+    // const { countries } = useCountries()
 
     const [country, setCountry] = useState(null);
     const [role, setRole] = useState("");
@@ -96,7 +96,7 @@ const View2 = () => {
         </div>
 
         <DropdownWithFlag
-            data={countries}
+            data={['new']}
             selectItem={setCountry}
             className='text-[12px] text-black border-[1.5px] rounded-md py-2 px-7  w-[38%]'
             style={"w-[38%] mx-4"}
