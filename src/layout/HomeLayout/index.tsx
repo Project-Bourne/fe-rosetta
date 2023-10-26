@@ -12,6 +12,7 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { grey } from '@mui/material/colors';
 import NotificationService from '@/services/notification.service';
 import ActionIcons from '@/pages/home/components/actionIcons/ActionIcon';
+import { Cookies } from "react-cookie";
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 
@@ -26,6 +27,11 @@ const HomeLayout = ({ children }: LayoutType) => {
     const { original, translated, translatedUuid } = useSelector((state: any) => state?.translate)
     const [isContainerVisible, setIsContainerVisible] = useState(false);
     const { userInfo } = useSelector((state: any) => state?.auth);
+    const cookies = new Cookies();
+    let access = "";
+    if (typeof window !== "undefined") {
+        access = cookies.get("deep-access")
+    }
 
     const toggleContainerVisibility = () => {
         setIsContainerVisible(!isContainerVisible);
@@ -35,7 +41,7 @@ const HomeLayout = ({ children }: LayoutType) => {
     const handleOriginalSelectChange = async (e) => {
         e.preventDefault();
         dispatch(setOriginalLang(e.target.value))
-        if(!original.text) return
+        if (!original.text) return
         dispatch(setOriginalLoading(true))
         try {
             const data = {
@@ -101,7 +107,7 @@ const HomeLayout = ({ children }: LayoutType) => {
         const selectedFile = event.target.files[0];
         const fullName = `${userInfo.firstName} ${userInfo.lastName}`;
         const userId = userInfo.uuid
-        if(!fullName || !userId || !selectedFile) return
+        if (!fullName || !userId || !selectedFile) return
         if (selectedFile) {
             setFileName(selectedFile.name)
             const formData = new FormData();
@@ -114,10 +120,18 @@ const HomeLayout = ({ children }: LayoutType) => {
                 const res = await fetch('http://192.81.213.226:81/89/api/v1/uploads', {
                     method: 'POST',
                     body: formData,
+                    headers: {
+                        "deep-token": access,
+                    }
                 });
+                if (res.status === 403) {
+                    cookies.remove("deep-access");
 
+                    // Redirect to the login page
+                    window.location.href = "http://192.81.213.226:30/auth/login";
+                    return "Access forbidden. Redirecting to login page.";
+                }
                 const response = await res.json();
-                
                 if (response) {
                     let newObj = {
                         text: response.data[0].text,
@@ -177,7 +191,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                                 <DriveFolderUploadIcon style={{ color: '#4582C4', cursor: 'pointer' }} /> Upload File
                             </label>
                             <span className='text-grey-400 ml-2 text-sm text-sirp-primary w-[38%]'>{useTruncate(fileName, 18)}</span>
-                            {fileName &&<span className='text-grey-400 text-sm text-sirp-primary ' onClick={() => setFileName('')}><RemoveCircleIcon style={{ color: '#4582C4', cursor: 'pointer' }} /></span>}
+                            {fileName && <span className='text-grey-400 text-sm text-sirp-primary ' onClick={() => setFileName('')}><RemoveCircleIcon style={{ color: '#4582C4', cursor: 'pointer' }} /></span>}
                             <input
                                 type="file"
                                 id="file-input"

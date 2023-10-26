@@ -29,6 +29,9 @@ const ActionIcons = ({ docId }) => {
     if (to === "summarizer") {
       router.push(`http://192.81.213.226:32/home/${id}&translator`);
     }
+    if (to === "interrogator") {
+      router?.push(`http://192.81.213.226:82/home/query/${id}&translator`);
+    }
   };
 
   return (

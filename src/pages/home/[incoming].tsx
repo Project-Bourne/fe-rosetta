@@ -73,6 +73,9 @@ export default function Reader() {
             case 'collab':
               url = `http://192.81.213.226:81/86/api/v1/doc/${routeId}`;
               break;
+            case 'interrogator':
+              url = `http://192.81.213.226:81/87/interrogation/message/${routeId}`;
+            break;
             default:
               throw new Error('Invalid routeName');
           }
@@ -121,6 +124,11 @@ export default function Reader() {
               }
               console.log(data?.data?.text, 'data?.data?.textmmmm', data)
             case 'interrogator':
+              dispatch(setOriginal({
+                text: data?.data?.answer,
+                lang: 'auto',
+              }))
+            break;
             case 'collab':
               const collabData: string[] = data?.data?.data?.ops.map((el) => {
                 return el.insert;
