@@ -142,7 +142,8 @@ const HomeLayout = ({ children }: LayoutType) => {
                         dispatch(setTranslated({
                             text: newResponse.data.textTranslation,
                             context: newResponse.data.textTranslationContext,
-                            lang: 'en',
+                            // lang: 'en',
+                            lang: ''
                         }))
                         dispatch(setOriginal({
                             text: newResponse.data.text,

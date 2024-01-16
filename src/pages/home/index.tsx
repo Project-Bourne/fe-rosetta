@@ -25,11 +25,13 @@ export default function Reader() {
   useEffect(() => {
     dispatch(setTranslated({
       text: '',
+      context:'',
       lang: '',
     }))
     dispatch(setOriginal({
       text: '',
-      lang: 'auto',
+      lang: '',
+      context:'',
     }))
   }, [])
 
@@ -72,15 +74,16 @@ export default function Reader() {
       }
 
       const response = await TranslatorService.translate(data)
+      console.log(response.data, 'responseeeeeee')
       if (response.status) {
         dispatch(setTranslated({
           text: response.data.textTranslation,
           context: response.data.textTranslationContext,
-          lang: 'en',
+          lang: response.data.targetLang,
         }))
         dispatch(setOriginal({
           text: response.data.text,
-          lang: 'auto',
+          lang: response.data.sourceLang,
         }))
         dispatch(setTranslatedUuid(response.data.uuid))
         setLoading(false);

@@ -22,7 +22,7 @@ const TranslateSlice = createSlice({
     translated: {
       text: '',
       context:'',
-      lang: 'en',
+      lang: '',
       isLoading: false
     },
   },
