@@ -5,10 +5,10 @@
  */
 import { Cookies } from "react-cookie";
 const cookies = new Cookies();
-let access = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5MjI1ZDk1LTM1ZTktNGZhOS1iMWVlLWZmMjQyODYyYjZiZiIsImlhdCI6MTcwNTM5NjM0NywiZXhwIjoxNzA1Mzk5OTQ3fQ.eZv6Ig58L_BYcXcR2J98HNA42Y9wBrf-GxtYmYvY8ks";
-// if (typeof window !== "undefined") {
-//   access = cookies.get("deep-access")
-// }
+let access = "";
+if (typeof window !== "undefined") {
+  access = cookies.get("deep-access")
+}
 export const requestHeader = {
     Accept: 'application/json',
     'Cache-Control': 'no-cache',
