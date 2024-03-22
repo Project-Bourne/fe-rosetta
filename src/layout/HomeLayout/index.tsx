@@ -154,7 +154,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                     } else {
                         dispatch(setOriginalLoading(false));
                         dispatch(setOriginalLoading(false))
-                        router.push('/home');
+                        router.replace('/home');
                         NotificationService.error({
                             message: "Error!",
                             addedText: <p>{newResponse.message}. please try again</p>,

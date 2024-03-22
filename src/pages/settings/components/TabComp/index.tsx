@@ -27,7 +27,7 @@ const TabComp = ({item, index, route}: TabCompType) => {
     // e.preventDefault();
     setPath(item.route);
     // console.log(route, path, route, `${path}` == `${route}`, )
-    router.push(
+    router.replace(
       {
         pathname: item.route
       },

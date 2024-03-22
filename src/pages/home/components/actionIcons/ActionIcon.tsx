@@ -12,22 +12,22 @@ const ActionIcons = ({ docId }) => {
 
   const handleExport = (id: string, to: string) => {
     if (to === "collab") {
-      router.push(`http://192.81.213.226:36/document/${id}&translator`);
+      router.replace(`http://192.81.213.226:36/document/${id}&translator`);
     }
     if (to === "analyser") {
-      router.push(`http://192.81.213.226:31/home/${id}&translator`);
+      router.replace(`http://192.81.213.226:31/home/${id}&translator`);
     }
     if (to === "factcheck") {
-      router.push(`http://192.81.213.226:34/home/${id}&translator`);
+      router.replace(`http://192.81.213.226:34/home/${id}&translator`);
     }
     if (to === "deepchat") {
-      router.push(`http://192.81.213.226:35/home/${id}&translator`);
+      router.replace(`http://192.81.213.226:35/home/${id}&translator`);
     }
     if (to === "interrogator") {
-      router.push(`http://192.81.213.226:82/home/${id}&translator`);
+      router.replace(`http://192.81.213.226:82/home/${id}&translator`);
     }
     if (to === "summarizer") {
-      router.push(`http://192.81.213.226:32/home/${id}&translator`);
+      router.replace(`http://192.81.213.226:32/home/${id}&translator`);
     }
     // if (to === "interrogator") {
     //   router?.push(`http://192.81.213.226:82/home/query/${id}&translator`);

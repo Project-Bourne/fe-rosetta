@@ -5,7 +5,7 @@ function Training() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(
+    router.replace(
       {
         pathname: `/training/all`,
       },

@@ -28,7 +28,7 @@ function RightComp() {
     localStorage.clear();
 
     removeCookie('deep-access', { path: '/' });
-    router.push('http://192.81.213.226:30/auth/login');
+    router.replace('http://192.81.213.226:30/auth/login');
 
     NotificationService.success({
       message: 'Logout operation successful!'
@@ -141,7 +141,7 @@ function RightComp() {
         <div
           className="ml-3 bg-sirp-lightGrey w-full self-center hidden md:block"
           onClick={() => {
-            router.push('http://192.81.213.226:30/settings/profile');
+            router.replace('http://192.81.213.226:30/settings/profile');
           }}
         >
           <h2 className="text-sirp-grey text-[13px] capitalize">

@@ -46,7 +46,7 @@ function HomeContent() {
                     }))
                 })
                 .catch(err => {
-                    router.push('/history')
+                    router.replace('/history')
                     NotificationService.error({
                         message: "something went wrong",
                     });

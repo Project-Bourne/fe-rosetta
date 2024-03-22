@@ -33,7 +33,7 @@ function BookmarkListItem({
     };
 
     const handleItemClick = () => {
-        router.push(`/history/${uuid}`);
+        router.replace(`/history/${uuid}`);
     };
 
     const handleArchive = (e, uuid) => {
