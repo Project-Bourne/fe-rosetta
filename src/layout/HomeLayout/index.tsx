@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTruncate } from "@/components/custom-hooks";
-import { setOriginalLang, setTranslatedLang, setOriginalLoading, setOriginalText, setTranslatedText, swapContents, setTranslatedLoading, setTranslated, setOriginal, setTranslateContext } from '@/redux/reducer/translateSlice';
+import { setOriginalLang, setTranslatedLang, setOriginalLoading, setOriginalText, setTranslatedText, swapContents, setTranslatedLoading, setTranslated, setOriginal, setTranslateContext, setTranslatedUuid } from '@/redux/reducer/translateSlice';
 import TranslatorService from '@/services/Translator.service';
 import Button from '@mui/material/Button';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
@@ -79,8 +79,11 @@ const HomeLayout = ({ children }: LayoutType) => {
                 targetLang: e.target.value,
             }
             const response = await TranslatorService.translate(data)
+
+            console.log('REsponse: ', response);
             if (response.status) {
                 dispatch(setTranslatedText(response.data.textTranslation))
+                dispatch(setTranslatedUuid(response.data.uuid))
                 dispatch(setTranslateContext(response.data.textTranslationContext))
                 console.log('Making API call:', response);
             } else {
@@ -145,6 +148,7 @@ const HomeLayout = ({ children }: LayoutType) => {
                             // lang: 'en',
                             lang: ''
                         }))
+                        dispatch(setTranslatedUuid(newResponse.data.uuid))
                         dispatch(setOriginal({
                             text: newResponse.data.text,
                             lang: 'auto',

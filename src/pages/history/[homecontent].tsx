@@ -40,6 +40,7 @@ function HomeContent() {
                         text: translate.data.textTranslation,
                         lang: translate.data.targetLang,
                     }))
+                    dispatch(setTranslatedUuid(translate.data.uuid))
                     dispatch(setOriginal({
                         text: translate.data.text,
                         lang: translate.data.sourceLang,

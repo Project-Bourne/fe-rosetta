@@ -119,7 +119,7 @@ export default function Reader() {
                   lang: 'auto',
                 }))
               }
-              console.log(data?.data?.text, 'data?.data?.textmmmm', data)
+              console.log(data?.data?.text, 'data?.data?.text', data)
             case 'interrogator':
               dispatch(setOriginal({
                 text: data?.data?.answer,
