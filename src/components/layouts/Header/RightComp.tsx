@@ -8,31 +8,47 @@ import { useDispatch, useSelector } from 'react-redux';
 import notification from '../../../../public/icons/notification.svg';
 import dashboard from '../../../../public/icons/dashboard.svg';
 import down from '../../../../public/icons/down.svg';
-import { useCookies } from 'react-cookie';
+import { Cookies, useCookies } from 'react-cookie';
 import DropdownItems from './DropdownItems';
 import CustomModal from '@/components/ui/CustomModal';
 import { logout } from '@/redux/reducer/authReducer';
+import authService from '@/services/auth.service';
 
 function RightComp() {
-  const [, removeCookie] = useCookies(['deep-access']);
+  const [, removeCookie] = useCookies(['deep-access', 'uuid']);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { userInfo } = useSelector((state: any) => state?.auth);
+  const { userInfo, userAccessToken } = useSelector((state: any) => state?.auth);
   const [dropdown, setDropdown] = useState(false);
   const [toggleDashboard, setToggleDashboard] = useState(false);
   const [logoutConfirmation, setLogoutConfirmation] = useState(false);
+  const cookies = new Cookies();
 
   const handleLogout = async (event: any) => {
     event.stopPropagation();
-    dispatch(logout());
-    localStorage.clear();
 
-    removeCookie('deep-access', { path: '/' });
-    router.replace('http://192.81.213.226:30/auth/login');
+    const access = cookies.get("deep-access");
 
-    NotificationService.success({
-      message: 'Logout operation successful!'
-    });
+    const refreshToken = userAccessToken || access;
+
+    authService.prototype.logout({ refreshToken })
+    .then((res) => {
+      if(res){
+          dispatch(logout());
+          localStorage.clear();
+
+          removeCookie("deep-access", { path: "/" });
+          router.replace("http://192.81.213.226:30/auth/login");
+
+          NotificationService.success({
+            message: "Logout operation successful!",
+          });
+        }else{
+          NotificationService.error({
+            message: "Logout Failed!",
+          });
+        }
+      })
     setDropdown(false);
   };
 

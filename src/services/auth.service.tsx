@@ -25,6 +25,23 @@ class AuthService {
       throw error;
     }
   }
+
+  // logout
+  async logout(data) {
+    try {
+      const response = await request2(
+        "logout",
+        "POST",
+        data,
+        false,
+        false,
+        false,
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 // Export the Service class.
