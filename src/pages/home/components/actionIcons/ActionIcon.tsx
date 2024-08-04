@@ -14,7 +14,7 @@ const ActionIcons = ({ docId }) => {
     if (to === "collab") {
       router.replace(`http://192.81.213.226:36/document/${id}&translator`);
     }
-    if (to === "analyzer") {
+    if (to === "analyser") {
       router.replace(`http://192.81.213.226:31/home/${id}&translator`);
     }
     if (to === "factcheck") {
@@ -69,7 +69,7 @@ const ActionIcons = ({ docId }) => {
               src={require("../../../../../public/icons/action_analyzer.svg")}
               alt="documents"
               className=" cursor-pointer"
-              onClick={() => handleExport(docId, "analyzer")}
+              onClick={() => handleExport(docId, "analyser")}
               width={60}
             />
           </Tooltip>
