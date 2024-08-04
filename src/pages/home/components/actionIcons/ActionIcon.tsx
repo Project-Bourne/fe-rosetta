@@ -24,7 +24,7 @@ const ActionIcons = ({ docId }) => {
       router.replace(`http://192.81.213.226:35/home/${id}&translator`);
     }
     if (to === "interrogator") {
-      router.replace(`http://192.81.213.226:82/home/${id}&translator`);
+      router.replace(`http://192.81.213.226:82/home/query/${id}&translator`);
     }
     if (to === "summarizer") {
       router.replace(`http://192.81.213.226:32/home/${id}&translator`);
