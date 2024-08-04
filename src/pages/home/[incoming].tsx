@@ -113,19 +113,20 @@ export default function Reader() {
               }))
               break;
             case 'analyser':
-              if(data.data.text){
+              if(data?.data?.text){
                 dispatch(setOriginal({
                   text: data?.data?.text,
                   lang: 'auto',
                 }))
               }
               console.log(data?.data?.text, 'data?.data?.text', data)
+              break;
             case 'interrogator':
               dispatch(setOriginal({
                 text: data?.data?.answer,
                 lang: 'auto',
               }))
-            break;
+              break;
             case 'collab':
               const collabData: string[] = data?.data?.data?.ops.map((el) => {
                 return el.insert;
@@ -134,6 +135,7 @@ export default function Reader() {
                 text: collabData.join(' '),
                 lang: 'auto',
               }))
+              break;
             case 'deepchat':
               break;
             default:

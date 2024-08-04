@@ -70,6 +70,7 @@ updatePagination: (state, action) => {
       state.translatedUuid = action.payload;
     },
     setOriginal: (state, action) => {
+      console.log('Payload: ', action.payload)
       state.original = action.payload;
     },
     setTranslated: (state, action) => {
