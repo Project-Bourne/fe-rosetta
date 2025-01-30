@@ -50,29 +50,37 @@ export default function Reader() {
 
           switch (routeName) {
             case 'summarizer':
-              url = `http://192.81.213.226:81/82/summary/${routeId}`;
+              // url = `http://192.81.213.226:81/82/summary/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_SUMMARIZER_API_ROUTE}/summary/${routeId}`;
               break;
             case 'translator':
-              url = `http://192.81.213.226:81/83/translation/${routeId}`;
+              // url = `http://192.81.213.226:81/83/translation/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_TRANSLATOR_API_ROUTE}/translation/${routeId}`;
               break;
             case 'factcheck':
-              url = `http://192.81.213.226:81/84/fact/${routeId}`;
+              // url = `http://192.81.213.226:81/84/fact/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_FACT_CHECKER_API_ROUTE}/fact/${routeId}`;
               break;
             case 'irp':
-              url = `http://192.81.213.226:81/84/fact/${routeId}`;
+              // url = `http://192.81.213.226:81/81/irp/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_IRP_API_ROUTE}/irp/${routeId}`;
               break;
             case 'deepchat':
-              url = `http://192.81.213.226:81/85/deepchat/${routeId}`;
+              // url = `http://192.81.213.226:81/85/deepchat/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_DEEP_CHAT_API_ROUTE}/deepchat/${routeId}`;
               break;
             case 'analyser':
-              url = `http://192.81.213.226:81/81/analysis/${routeId}`;
+              // url = `http://192.81.213.226:81/81/analysis/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_ANALYZER_API_ROUTE}/analysis/${routeId}`;
               break;
             case 'collab':
-              url = `http://192.81.213.226:81/86/api/v1/doc/${routeId}`;
+              // url = `http://192.81.213.226:81/86/api/v1/doc/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_COLLAB_API_PORT}/api/v1/doc/${routeId}`;
               break;
             case 'interrogator':
-              url = `http://192.81.213.226:81/87/interrogation/message/${routeId}`;
-            break;
+              // url = `http://192.81.213.226:82/87/interrogation/message/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_INTERROGATOR_API_ROUTE}/interrogation/message/${routeId}`;
+              break;
             default:
               throw new Error('Invalid routeName');
           }
@@ -86,7 +94,7 @@ export default function Reader() {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data = await response.json();
-          console.log(data, "data-router")
+          // console.log(data, "data-router")
           switch (routeName) {
             case 'translator':
               dispatch(setOriginal({
@@ -119,7 +127,7 @@ export default function Reader() {
                   lang: 'auto',
                 }))
               }
-              console.log(data?.data?.text, 'data?.data?.text', data)
+              // console.log(data?.data?.text, 'data?.data?.text', data)
               break;
             case 'interrogator':
               dispatch(setOriginal({
@@ -192,7 +200,7 @@ export default function Reader() {
           });
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 
@@ -234,7 +242,7 @@ export default function Reader() {
       }
 
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setLoading(false)
     }
   };

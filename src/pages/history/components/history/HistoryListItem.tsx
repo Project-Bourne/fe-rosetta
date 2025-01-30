@@ -41,7 +41,7 @@ function ListItem({
             fetchData(dispatch)
         }
         catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     };
 
@@ -57,7 +57,7 @@ function ListItem({
 
             });
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
 
     };

@@ -28,7 +28,12 @@ export const requestHeader = {
  *
  */
 
-let API_USER_URL = 'http://192.81.213.226:81/83/';
+import { getApiUrl } from '@/utils/config';
+
+// Update API URLs to use the config utility
+let API_USER_URL = getApiUrl('translator');
+let API_USER_URL2 = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/80/`;
+
 export async function request(url, method, payload, token, text, form) {
   requestHeader['Content-Type'] =
     form === true ? 'multipart/form-data' : 'application/json';
@@ -45,7 +50,7 @@ export async function request(url, method, payload, token, text, form) {
           cookies.remove('uuid');
           localStorage.clear();
           // Redirect to the login page
-          window.location.replace('http://192.81.213.226:30/auth/login');
+          window.location.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`);
           return 'Access forbidden. Redirecting to login page.';
         } else if (text === true) {
           return res.text();
@@ -70,7 +75,7 @@ export async function request(url, method, payload, token, text, form) {
           cookies.remove('uuid');
           localStorage.clear();
           // Redirect to the login page
-          window.location.replace('http://192.81.213.226:30/auth/login');
+          window.location.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`);
           return 'Access forbidden. Redirecting to login page.';
         } else if (text === true) {
           return res.text();
@@ -84,8 +89,6 @@ export async function request(url, method, payload, token, text, form) {
       });
   }
 }
-
-let API_USER_URL2 = 'http://192.81.213.226:81/80/';
 
 export async function request2(url, method, payload, token, text, form) {
   if (form === true) {
@@ -106,7 +109,8 @@ export async function request2(url, method, payload, token, text, form) {
           cookies.remove('uuid');
           localStorage.clear();
           // Redirect to the login page
-          window.location.replace('http://192.81.213.226:30/auth/login');
+          // window.location.replace('http://192.81.213.226:30/auth/login');
+          window.location.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`);
           return 'Access forbidden. Redirecting to login page.';
         } else if (text === true) {
           return res.text();
@@ -131,7 +135,7 @@ export async function request2(url, method, payload, token, text, form) {
           cookies.remove('uuid');
           localStorage.clear();
           // Redirect to the login page
-          window.location.replace('http://192.81.213.226:30/auth/login');
+          window.location.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`);
           return 'Access forbidden. Redirecting to login page.';
         } else if (text === true) {
           return res.text();

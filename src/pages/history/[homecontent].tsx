@@ -51,7 +51,7 @@ function HomeContent() {
                     NotificationService.error({
                         message: "something went wrong",
                     });
-                    console.log(err);
+                    // console.log(err);
                 });
         }
     }, [homecontent]);
@@ -94,7 +94,7 @@ function HomeContent() {
         }
   
       } catch (error) {
-        console.log(error)
+        // console.log(error)
         setLoading(false)
       }
     };

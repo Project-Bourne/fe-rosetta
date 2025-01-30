@@ -11,56 +11,56 @@ import deep_chat from "../../../../public/icons/deep.svg";
 import Image from "next/image";
 import admin from "../../../../public/icons/admin.svg";
 
-const BASE_URL = "http://192.81.213.226";
+const BASE_URL = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}`;
 
 const dropdownItems = [
   {
     name: "Admin",
-    to: `${BASE_URL}:38/home`,
+    to: `${BASE_URL}:${process.env.NEXT_PUBLIC_ADMIN_PORT}/home`,
     key: "admin",
     icon: admin,
   },
   {
     name: "IRP",
-    to: `${BASE_URL}:30/home`,
+    to: `${BASE_URL}:${process.env.NEXT_PUBLIC_IRP_PORT}/home`,
     key: "irp",
     icon: irp,
   },
   {
     name: "Collab",
-    to: `${BASE_URL}:36/home`,
+    to: `${BASE_URL}:${process.env.NEXT_PUBLIC_COLLAB_PORT}/home`,
     key: "collab",
     icon: collab,
   },
   {
     name: "Summarizer",
-    to: `${BASE_URL}:32/home`,
+    to: `${BASE_URL}:${process.env.NEXT_PUBLIC_SUMMARIZER_PORT}/home`,
     key: "summarizer",
     icon: summarizer,
   },
   {
     name: "Fact Checker",
-    to: `${BASE_URL}:34/home`,
+    to: `${BASE_URL}:${process.env.NEXT_PUBLIC_FACT_CHECKER_PORT}/home`,
     key: "fact checker",
     icon: fact_checker,
   },
   {
     name: 'Analyzer',
-    to: `${BASE_URL}31/home`,
+    to: `${BASE_URL}:${process.env.NEXT_PUBLIC_ANALYZER_PORT}/home`,
     key: 'analyser',
     icon: analyzer
   },
 
   {
     name: "Deep Chat",
-    to: `${BASE_URL}:35/home`,
+    to: `${BASE_URL}:${process.env.NEXT_PUBLIC_DEEP_CHAT_PORT}/home`,
     key: "deep chat",
     icon: deep_chat,
   },
 
   {
     name: "Interrogator",
-    to: `${BASE_URL}:82/home`, // change route
+    to: `${BASE_URL}:${process.env.NEXT_PUBLIC_INTERROGATOR_PORT}/home`, // change route
     key: "interrogator",
     icon: interrogator,
   },

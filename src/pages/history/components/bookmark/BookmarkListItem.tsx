@@ -43,7 +43,7 @@ function BookmarkListItem({
             fetchData(dispatch)
             // dispatch(setBookmark());
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     };
 
@@ -59,7 +59,7 @@ function BookmarkListItem({
 
             });
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     };
 

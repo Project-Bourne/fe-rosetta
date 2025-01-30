@@ -12,23 +12,28 @@ const ActionIcons = ({ docId }) => {
 
   const handleExport = (id: string, to: string) => {
     if (to === "collab") {
-      router.replace(`http://192.81.213.226:36/document/${id}&translator`);
+      // router.replace(`http://192.81.213.226:36/document/${id}&translator`);
+      router.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_COLLAB_PORT}/document/${id}&translator`);
     }
     if (to === "analyser") {
-      router.replace(`http://192.81.213.226:31/home/${id}&translator`);
+      // router.replace(`http://192.81.213.226:31/home/${id}&translator`);
+      router.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_ANALYZER_PORT}/home/${id}&translator`);
     }
     if (to === "factcheck") {
-      router.replace(`http://192.81.213.226:34/home/${id}&translator`);
+      // router.replace(`http://192.81.213.226:34/home/${id}&translator`);
+      router.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_FACT_CHECKER_PORT}/home/${id}&translator`);
     }
     if (to === "deepchat") {
-      router.replace(`http://192.81.213.226:35/home/${id}&translator`);
+      // router.replace(`http://192.81.213.226:35/home/${id}&translator`);
+      router.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_DEEP_CHAT_PORT}/home/${id}&translator`);
     }
     if (to === "interrogator") {
-      // router.replace(`http://localhost:3000/home/query/${id}&translator`);
-      router.replace(`http://192.81.213.226:82/home/query/${id}&translator`);
+      // router.replace(`http://192.81.213.226:82/home/query/${id}&translator`);
+      router.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_INTERROGATOR_PORT}/home/query/${id}&translator`);
     }
     if (to === "summarizer") {
-      router.replace(`http://192.81.213.226:32/home/${id}&translator`);
+      // router.replace(`http://192.81.213.226:32/home/${id}&translator`);
+      router.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_SUMMARIZER_PORT}/home/${id}&translator`);
     }
     // if (to === "interrogator") {
     //   router?.push(`http://192.81.213.226:82/home/query/${id}&translator`);

@@ -54,7 +54,7 @@ export default function Reader() {
           });
         });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, []);
 
@@ -74,7 +74,7 @@ export default function Reader() {
       }
 
       const response = await TranslatorService.translate(data)
-      console.log(response.data, 'responseeeeeee')
+      // console.log(response.data, 'responseeeeeee')
       if (response.status) {
         dispatch(setTranslated({
           text: response.data.textTranslation,
@@ -97,7 +97,7 @@ export default function Reader() {
       }
 
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setLoading(false)
     }
   };

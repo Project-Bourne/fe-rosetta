@@ -52,7 +52,7 @@ const HomeLayout = ({ children }: LayoutType) => {
             const response = await TranslatorService.translate(data)
             if (response.status) {
                 dispatch(setOriginalText(response.data.textTranslation))
-                console.log('Making API call:', response);
+                // console.log('Making API call:', response);
             } else {
                 NotificationService.error({
                     message: "Error!",
@@ -61,7 +61,7 @@ const HomeLayout = ({ children }: LayoutType) => {
             }
             dispatch(setOriginalLoading(false))
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             dispatch(setOriginalLoading(false))
         }
     };
@@ -80,12 +80,12 @@ const HomeLayout = ({ children }: LayoutType) => {
             }
             const response = await TranslatorService.translate(data)
 
-            console.log('REsponse: ', response);
+            // console.log('REsponse: ', response);
             if (response.status) {
                 dispatch(setTranslatedText(response.data.textTranslation))
                 dispatch(setTranslatedUuid(response.data.uuid))
                 dispatch(setTranslateContext(response.data.textTranslationContext))
-                console.log('Making API call:', response);
+                // console.log('Making API call:', response);
             } else {
 
                 NotificationService.error({
@@ -95,7 +95,7 @@ const HomeLayout = ({ children }: LayoutType) => {
             }
             dispatch(setTranslatedLoading(false))
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             dispatch(setTranslatedLoading(false))
         }
     };

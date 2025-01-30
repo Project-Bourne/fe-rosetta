@@ -23,10 +23,10 @@ function HistoryContent() {
             setCurrentPage(page);
             dispatch(updatePagination({ currentPage: page }));
             const data =    await  TranslatorService.getTranslationsHistory(page)
-            // console.log(data, displayedHistory)
+            // // console.log(data, displayedHistory)
             dispatch(setHistory(data?.data))
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
         setLoading(false)
     };
