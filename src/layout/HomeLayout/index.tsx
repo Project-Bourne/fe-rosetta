@@ -120,18 +120,22 @@ const HomeLayout = ({ children }: LayoutType) => {
             dispatch(setOriginalLoading(true));
             dispatch(setOriginalLoading(true))
             try {
-                const res = await fetch('http://192.81.213.226:81/89/api/v1/uploads', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        "deep-token": access,
-                    }
-                });
+                const res = await fetch(
+                    // 'http://192.81.213.226:81/89/api/v1/uploads', 
+                    `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_FILE_UPLOAD_API_ROUTE}/api/v1/uploads`,
+                    {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            "deep-token": access,
+                        }
+                    });
                 if (res.status === 403) {
                     cookies.remove("deep-access");
 
                     // Redirect to the login page
-                    window.location.href = "http://192.81.213.226:30/auth/login";
+                    // window.location.href = "http://192.81.213.226:30/auth/login";
+                    window.location.href = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/auth/login`;
                     return "Access forbidden. Redirecting to login page.";
                 }
                 const response = await res.json();
