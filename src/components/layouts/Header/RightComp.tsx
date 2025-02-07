@@ -133,13 +133,22 @@ function RightComp() {
           className="flex flex-row items-center justify-center"
           onClick={handleLogoutToggle}
         >
-          <img
-            src={userInfo?.image ?? userInitials()}
-            alt="userImage"
-            width={25}
-            height={25}
-            className="rounded-full object-fill"
-          />
+          {userInfo?.image ? (
+            <Image
+              src={userInfo?.image || userInitials() || "DS"}
+              alt="X"
+              width={25}
+              height={25}
+              className="rounded-full object-fill"
+              priority
+            />
+          ) : (
+            <div className="h-[32px] w-[32px] aspect-square flex items-center justify-center rounded-full bg-sirp-primary">
+              <p className="text-white text-[12px] font-extrabold">
+                {userInitials()}
+              </p>
+            </div>
+          )}
 
           <Image
             src={down}
@@ -157,7 +166,7 @@ function RightComp() {
         <div
           className="ml-3 bg-sirp-lightGrey w-full self-center hidden md:block"
           onClick={() => {
-            router.replace('http://213.226:30/settings/profile');
+            router.replace(`http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_PORT}/settings/profile`);
           }}
         >
           <h2 className="text-sirp-grey text-[13px] capitalize">

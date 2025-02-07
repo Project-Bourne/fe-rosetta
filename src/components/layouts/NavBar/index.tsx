@@ -5,6 +5,10 @@ import { NavBarContents } from "../../../utils/constants";
 import { useRouter } from "next/router";
 import disclaimerIcon from '../../../../public/icons/toast.warn.svg';
 
+const COMPANY_INFO = {
+    copyright: `© ${new Date().getFullYear()} Powered by RIDU. All rights reserved.`,
+}
+
 function NavBar() {
     const router = useRouter();
     return (
@@ -36,6 +40,11 @@ function NavBar() {
                         <Image src={disclaimerIcon} alt="disclaimer" height={12} width={12} />&nbsp; DISCLAIMER
                     </h3>
                     <p>The information presented is intended for general informational purposes only. It is imperative that users independently verify and assess the output before making any consequential decisions. <br />Kindly be advised that the application's output may not comprehensively address individual needs and circumstances.</p>
+                    <br />
+                    <br />
+                    <p className="bg-sirp-primary text-white px-2 py-1 rounded-md">
+                        {COMPANY_INFO.copyright}
+                    </p>
                 </div>
             </div>
         </div>

@@ -73,7 +73,7 @@ function DashboardDropdown() {
   );
 
   return (
-    <ul className="bg-sirp-lightGrey shadow absolute top-[3rem] pt-1 flex md:grid grid-cols-3 rounded z-30 w-[130px] md:w-[300px]">
+    <ul className="bg-sirp-lightGrey shadow absolute top-[3rem] right-[1rem] pt-1 flex md:grid grid-cols-3 rounded z-30 w-[130px] md:w-[300px]">
       {dropdownItems.map((item, index) => {
         const shouldRender = item.key === 'irp' || permissions.includes(item.key);
         
@@ -81,9 +81,9 @@ function DashboardDropdown() {
           shouldRender && (
             <li
               key={index}
-              className="py-1.5 px-2  text-black border-b-[1px] border-r-[1px] border-b-gray-200/[0.5] border-r-gray-200/[0.5] text-[12px] text-center"
+              className="py-1.5 px-2 min-h-[56px] text-black border-b-[1px] border-r-[1px] border-b-gray-200/[0.5] border-r-gray-200/[0.5] text-[12px] text-center"
             >
-              <Link href={item.to} className="grid gap-x-3 items-center">
+              <Link href={item.to} className="h-full rounded-lg grid gap-x-3 justify-center items-center hover:bg-white hover:cursor-pointer hover:text-sirp-primary">
                 <Image
                   src={item.icon}
                   alt={item.key}
@@ -93,7 +93,7 @@ function DashboardDropdown() {
                       : "h-[20px] w-[10px] md:mx-auto"
                   } `}
                 />
-                <span>{item.name}</span>
+                <span className="text-center">{item.name}</span>
               </Link>
             </li>
           )
