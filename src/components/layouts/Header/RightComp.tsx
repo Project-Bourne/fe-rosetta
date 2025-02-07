@@ -150,6 +150,7 @@ function RightComp() {
             </div>
           )}
 
+
           <Image
             src={down}
             alt="down"
