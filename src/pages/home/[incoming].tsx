@@ -63,7 +63,7 @@ export default function Reader() {
               break;
             case 'irp':
               // url = `http://192.81.213.226:81/81/irp/${routeId}`;
-              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_IRP_API_ROUTE}/irp/${routeId}`;
+              url = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${process.env.NEXT_PUBLIC_IRP_API_PORT}/${process.env.NEXT_PUBLIC_FACT_CHECKER_API_ROUTE}/irp/${routeId}`;
               break;
             case 'deepchat':
               // url = `http://192.81.213.226:81/85/deepchat/${routeId}`;
