@@ -36,12 +36,13 @@ let API_USER_URL2 = `http://${process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS}:${proce
 
 export async function request(url, method, payload, token, text, form) {
   requestHeader['Content-Type'] =
-    form === true ? 'multipart/form-data' : 'application/json';
+    form === true ? 'multipart/form-data' : 'application/json'
 
   if (method === 'GET') {
     return fetch(API_USER_URL + url, {
       method,
-      headers: Object.assign(requestHeader)
+      headers: Object.assign(requestHeader),
+      mode: 'no-cors'
     })
       .then(res => {
         if (res.status === 403) {
@@ -66,6 +67,7 @@ export async function request(url, method, payload, token, text, form) {
     return fetch(API_USER_URL + url, {
       method,
       headers: Object.assign(requestHeader),
+      mode: 'no-cors',
       body: form === true ? payload : JSON.stringify(payload)
     })
       .then(res => {
@@ -100,7 +102,8 @@ export async function request2(url, method, payload, token, text, form) {
   if (method === 'GET') {
     return fetch(API_USER_URL2 + url, {
       method,
-      headers: Object.assign(requestHeader)
+      headers: Object.assign(requestHeader),
+      mode: 'no-cors'
     })
       .then(res => {
         if (res.status === 403) {
@@ -126,6 +129,7 @@ export async function request2(url, method, payload, token, text, form) {
     return fetch(API_USER_URL2 + url, {
       method,
       headers: Object.assign(requestHeader),
+      mode: 'no-cors',
       body: form === true ? payload : JSON.stringify(payload)
     })
       .then(res => {
