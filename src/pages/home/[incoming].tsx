@@ -21,6 +21,8 @@ import { useRouter } from 'next/router';
 import { Cookies } from 'react-cookie';
 import ReactMarkdown from 'react-markdown';
 
+const markdownIcon = require('../../../public/icons/markdown.svg');
+
 export default function Reader() {
   const { original, translated, isSwapped } = useSelector(
     (state: any) => state?.translate
@@ -340,7 +342,7 @@ export default function Reader() {
                   onClick={() => setMarkdownView(!markdownView)}
                 >
                   <Image
-                    src={require(`../../assets/icons/markdown.svg`)}
+                    src={markdownIcon}
                     alt="toggle markdown"
                     width={20}
                     height={20}
