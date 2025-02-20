@@ -134,14 +134,19 @@ function RightComp() {
           onClick={handleLogoutToggle}
         >
           {userInfo?.image ? (
-            <Image
-              src={userInfo?.image || userInitials() || "DS"}
-              alt="X"
-              width={25}
-              height={25}
-              className="rounded-full object-fill"
-              priority
-            />
+            // <Image
+            //   src={userInfo?.image || userInitials() || "DS"}
+            //   alt="X"
+            //   width={25}
+            //   height={25}
+            //   className="rounded-full object-fill"
+            //   priority
+            // />
+            <div className="h-[32px] w-[32px] aspect-square flex items-center justify-center rounded-full bg-sirp-primary">
+              <p className="text-white text-[12px] font-extrabold">
+                {userInitials()}
+              </p>
+            </div>
           ) : (
             <div className="h-[32px] w-[32px] aspect-square flex items-center justify-center rounded-full bg-sirp-primary">
               <p className="text-white text-[12px] font-extrabold">
