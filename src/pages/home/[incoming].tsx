@@ -19,6 +19,7 @@ import AuthService from '@/services/auth.service';
 import { setUserInfo } from '@/redux/reducer/authReducer';
 import { useRouter } from 'next/router';
 import { Cookies } from 'react-cookie';
+import ReactMarkdown from 'react-markdown';
 
 export default function Reader() {
   const { original, translated, isSwapped } = useSelector(
@@ -35,6 +36,7 @@ export default function Reader() {
   const { incoming } = router.query;
   const cookies = new Cookies();
   const token = cookies.get('deep-access');
+  const [markdownView, setMarkdownView] = useState(true);
 
   const headers = {
     'deep-token': token
@@ -332,12 +334,55 @@ export default function Reader() {
                 </>
               }
 
+              <Tooltip title={markdownView ? "Show Plain Text" : "Show Markdown"} className="badge-icon absolute top-2 right-12 cursor-pointer">
+                <div 
+                  className={`w-8 h-8 ${markdownView ? 'bg-sirp-primary' : 'bg-white'} text-white rounded-full flex items-center justify-center`}
+                  onClick={() => setMarkdownView(!markdownView)}
+                >
+                  <Image
+                    src={require(`../../assets/icons/markdown.svg`)}
+                    alt="toggle markdown"
+                    width={20}
+                    height={20}
+                    priority
+                  />
+                </div>
+              </Tooltip>
+
               {translated.isLoading || loading ? (
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                   <CircularProgress />
                 </Box>
               ) : (
-                <p className='text-[#383E42] text-sm pt-3'>{!showContext ? translated.text : translated.context}</p>
+                <div className='text-[#383E42] text-sm pt-3'>
+                  {markdownView ? (
+                    <div className="prose max-w-none">
+                      <ReactMarkdown
+                        components={{
+                          a: ({ href, children }) => (
+                            <a href={href} className="text-sirp-primary">{children}</a>
+                          ),
+                          p: ({ children }) => (
+                            <p className="mb-4">{children}</p>
+                          ),
+                          ul: ({ children }) => (
+                            <ul className="list-disc list-inside">{children}</ul>
+                          ),
+                          ol: ({ children }) => (
+                            <ol className="list-decimal list-inside">{children}</ol>
+                          ),
+                          blockquote: ({ children }) => (
+                            <blockquote className="border-l-4 border-sirp-primary pl-4 italic">{children}</blockquote>
+                          )
+                        }}
+                      >
+                        {!showContext ? translated.text : translated.context}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p>{!showContext ? translated.text : translated.context}</p>
+                  )}
+                </div>
               )}
             </div>
           </div>
