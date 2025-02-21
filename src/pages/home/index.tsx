@@ -160,7 +160,7 @@ export default function Reader() {
               <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
               {translated?.context?.length > 0 &&
                 <> 
-                {showContext ?
+                {/* {showContext ? */}
                   <Tooltip title="Show Translation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
                     <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
                       <Image
@@ -171,19 +171,19 @@ export default function Reader() {
                         priority
                       />
                     </div>
-                  </Tooltip> :
-                  <Tooltip title="Show Translation with Context" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
-                    <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
-                      <Image
-                        src={require(`../../assets/icons/eye.svg`)}
-                        alt="upload image"
-                        width={20}
-                        height={20}
-                        priority
-                      />
-                    </div>
                   </Tooltip>
-                }
+                  {/* // <Tooltip title="Show Translation with Context" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
+                  //   <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
+                  //     <Image
+                  //       src={require(`../../assets/icons/eye.svg`)}
+                  //       alt="upload image"
+                  //       width={20}
+                  //       height={20}
+                  //       priority
+                  //     />
+                  //   </div>
+                  // </Tooltip>
+                // } */}
                 </>
               }
 
