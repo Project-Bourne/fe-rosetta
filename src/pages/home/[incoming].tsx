@@ -46,6 +46,18 @@ export default function Reader() {
 
   useEffect(() => {
     const fetchData = async () => {
+      // Clear states first
+      dispatch(setOriginal({
+        text: '',
+        lang: 'auto',
+      }));
+      dispatch(setTranslated({
+        text: '',
+        context: '',
+        lang: 'en',
+      }));
+      dispatch(setTranslatedUuid(''));
+      
       setLoading(true);
       if (typeof incoming === 'string') {
         try {
@@ -209,7 +221,14 @@ export default function Reader() {
   }, []);
 
   const debouncedHandleChange = async () => {
-    setLoading(true)
+    // Clear translated state first
+    dispatch(setTranslated({
+      text: '',
+      context: '',
+      lang: translated.lang || 'en',
+    }));
+    
+    setLoading(true);
     try {
       const data = {
         text: original.text,
