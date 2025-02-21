@@ -44,7 +44,6 @@ export async function request(url, method, payload, token, text, form) {
     return fetch(API_USER_URL + url, {
       method,
       headers: Object.assign(requestHeader),
-      mode: 'no-cors'
     })
       .then(res => {
         if (res.status === 403) {
@@ -69,7 +68,6 @@ export async function request(url, method, payload, token, text, form) {
     return fetch(API_USER_URL + url, {
       method,
       headers: Object.assign(requestHeader),
-      mode: 'no-cors',
       body: form === true ? payload : JSON.stringify(payload)
     })
       .then(res => {
@@ -107,7 +105,6 @@ export async function request2(url, method, payload, token, text, form) {
     return fetch(API_USER_URL2 + url, {
       method,
       headers: Object.assign(requestHeader),
-      mode: 'no-cors'
     })
       .then(res => {
         if (res.status === 403) {
@@ -133,7 +130,6 @@ export async function request2(url, method, payload, token, text, form) {
     return fetch(API_USER_URL2 + url, {
       method,
       headers: Object.assign(requestHeader),
-      mode: 'no-cors',
       body: form === true ? payload : JSON.stringify(payload)
     })
       .then(res => {
