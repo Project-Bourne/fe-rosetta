@@ -40,6 +40,8 @@ export async function request(url, method, payload, token, text, form) {
 
   requestHeader['deep-token'] = access || cookies.get('deep-access');
 
+  console.log(requestHeader);
+
   if (method === 'GET') {
     return fetch(API_USER_URL + url, {
       method,
