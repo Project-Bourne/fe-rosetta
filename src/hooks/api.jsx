@@ -38,6 +38,8 @@ export async function request(url, method, payload, token, text, form) {
   requestHeader['Content-Type'] =
     form === true ? 'multipart/form-data' : 'application/json'
 
+  requestHeader['deep-token'] = access || cookies.get('deep-access');
+
   if (method === 'GET') {
     return fetch(API_USER_URL + url, {
       method,
@@ -98,6 +100,8 @@ export async function request2(url, method, payload, token, text, form) {
   } else {
     requestHeader['Content-Type'] = 'application/json';
   }
+
+  requestHeader['deep-token'] = access || cookies.get('deep-access');
 
   if (method === 'GET') {
     return fetch(API_USER_URL2 + url, {
