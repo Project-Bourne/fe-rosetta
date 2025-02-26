@@ -8,6 +8,7 @@ import { fetchData } from '@/hooks/FetchHistory'
 import TranslatorService from '@/services/Translator.service';
 import NotificationService from '@/services/notification.service';
 import { Tooltip } from '@mui/material';
+import ReactMarkdown from 'react-markdown';
 
 function ListItem({
     uuid,
@@ -92,15 +93,46 @@ function ListItem({
                     />
                 </Tooltip>
                 {/* name */}
-                <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-500">
+                {/* <p className="text-sirp-black-500 ml-2 md:w-[20rem] hover:text-gray-500">
                     {useTruncate(title, 20)}
-                </p>
+                </p> */}
+                <ReactMarkdown
+                    components={{
+                        a: ({ node, ...props }) => (
+                            <a {...props} className="text-blue-500 hover:text-blue-700">
+                                {props.children}
+                            </a>
+                        ),
+                        p: ({ node, ...props }) => (
+                            <p {...props} className="text-gray-500 hover:text-gray-400">
+                                {props.children}
+                            </p>
+                        )
+                    }}
+                >
+                    {useTruncate(title, 20)}
+                </ReactMarkdown>
             </div>
             {showaction === 0 ? (
-                <div className="md:w-[23rem] hidden md:block">
-                    <p className="text-gray-400 border-l-2 pl-2 ">{useTruncate(translation, 20)}</p>
-                </div>
-
+                // <div className="md:w-[23rem] hidden md:block">
+                //     <p className="text-gray-400 border-l-2 pl-2 ">{useTruncate(translation, 20)}</p>
+                // </div>
+                <ReactMarkdown
+                    components={{
+                        a: ({ node, ...props }) => (
+                            <a {...props} className="text-blue-500 hover:text-blue-700">
+                                {props.children}
+                            </a>
+                        ),
+                        p: ({ node, ...props }) => (
+                            <p {...props} className="text-gray-400 border-l-2 pl-2 ">
+                                {props.children}
+                            </p>
+                        )
+                    }}
+                >
+                    {useTruncate(translation, 20)}
+                </ReactMarkdown>
             ) : null}
             {/* time */}
             <div className="flex w-[8rem] mr-[3rem] md:mr-[5rem]">

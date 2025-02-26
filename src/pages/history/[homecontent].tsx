@@ -15,6 +15,7 @@ import NotificationService from '@/services/notification.service';
 import HomeLayout from '@/layout/HomeLayout';
 import { CircularProgress } from '@mui/material';
 import Box from '@mui/material/Box';
+import ReactMarkdown from 'react-markdown';
 
 function HomeContent() {
     const { original, translated, isSwapped } = useSelector((state: any) => state?.translate);
@@ -131,7 +132,8 @@ function HomeContent() {
                   <span className='text-[#383E42] text-xl font-bold'>Original Text</span>
                   {original.isLoading ? <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                     <CircularProgress />
-                  </Box> : <textarea
+                  </Box> : 
+                  <textarea
                     ref={focusedTextarea}
                     className='text-[#383E42] h-full text-sm pt-3 bg-transparent border-0 outline-none w-full resize-none'
                     value={original.text}
@@ -146,7 +148,21 @@ function HomeContent() {
                     style={{
                       height: editMode && focusedTextarea.current === 'original' ? 'auto' : 'auto', // Set initial height
                     }}
-                  />}
+                  />
+
+
+              //   <ReactMarkdown
+              //   components={{
+              //     p: ({ node, ...props }) => (
+              //       <p {...props} className="text-gray-500 hover:text-gray-400">
+              //         {props.children}
+              //       </p>
+              //     )
+              //   }}
+              // >
+              //   {original.text}
+              // </ReactMarkdown>
+                  }
                 </div>
                 <div className={`row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] border-2 max-h-[60vh] relative overflow-y-scroll border-[#E5E7EB] ${isSwapped ? 'order-2' : 'order-1'}`}>
                   <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
@@ -184,7 +200,48 @@ function HomeContent() {
                       <CircularProgress />
                     </Box>
                   ) : (
-                    <p className='text-[#383E42] text-sm pt-3'>{!showContext ? translated.text : translated.context}</p>
+                    // <p className='text-[#383E42] text-sm pt-3'>{!showContext ? translated.text : translated.context}</p>
+                    <ReactMarkdown
+                      components={{
+                        p: ({ node, ...props }) => (
+                          <p {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </p>
+                        ),
+                        h1: ({ node, ...props }) => (
+                          <h1 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h1>
+                        ),
+                        h2: ({ node, ...props }) => (
+                          <h2 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h2>
+                        ),
+                        h3: ({ node, ...props }) => (
+                          <h3 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h3>
+                        ),
+                        h4: ({ node, ...props }) => (
+                          <h4 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h4>
+                        ),
+                        h5: ({ node, ...props }) => (
+                          <h5 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h5>
+                        ),
+                        h6: ({ node, ...props }) => (
+                          <h6 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h6>
+                        )
+                      }}
+                    >
+                      {translated.text}
+                    </ReactMarkdown>
                   )}
                 </div>
               </div>

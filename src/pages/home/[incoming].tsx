@@ -402,7 +402,48 @@ export default function Reader() {
                       </ReactMarkdown>
                     </div>
                   ) : (
-                    <p>{!showContext ? translated.text : translated.context}</p>
+                    // <p>{!showContext ? translated.text : translated.context}</p>
+                    <ReactMarkdown
+                      components={{
+                        p: ({ node, ...props }) => (
+                          <p {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </p>
+                        ),
+                        h1: ({ node, ...props }) => (
+                          <h1 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h1>
+                        ),
+                        h2: ({ node, ...props }) => (
+                          <h2 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h2>
+                        ),
+                        h3: ({ node, ...props }) => (
+                          <h3 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h3>
+                        ),
+                        h4: ({ node, ...props }) => (
+                          <h4 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h4>
+                        ),
+                        h5: ({ node, ...props }) => (
+                          <h5 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h5>
+                        ),
+                        h6: ({ node, ...props }) => (
+                          <h6 {...props} className="text-gray-500 hover:text-gray-400">
+                            {props.children} <br /> <br />
+                          </h6>
+                        )
+                      }}
+                    >
+                      {translated.text}
+                    </ReactMarkdown>
                   )}
                 </div>
               )}
