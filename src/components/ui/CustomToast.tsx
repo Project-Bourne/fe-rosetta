@@ -39,7 +39,7 @@ function CustomToast({ message, addedText, position, type }: ToastModel) {
                 ${ type === 'success' ? 'bg-[#F0FDF4] border-[#22C55E]' :
                     type === 'error' ? 'bg-[#FAEAEC] border-[#B22735]' : 
                     'bg-[#FFFBE5] border-[#FFE033]'} 
-                    p-4 md:w-[40%] w-full rounded-md shadow-lg shadow-sirp-lightGrey border-l-[1.4rem] border-y-[1px] border-r-[1px] absolute z-[9999999999] translate-y-0 opacity-100 ${position ? _toast_position() : 'top-5 right-5' }
+                    p-4 md:w-[40%] w-full rounded-md shadow-lg shadow-sirp-lightGrey border-l-[1.4rem] border-y-[1px] border-r-[1px] absolute z-[200] translate-y-0 opacity-100 ${position ? _toast_position() : 'top-5 right-5' }
             `}>
                 <p className='flex justify-between items-center'>
                     <span className='text-[17px] font-bold'>{message}</span>

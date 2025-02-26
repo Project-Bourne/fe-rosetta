@@ -39,6 +39,7 @@ export default function Reader() {
   const cookies = new Cookies();
   const token = cookies.get('deep-access');
   const [markdownView, setMarkdownView] = useState(true);
+  const [isCopied, setIsCopied] = useState(false);
 
   const headers = {
     'deep-token': token
@@ -312,6 +313,25 @@ export default function Reader() {
     }
   }, [original]);
 
+  const handleCopyText = () => {
+    const textToCopy = !showContext ? translated.text : translated.context;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      setIsCopied(true);
+      NotificationService.error({
+        message: "Copied!",
+        addedText: "Text copied to clipboard",
+        position: "bottom-right"
+      });
+      setTimeout(() => setIsCopied(false), 2000);
+    }).catch(() => {
+      NotificationService.error({
+        message: "Error!",
+        addedText: "Failed to copy text",
+        position: "bottom-right"
+      });
+    });
+  };
+
   return (
     <div className='min-h-screen bg-[#F9F9F9]'>
       <HomeLayout>
@@ -342,7 +362,7 @@ export default function Reader() {
                 <textarea
                   ref={focusedTextarea}
                   className='text-[#383E42] h-full text-sm pt-3 bg-transparent border-0 outline-none w-full resize-none min-h-[300px]'
-                  value={original.text}
+                  value={original.text?.replace(/[*#_`~]/g, '')}
                   onClick={handleTextareaClick}
                   onBlur={handleTextareaBlur}
                   onChange={handlechange}
@@ -359,33 +379,54 @@ export default function Reader() {
             </div>
 
             <div className={`bg-white rounded-xl p-4 min-h-[400px] shadow-sm relative ${isSwapped ? 'order-2' : 'order-1'}`}>
-              <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
-              {/* Context and Markdown toggles */}
-              <div className="absolute top-4 right-4 flex gap-2">
-                {translated?.context?.length > 0 && (
-                  <Tooltip title={showContext ? "Show Translation" : "Show Translation with Context"}>
-                    <div className={`w-8 h-8 ${showContext ? 'bg-sirp-primary' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer`}>
+              <div className="flex justify-between items-center mb-4">
+                <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
+                <div className="flex gap-2">
+                  <Tooltip title="Copy text">
+                    <div 
+                      className={`w-8 h-8 ${isCopied ? 'bg-green-500' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer transition-colors duration-200`}
+                      onClick={handleCopyText}
+                    >
                       <Image
-                        src={require(`../../assets/icons/${showContext ? 'on.eye.svg' : 'eye.svg'}`)}
-                        alt="toggle context"
+                        src={require(`../../assets/icons/${isCopied ? 'square-check 1.svg' : 'file-arrow.svg'}`)}
+                        alt="copy text"
                         width={20}
                         height={20}
                         priority
                       />
                     </div>
                   </Tooltip>
-                )}
-                <Tooltip title={markdownView ? "Show Plain Text" : "Show Markdown"}>
-                  <div className={`w-8 h-8 ${markdownView ? 'bg-sirp-primary' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer`}>
-                    <Image
-                      src={markdownIcon}
-                      alt="toggle markdown"
-                      width={20}
-                      height={20}
-                      priority
-                    />
-                  </div>
-                </Tooltip>
+                  {translated?.context?.length > 0 && (
+                    <Tooltip title={showContext ? "Show Translation" : "Show Translation with Context"}>
+                      <div 
+                        className={`w-8 h-8 ${showContext ? 'bg-sirp-primary' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer`}
+                        onClick={() => setShowContext(!showContext)}
+                      >
+                        <Image
+                          src={require(`../../assets/icons/${showContext ? 'on.eye.svg' : 'eye.svg'}`)}
+                          alt="toggle context"
+                          width={20}
+                          height={20}
+                          priority
+                        />
+                      </div>
+                    </Tooltip>
+                  )}
+                  <Tooltip title={markdownView ? "Show Plain Text" : "Show Markdown"}>
+                    <div 
+                      className={`w-8 h-8 ${markdownView ? 'bg-sirp-primary' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer`}
+                      onClick={() => setMarkdownView(!markdownView)}
+                    >
+                      <Image
+                        src={markdownIcon}
+                        alt="toggle markdown"
+                        width={20}
+                        height={20}
+                        priority
+                      />
+                    </div>
+                  </Tooltip>
+                </div>
               </div>
 
               {/* Content */}

@@ -31,6 +31,7 @@ function HomeContent() {
         useSelector(
             (state: any) => state.translate // Include summaryTitle in the state selector
         );
+    const [isCopied, setIsCopied] = useState(false);
 
     useEffect(() => {
         if (homecontent) {
@@ -123,6 +124,25 @@ function HomeContent() {
         setEditMode(false);
     };
 
+    const handleCopyText = () => {
+        const textToCopy = !showContext ? translated.text : translated.context;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            setIsCopied(true);
+            NotificationService.success({
+                message: "Copied!",
+                addedText: "Text copied to clipboard",
+                position: "bottom-right"
+            });
+            setTimeout(() => setIsCopied(false), 2000);
+        }).catch(() => {
+            NotificationService.error({
+                message: "Error!",
+                addedText: "Failed to copy text",
+                position: "bottom-right"
+            });
+        });
+    };
+
     return (
         <div className='lg:m-10 py-5 rounded-[1rem] bg-[#F9F9F9]'>
           <HomeLayout>
@@ -136,7 +156,7 @@ function HomeContent() {
                   <textarea
                     ref={focusedTextarea}
                     className='text-[#383E42] h-full text-sm pt-3 bg-transparent border-0 outline-none w-full resize-none'
-                    value={original.text}
+                    value={original.text?.replace(/[*#_`~]/g, '')}
                     onClick={handleTextareaClick}
                     onBlur={handleTextareaBlur}
                     onChange={handlechange}
@@ -165,35 +185,38 @@ function HomeContent() {
                   }
                 </div>
                 <div className={`row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] border-2 max-h-[60vh] relative overflow-y-scroll border-[#E5E7EB] ${isSwapped ? 'order-2' : 'order-1'}`}>
-                  <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
-                  {translated?.context?.length > 0 &&
-                    <> 
-                    {showContext ?
-                      <Tooltip title="Show Translation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
-                        <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
+                    <div className="flex gap-2">
+                      <Tooltip title="Copy text">
+                        <div 
+                          className={`w-8 h-8 ${isCopied ? 'bg-green-500' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer transition-colors duration-200`}
+                          onClick={handleCopyText}
+                        >
                           <Image
-                            src={require(`../../assets/icons/on.eye.svg`)}
-                            alt="upload image"
-                            width={20}
-                            height={20}
-                            priority
-                          />
-                        </div>
-                      </Tooltip> :
-                      <Tooltip title="Show Translation with Context" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
-                        <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
-                          <Image
-                            src={require(`../../assets/icons/eye.svg`)}
-                            alt="upload image"
+                            src={require(`../../assets/icons/${isCopied ? 'square-check 1.svg' : 'file-arrow.svg'}`)}
+                            alt="copy text"
                             width={20}
                             height={20}
                             priority
                           />
                         </div>
                       </Tooltip>
-                    }
-                    </>
-                  }
+                      {translated?.context?.length > 0 && (
+                        <Tooltip title={showContext ? "Show Translation" : "Show Translation with Context"}>
+                          <div className={`w-8 h-8 ${showContext ? 'bg-sirp-primary' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer`} onClick={() => setShowContext(!showContext)}>
+                            <Image
+                              src={require(`../../assets/icons/${showContext ? 'on.eye.svg' : 'eye.svg'}`)}
+                              alt="toggle context"
+                              width={20}
+                              height={20}
+                              priority
+                            />
+                          </div>
+                        </Tooltip>
+                      )}
+                    </div>
+                  </div>
     
                   {translated.isLoading || loading ? (
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
