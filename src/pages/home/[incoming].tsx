@@ -46,7 +46,7 @@ export default function Reader() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Clear states first
+      // Clear both original and translated states first
       dispatch(setOriginal({
         text: '',
         lang: 'auto',
@@ -63,6 +63,13 @@ export default function Reader() {
         try {
           const [routeId, routeName] = incoming.split('&');
           let url;
+
+          // Clear translated text again when receiving data
+          dispatch(setTranslated({
+            text: '',
+            context: '',
+            lang: 'en',
+          }));
 
           switch (routeName) {
             case 'summarizer':
@@ -110,7 +117,14 @@ export default function Reader() {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data = await response.json();
-          // console.log(data, "data-router")
+          
+          // Clear translated text before setting original text
+          dispatch(setTranslated({
+            text: '',
+            context: '',
+            lang: 'en',
+          }));
+
           switch (routeName) {
             case 'translator':
               dispatch(setOriginal({
