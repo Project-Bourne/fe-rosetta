@@ -212,15 +212,15 @@ const HomeLayout = ({ children }: LayoutType) => {
                     </div>
                     {/* // ) : null} */}
                     <div className='flex w-full items-center justify-end'>
-                        <div className={`px-3 flex w-[40%] align-middle justify-between ${isContainerVisible ? '' : 'hidden'}`}>
+                        <div className={`px-3 flex w-full align-middle justify-between`}>
                             <ActionIcons docId={translatedUuid} />
                         </div>
 
-                        <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex items-center rounded-[10px] justify-center' onClick={toggleContainerVisibility}>
+                        {/* <span className='w-[50px] h-[50px] cursor-pointer shadow-xl flex items-center rounded-[10px] justify-center' onClick={toggleContainerVisibility}>
                             <span className='flex align-middle justify-center'>
-                                <MenuIcon style={{ color: '#4582C4' }} /> {/* Replace with Material-UI Menu Icon */}
+                                <MenuIcon style={{ color: '#4582C4' }} /> {/* Replace with Material-UI Menu Icon *
                             </span>
-                        </span>
+                        </span> */}
                     </div>
 
 

@@ -123,7 +123,7 @@ function HomeContent() {
     };
 
     return (
-        <div className='m-10 py-5 rounded-[1rem] bg-[#F9F9F9]'>
+        <div className='lg:m-10 py-5 rounded-[1rem] bg-[#F9F9F9]'>
           <HomeLayout>
             <div className='p-5'>
               <div className='m-5 grid grid-cols-2 gap-4'>

@@ -313,77 +313,82 @@ export default function Reader() {
   }, [original]);
 
   return (
-    <div className='m-10 py-5 rounded-[1rem] bg-[#F9F9F9]'>
+    <div className='min-h-screen bg-[#F9F9F9]'>
       <HomeLayout>
-        <div className='p-5'>
-          <div className='m-5 grid grid-cols-2 gap-4'>
-            <div className={`row-span-2 p-5 rounded-[20px] bg-[#f4f5f6] max-h-[60vh] overflow-y-scroll border-2 border-[#E5E7EB]`}>
-              <span className='text-[#383E42] text-xl font-bold'>Original Text</span>
-              {original.isLoading ? <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                <CircularProgress />
-              </Box> : <textarea
-                ref={focusedTextarea}
-                className='text-[#383E42] h-full text-sm pt-3 bg-transparent border-0 outline-none w-full resize-none'
-                value={original.text}
-                onClick={handleTextareaClick}
-                onBlur={handleTextareaBlur}
-                onChange={handlechange}
-                onFocus={() => {
-                  focusedTextarea.current = 'original';
-                }}
-                onKeyDown={handleKeyDown}
-                rows={20} // Set an initial value for rows
-                style={{
-                  height: editMode && focusedTextarea.current === 'original' ? 'auto' : 'auto', // Set initial height
-                }}
-              />}
+        <div className='p-4 sm:p-5'>
+          {/* Upload Section */}
+          <div className='flex justify-center mb-6'>
+            <div className='bg-white rounded-xl shadow-sm p-4 flex flex-col items-center cursor-pointer hover:shadow-md transition-shadow w-[140px]'>
+              <Image
+                src={require(`../../assets/icons/upload.svg`)}
+                alt="upload"
+                width={40}
+                height={40}
+                priority
+              />
+              <span className='text-sirp-primary mt-2 text-center'>Upload File</span>
             </div>
-            <div className={`row-span-2 p-5 rounded-[20px] bg-[#E8EAEC] border-2 max-h-[60vh] relative overflow-y-scroll border-[#E5E7EB] ${isSwapped ? 'order-2' : 'order-1'}`}>
+          </div>
+
+          {/* Text Areas */}
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div className='bg-white rounded-xl p-4 min-h-[400px] shadow-sm'>
+              <span className='text-[#383E42] text-xl font-bold'>Original Text</span>
+              {original.isLoading ? (
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <textarea
+                  ref={focusedTextarea}
+                  className='text-[#383E42] h-full text-sm pt-3 bg-transparent border-0 outline-none w-full resize-none min-h-[300px]'
+                  value={original.text}
+                  onClick={handleTextareaClick}
+                  onBlur={handleTextareaBlur}
+                  onChange={handlechange}
+                  onFocus={() => {
+                    focusedTextarea.current = 'original';
+                  }}
+                  onKeyDown={handleKeyDown}
+                  rows={20}
+                  style={{
+                    height: editMode && focusedTextarea.current === 'original' ? 'auto' : 'auto',
+                  }}
+                />
+              )}
+            </div>
+
+            <div className={`bg-white rounded-xl p-4 min-h-[400px] shadow-sm relative ${isSwapped ? 'order-2' : 'order-1'}`}>
               <span className='text-[#383E42] text-xl font-bold'>Translated Text</span>
-              {translated?.context?.length > 0 &&
-                <>
-                  {showContext ?
-                    <Tooltip title="Show Translation" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
-                      <div className="w-8 h-8 bg-sirp-primary text-white rounded-full flex items-center justify-center">
-                        <Image
-                          src={require(`../../assets/icons/on.eye.svg`)}
-                          alt="upload image"
-                          width={20}
-                          height={20}
-                          priority
-                        />
-                      </div>
-                    </Tooltip> :
-                    <Tooltip title="Show Translation with Context" className="badge-icon absolute top-2 right-2 cursor-pointer" onClick={() => setShowContext(!showContext)}>
-                      <div className="w-8 h-8 bg-white text-white rounded-full flex items-center justify-center">
-                        <Image
-                          src={require(`../../assets/icons/eye.svg`)}
-                          alt="upload image"
-                          width={20}
-                          height={20}
-                          priority
-                        />
-                      </div>
-                    </Tooltip>
-                  }
-                </>
-              }
+              {/* Context and Markdown toggles */}
+              <div className="absolute top-4 right-4 flex gap-2">
+                {translated?.context?.length > 0 && (
+                  <Tooltip title={showContext ? "Show Translation" : "Show Translation with Context"}>
+                    <div className={`w-8 h-8 ${showContext ? 'bg-sirp-primary' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer`}>
+                      <Image
+                        src={require(`../../assets/icons/${showContext ? 'on.eye.svg' : 'eye.svg'}`)}
+                        alt="toggle context"
+                        width={20}
+                        height={20}
+                        priority
+                      />
+                    </div>
+                  </Tooltip>
+                )}
+                <Tooltip title={markdownView ? "Show Plain Text" : "Show Markdown"}>
+                  <div className={`w-8 h-8 ${markdownView ? 'bg-sirp-primary' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer`}>
+                    <Image
+                      src={markdownIcon}
+                      alt="toggle markdown"
+                      width={20}
+                      height={20}
+                      priority
+                    />
+                  </div>
+                </Tooltip>
+              </div>
 
-              <Tooltip title={markdownView ? "Show Plain Text" : "Show Markdown"} className="badge-icon absolute top-2 right-12 cursor-pointer">
-                <div 
-                  className={`w-8 h-8 ${markdownView ? 'bg-sirp-primary' : 'bg-white'} text-white rounded-full flex items-center justify-center`}
-                  onClick={() => setMarkdownView(!markdownView)}
-                >
-                  <Image
-                    src={markdownIcon}
-                    alt="toggle markdown"
-                    width={20}
-                    height={20}
-                    priority
-                  />
-                </div>
-              </Tooltip>
-
+              {/* Content */}
               {translated.isLoading || loading ? (
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                   <CircularProgress />
@@ -392,25 +397,7 @@ export default function Reader() {
                 <div className='text-[#383E42] text-sm pt-3'>
                   {markdownView ? (
                     <div className="prose max-w-none">
-                      <ReactMarkdown
-                        components={{
-                          a: ({ href, children }) => (
-                            <a href={href} className="text-sirp-primary">{children}</a>
-                          ),
-                          p: ({ children }) => (
-                            <p className="mb-4">{children}</p>
-                          ),
-                          ul: ({ children }) => (
-                            <ul className="list-disc list-inside">{children}</ul>
-                          ),
-                          ol: ({ children }) => (
-                            <ol className="list-decimal list-inside">{children}</ol>
-                          ),
-                          blockquote: ({ children }) => (
-                            <blockquote className="border-l-4 border-sirp-primary pl-4 italic">{children}</blockquote>
-                          )
-                        }}
-                      >
+                      <ReactMarkdown>
                         {!showContext ? translated.text : translated.context}
                       </ReactMarkdown>
                     </div>
@@ -421,8 +408,17 @@ export default function Reader() {
               )}
             </div>
           </div>
+
+          {/* Run Translator Button */}
+          <div className='mt-6 flex justify-center w-full md:w-[400px]'>
+            <button 
+              onClick={debouncedHandleChange}
+              className='w-full bg-sirp-primary text-white font-bold rounded-xl py-3 px-6 hover:bg-opacity-90 transition-colors shadow-sm'
+            >
+              Run Translator
+            </button>
+          </div>
         </div>
-        <div className='w-full flex items-center justify-center' onClick={debouncedHandleChange}> <div className='bg-sirp-primary cursor-pointer text-white font-bold rounded-lg py-2 px-4 w-[20%] flex items-center justify-center'>Run Translator</div></div>
       </HomeLayout>
     </div>
   );

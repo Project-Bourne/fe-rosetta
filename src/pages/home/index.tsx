@@ -131,7 +131,7 @@ export default function Reader() {
 
 
   return (
-    <div className='m-10 py-5 rounded-[1rem] bg-[#F9F9F9]'>
+    <div className='lg:m-10 py-5 rounded-[1rem] bg-[#F9F9F9]'>
       <HomeLayout>
         <div className='p-5'>
           <div className='m-5 grid grid-cols-2 gap-4'>
@@ -197,7 +197,7 @@ export default function Reader() {
             </div>
           </div>
         </div>
-        <div className='w-full flex items-center justify-center' onClick={debouncedHandleChange}> <div className='bg-sirp-primary cursor-pointer text-white font-bold rounded-lg py-2 px-4 w-[20%] flex items-center justify-center'>Run Translator</div></div>
+        <div className='w-full flex items-center justify-center' onClick={debouncedHandleChange}> <div className='bg-sirp-primary cursor-pointer text-white font-bold rounded-lg py-2 px-4 w-[80%] md:w-[20%] flex items-center justify-center'>Run Translator</div></div>
       </HomeLayout>
     </div>
   );
