@@ -24,8 +24,8 @@ function NavBar() {
                     className="md:mr-[20px]"
                     priority
                 />
-                <h1 className="text-sirp-primary font-semibold text-[22px] hidden md:block">
-                    Deep Soul
+                <h1 className="text-sirp-primary font-semibold text-[18px] hidden md:block">
+                    Translator
                 </h1>
             </div>
 

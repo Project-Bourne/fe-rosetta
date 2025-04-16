@@ -71,14 +71,14 @@ function HistoryContent() {
     const handlePageChange = async (page: number) => {
         try {
             // setCurrentPage(page);
-            // dispatch(updatePagination({ currentPage: page }));
-            // const data =    await  TranslatorService.getTranslationsHistory(page)
-            // // // console.log(data, displayedHistory)
-            // dispatch(setHistory(data?.data))
+            dispatch(updatePagination({ currentPage: page }));
+            const data =    await  TranslatorService.getTranslationsHistory(page)
+            // // console.log(data, displayedHistory)
+            dispatch(setHistory(data?.data))
             
-            dispatch(updatePagination({ currentPage: page + 1 }));
-            const data = await TranslatorService.getTranslationsHistory(page + 1);
-            dispatch(setHistory(data?.data));
+            // dispatch(updatePagination({ currentPage: page + 1 }));
+            // const data = await TranslatorService.getTranslationsHistory(page + 1);
+            // dispatch(setHistory(data?.data));
         } catch (error) {
             NotificationService.error({
                 message: "Failed to fetch translations",

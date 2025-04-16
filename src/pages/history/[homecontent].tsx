@@ -202,7 +202,7 @@ function HomeContent() {
                           />
                         </div>
                       </Tooltip>
-                      {translated?.context?.length > 0 && (
+                      {/* {translated?.context?.length > 0 && (
                         <Tooltip title={showContext ? "Show Translation" : "Show Translation with Context"}>
                           <div className={`w-8 h-8 ${showContext ? 'bg-sirp-primary' : 'bg-white'} rounded-full flex items-center justify-center shadow-sm cursor-pointer`} onClick={() => setShowContext(!showContext)}>
                             <Image
@@ -214,7 +214,7 @@ function HomeContent() {
                             />
                           </div>
                         </Tooltip>
-                      )}
+                      )} */}
                     </div>
                   </div>
     

@@ -23,6 +23,8 @@ import { Tooltip } from '@mui/material';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { useTruncate } from '../../custom-hooks'
+import { useSelector } from 'react-redux'
 
 /**
  * Type definition for table column configuration
@@ -74,6 +76,7 @@ const Table: React.FC<TableProps> = ({
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const router = useRouter();
+    const { history } = useSelector((state: any) => state.translate.history)
     const [hoveredRow, setHoveredRow] = useState<string | null>(null);
 
     // Column definitions
@@ -109,7 +112,9 @@ const Table: React.FC<TableProps> = ({
             render: (row: TableData) => (
                 <div className="text-[#383E42] truncate hover-bold">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {row.translate.title}
+                        {
+                            useTruncate(row.translate.title, 40)
+                        }
                     </ReactMarkdown>
                 </div>
             )
@@ -122,7 +127,9 @@ const Table: React.FC<TableProps> = ({
             render: (row: TableData) => (
                 <div className="text-[#545C62] truncate hover-bold">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {row.translate.textTranslation}
+                        {
+                            useTruncate(row.translate.textTranslation, 60)
+                        }
                     </ReactMarkdown>
                 </div>
             )
@@ -148,7 +155,8 @@ const Table: React.FC<TableProps> = ({
             label: '',
             width: '40px',
             render: (row: TableData) => (
-                hoveredRow === row.uuid && (
+                // hoveredRow === row.uuid && 
+                (
                     <Tooltip title="Delete">
                         <Image
                             src={require('../../../assets/icons/delete.svg')}
